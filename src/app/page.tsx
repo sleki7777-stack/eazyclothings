@@ -21,7 +21,7 @@ export default function Home(){
    <nav className={menu?"navlinks open":"navlinks"}>
     <a href="#house" onClick={()=>setMenu(false)}>The House</a><a href="#collections" onClick={()=>setMenu(false)}>Collections</a><a href="#atelier" onClick={()=>setMenu(false)}>Atelier</a><a href="#wardrobe" onClick={()=>setMenu(false)}>Wardrobe</a><a href="#runway" onClick={()=>setMenu(false)}>Runway</a><a href="#journal" onClick={()=>setMenu(false)}>Journal</a>
    </nav>
-   <div className="navtools"><a href="/sleek-eazy">SLEEK EAZY</a><a href="/atelier">Enter Atelier</a><button>Bag 0</button></div>
+   <div className="navtools"><a href="/atelier">Talk to Your Designer</a><a href="/sleek-eazy">SLEEK EAZY</a><a href="/composition">Composition</a><button>Bag 0</button></div>
    <button className="menubtn" onClick={()=>setMenu(!menu)} aria-label="Open menu">☰</button>
   </header>
 
