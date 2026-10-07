@@ -87,6 +87,12 @@ export function canReleaseComposition(order: EazyFulfillmentOrder) {
   );
 }
 
+export const SLEEK_EAZY_FULFILLMENT_LAW = "ALL SLEEK EAZY PRODUCTS ARE RECEIVED BY EAZY FIRST, QC-CHECKED, THEN FULFILLED TO THE CUSTOMER.";
+
+export function requiresEazyReceiving(component: FulfillmentComponent) {
+  return component.kind === "SLEEK_EAZY";
+}
+
 export function buildSupplierInstruction(
   order: EazyFulfillmentOrder,
   component: FulfillmentComponent,
@@ -99,6 +105,6 @@ export function buildSupplierInstruction(
     quantity: component.quantity,
     shipTo: EAZY_RECEIVING_ADDRESS,
     instruction:
-      "SHIP TO EAZY RECEIVING ONLY. DO NOT SHIP DIRECTLY TO THE CUSTOMER. Include the order/component reference on the parcel.",
+      "SHIP TO EAZY RECEIVING ONLY. DO NOT SHIP DIRECTLY TO THE CUSTOMER. EAZY must receive and QC-check the product before customer fulfillment. Include the order/component reference on the parcel.",
   };
 }
