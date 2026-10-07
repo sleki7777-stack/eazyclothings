@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { getEazyFulfillmentFromOrder, persistEazyFulfillmentOnOrder } from "@/lib/shopify";
 
 const SHOPIFY_WEBHOOK_SECRET =
   process.env.SHOPIFY_WEBHOOK_SECRET || process.env.EAZY_FULFILLMENT_WEBHOOK_SECRET || "";
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
   const rawBody = await request.text();
 
   if (!verifyShopifyHmac(rawBody, request.headers.get("x-shopify-hmac-sha256"))) {
-    const garmentComponent = composition["EAZY Garment"] ? [{
+    if (orderId) {\n    const existing = await getEazyFulfillmentFromOrder(orderId).catch(() => null);\n    if (existing && webhookId && existing.webhookId === webhookId) {\n      const fulfillmentRecord = {\n    webhookId,\n    shopDomain,\n    shopifyOrderId: orderId,\n    stage: "ORDER_CREATED",\n    customer: {\n      name: [payload.shipping_address?.first_name, payload.shipping_address?.last_name].filter(Boolean).join(" "),\n      email: payload.email || payload.contact_email || "",\n      shippingAddress: payload.shipping_address || {},\n    },\n    composition,\n    components: [...garmentComponent, ...sleekComponents],\n    createdAt: new Date().toISOString(),\n  };\n\n  await persistEazyFulfillmentOnOrder(orderId, fulfillmentRecord);\n\n  return NextResponse.json({ ok: true, received: true, duplicate: true, webhookId, shopifyOrderId: orderId });\n    }\n  }\n\n  const garmentComponent = composition["EAZY Garment"] ? [{
     id: `composition-${orderId}`,
     orderId,
     kind: "EAZY_GARMENT",
