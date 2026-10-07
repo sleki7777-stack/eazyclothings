@@ -18,16 +18,16 @@ export default function SleekEazy(){
  const [bag,setBag]=useState<string[]>([]);
  const filtered=cat==="ALL"?items:items.filter(x=>x.type.toUpperCase()===cat||cat==="GIFTS");
 
- return <main className="slekon-page">
-  <header className="slekon-nav">
+ return <main className="sleek-page">
+  <header className="sleek-nav">
    <a href="/" className="back">EAZY</a>
-   <div className="slekon-word"><span>SLEEK</span> EAZY</div>
+   <div className="sleek-word"><span>SLEEK</span> EAZY</div>
    <a href="/composition">Composition <span>{bag.length}</span></a>
   </header>
 
-  <section className="slekon-hero">
-   <div className="slekon-heroimg"></div>
-   <div className="slekon-herotext">
+  <section className="sleek-hero">
+   <div className="sleek-heroimg"></div>
+   <div className="sleek-herotext">
     <p className="eyebrow">SLEEK EAZY · CURATED OBJECTS</p>
     <h1>Objects for<br/><em>the well-dressed man.</em></h1>
     <p>Premium accessories and gifts for the moments that matter — whether or not you came for an EAZY garment.</p>
@@ -38,22 +38,22 @@ export default function SleekEazy(){
    </div>
   </section>
 
-  <section className="slekon-intro">
+  <section className="sleek-intro">
    <p className="eyebrow">THE IDEA</p>
    <h2>You do not have to buy<br/>the cloth to enter the world.</h2>
    <p>Come for a bracelet. Stay for the details. Choose a birthday gift, an anniversary piece, a watch for a milestone, or complete an EAZY creation with objects selected for the composition.</p>
   </section>
 
-  <section id="shop" className="slekon-shop">
+  <section id="shop" className="sleek-shop">
    <div className="sectionhead">
     <div><p className="eyebrow">SLEEK EAZY</p><h2>Curated now.</h2></div>
    </div>
    <div className="filters">
     {cats.map(c=><button key={c} className={cat===c?"active":""} onClick={()=>setCat(c)}>{c}</button>)}
    </div>
-   <div className="slekon-grid">
-    {filtered.map(x=><article className="slekon-card" key={x.name}>
-     <div className="slekon-img">
+   <div className="sleek-grid">
+    {filtered.map(x=><article className="sleek-card" key={x.name}>
+     <div className="sleek-img">
       <img src={x.img} alt={x.name}/>
       <button onClick={()=>setBag([...bag,x.name])}>Add</button>
      </div>
@@ -67,7 +67,7 @@ export default function SleekEazy(){
    <div><p>Birthdays. Anniversaries. Weddings. Promotions. Father’s Day. Milestones. Or no occasion at all.</p><a className="primary" href="#shop">Find a gift ↗</a></div>
   </section>
 
-  <section className="slekon-bridge">
+  <section className="sleek-bridge">
    <p className="eyebrow">CREATING AN EAZY LOOK?</p>
    <h2>Take what you love<br/><em>back to your composition.</em></h2>
    <p>Your selected SLEEK EAZY pieces can travel with you. Return to EAZY, review the full composition and validate before commissioning.</p>
