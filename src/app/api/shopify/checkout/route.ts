@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { isShopifyConfigured } from "@/lib/shopify";
 
-type CheckoutItem = { variantId?: unknown; quantity?: unknown };
+type CheckoutItem = { variantId?: unknown; quantity?: unknown };\ntype CheckoutBody = { items?: CheckoutItem[]; composition?: Record<string,string|undefined> };
 
 function numericVariantId(value: unknown) {
   if (typeof value !== "string") return null;
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: "Shopify is not configured." }, { status: 503 });
     }
 
-    const body = (await request.json()) as { items?: CheckoutItem[] };
+    const body = (await request.json()) as CheckoutBody;
     const items = Array.isArray(body.items) ? body.items : [];
     const lines = items
       .map((item) => ({
@@ -31,11 +31,11 @@ export async function POST(request: Request) {
     }
 
     const domain = process.env.SHOPIFY_STORE_DOMAIN!.trim().replace(/^https?:\/\//, "").replace(/\/$/, "");
-    const cart = lines.map((line) => `${line.variantId}:${line.quantity}`).join(",");
+    const cart = lines.map((line) => `${line.variantId}:${line.quantity}`).join(",");\n    const c=body.composition||{};\n    const attrs=[["EAZY Composition","WORK 001 · LAGOS SOIL"],["EAZY Garment",c.garment||"Modern Native / Senator"],["EAZY Textile",c.textile||"Lagos Earth"],["EAZY Collar",c.collar||"Band Collar"],["EAZY Sleeve",c.sleeve||"Long"],["EAZY Fit",c.fit||"L"],["EAZY Finish",c.finish||"Hand Finish"],["EAZY Edition",c.edition||"07 of 24"]];\n    const query=attrs.map(([k,v])=>`attributes[${encodeURIComponent(k)}]=${encodeURIComponent(String(v).slice(0,180))}`).join("&");
     return NextResponse.json({
       ok: true,
-      checkoutUrl: `https://${domain}/cart/${cart}`,
-      itemCount: lines.reduce((sum, line) => sum + line.quantity, 0),
+      checkoutUrl: `https://${domain}/cart/${cart}?${query}`,
+      itemCount: lines.reduce((sum, line) => sum + line.quantity, 0),\n      compositionLocked: true,
     });
   } catch {
     return NextResponse.json({ ok: false, error: "Unable to prepare Shopify checkout." }, { status: 500 });
