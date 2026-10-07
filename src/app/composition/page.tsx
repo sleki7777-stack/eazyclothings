@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import EazyThread from "@/components/EazyThread";
 
 const fallbackAccessories:string[]=[];
 
@@ -37,6 +38,7 @@ export default function Composition(){
   const approved=atelier.approved===true;
 
   return <main className="composition-page">
+    <EazyThread current="composition" />
     <header className="composition-nav">
       <a href="/">← EAZY</a><span>COMPOSITION</span><a href="/sleek-eazy">SLEEK EAZY ↗</a>
     </header>
