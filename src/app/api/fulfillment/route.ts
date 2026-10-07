@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   EAZY_RECEIVING_ADDRESS,
   buildSupplierInstruction,
+  evaluateBrandProtection,
   isReceivingAddressConfigured,
   type EazyFulfillmentOrder,
 } from "@/lib/fulfillment";
@@ -45,6 +46,8 @@ export async function POST(request: Request) {
     eazyReceivingAddress: EAZY_RECEIVING_ADDRESS,
   };
 
+  const brandProtection = evaluateBrandProtection(order);
+
   const supplierInstructions = order.components
     .filter(component => component.kind === "SLEEK_EAZY")
     .map(component => buildSupplierInstruction(order, component));
@@ -58,5 +61,7 @@ export async function POST(request: Request) {
     rule: "SUPPLIER → EAZY → CUSTOMER",
     universalReceiving: true,
     receivingLaw: "Every SLEEK EAZY product is received by EAZY first and QC-checked before final customer fulfillment.",
+    brandProtection,
+    customerRefundRequired: brandProtection.decision === "REFUND_CUSTOMER",
   });
 }
