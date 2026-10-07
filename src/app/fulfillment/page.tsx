@@ -13,7 +13,7 @@ const stages = [
 ];
 
 export default function Fulfillment() {
- const [show,setShow]=useState(false);
+ const [show,setShow]=useState(false);\n const [selected,setSelected]=useState("07");
  return <main className="fulfillment-page">
   <header className="fulfillment-nav"><a href="/">EAZY</a><span>FULFILLMENT CONTROL</span><a href="/composition">Composition ↗</a></header>
   <section className="fulfillment-hero"><p className="eyebrow">EAZY FULFILLMENT ORCHESTRATION</p><h1>One composition.<br/><em>One final delivery.</em></h1><p>Shopify remains the commerce source of truth. EAZY controls the physical consolidation layer between suppliers and the customer.</p></section>
