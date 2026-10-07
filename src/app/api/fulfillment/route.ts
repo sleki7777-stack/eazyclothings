@@ -56,5 +56,7 @@ export async function POST(request: Request) {
     eazyReceivingDestination: EAZY_RECEIVING_ADDRESS,
     supplierInstructions,
     rule: "SUPPLIER → EAZY → CUSTOMER",
+    universalReceiving: true,
+    receivingLaw: "Every SLEEK EAZY product is received by EAZY first and QC-checked before final customer fulfillment.",
   });
 }
