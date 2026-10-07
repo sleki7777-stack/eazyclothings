@@ -10,7 +10,7 @@ export default function Atelier() {
   const [size, setSize] = useState("L");
   const [garment, setGarment] = useState("Native / Senator");
   const [measurements, setMeasurements] = useState(false);
-  const [designerOpen, setDesignerOpen] = useState(false);
+  const [designerOpen, setDesignerOpen] = useState(false);\n  const [designerMessage, setDesignerMessage] = useState("");\n  const [designerReply, setDesignerReply] = useState("");
   const [approved, setApproved] = useState(false);
   const [measureValues, setMeasureValues] = useState<Record<string,string>>({});
 
@@ -208,7 +208,7 @@ export default function Atelier() {
               <button>“What would work with my wardrobe?”</button>
               <button>“I have an idea — let me explain.”</button>
             </div>
-            <div className="designer-input">Your designer conversation will live here. <span>↗</span></div>
+            <textarea className="designer-input" value={designerMessage} onChange={(e) => setDesignerMessage(e.target.value)} placeholder="Tell your designer what you are imagining..." />\n            <button className="primary designer-send" onClick={() => setDesignerReply(designerMessage ? "I’ve captured that direction. Let’s shape the silhouette, textile and occasion around your idea." : "Start with an occasion, garment, mood or reference.")}>Send to your designer ↗</button>\n            {designerReply && <p className="designer-reply">{designerReply}</p>}
             <small>Your designer advises. You decide.</small>
           </div>
         </div>
