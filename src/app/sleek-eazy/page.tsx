@@ -12,13 +12,17 @@ const items=[
 ];
 
 const cats=["ALL","BRACELETS","WATCHES","BAGS","BELTS","EYEWEAR","FOOTWEAR","GIFTS"];
+type CatalogueProduct={id:string;title:string;productType:string;tags:string[];image:string|null;alt:string;variants:Array<{id:string;title:string;price:string;availableForSale:boolean}>};
 
 export default function SleekEazy(){
  const [cat,setCat]=useState("ALL");
  const [bag,setBag]=useState<string[]>([]);
- useEffect(()=>{try{const saved=localStorage.getItem("eazy-sleek-bag");if(saved)setBag(JSON.parse(saved));}catch{}},[]);
+ const [products,setProducts]=useState<CatalogueProduct[]>([]);
+ const [catalogueLive,setCatalogueLive]=useState(false);
+ useEffect(()=>{try{const saved=localStorage.getItem("eazy-sleek-bag");if(saved)setBag(JSON.parse(saved));}catch{} fetch("/api/shopify/products").then(r=>r.json()).then(data=>{if(data?.configured&&Array.isArray(data.products)&&data.products.length){setProducts(data.products);setCatalogueLive(true);}}).catch(()=>{});},[]);
  function addToComposition(name:string){const next=[...bag,name];setBag(next);localStorage.setItem("eazy-sleek-bag",JSON.stringify(next));}
- const filtered=cat==="ALL"?items:items.filter(x=>x.type.toUpperCase()===cat||cat==="GIFTS");
+ const source=products.length?products:items.map((x,i)=>({id:String(i),title:x.name,productType:x.type,tags:["SLEEK_EAZY"],image:x.img,alt:x.name,variants:[{id:String(i),title:"Default",price:x.price.replace("₦","").replace(/,/g,""),availableForSale:true}]}));
+ const filtered=cat==="ALL"?source:source.filter(x=>x.productType.toUpperCase()===cat||x.tags.some(t=>t.toUpperCase()===cat)||cat==="GIFTS");
 
  return <main className="sleek-page">
   <header className="sleek-nav">
@@ -48,18 +52,18 @@ export default function SleekEazy(){
 
   <section id="shop" className="sleek-shop">
    <div className="sectionhead">
-    <div><p className="eyebrow">SLEEK EAZY</p><h2>Curated now.</h2></div>
+    <div><p className="eyebrow">SLEEK EAZY {catalogueLive?"· LIVE CATALOGUE":"· CURATED PREVIEW"}</p><h2>Curated now.</h2></div>
    </div>
    <div className="filters">
     {cats.map(c=><button key={c} className={cat===c?"active":""} onClick={()=>setCat(c)}>{c}</button>)}
    </div>
    <div className="sleek-grid">
-    {filtered.map(x=><article className="sleek-card" key={x.name}>
+    {filtered.map(x=><article className="sleek-card" key={x.id}>
      <div className="sleek-img">
-      <img src={x.img} alt={x.name}/>
-      <button onClick={()=>addToComposition(x.name)}>Add</button>
+      <img src={x.image || ""} alt={x.alt || x.title}/>
+      <button onClick={()=>addToComposition(x.title)}>Add</button>
      </div>
-     <p>{x.type}</p><h3>{x.name}</h3><strong>{x.price}</strong>
+     <p>{x.productType}</p><h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price||0).toLocaleString()}</strong>
     </article>)}
    </div>
   </section>
