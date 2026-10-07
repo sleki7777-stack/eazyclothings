@@ -52,4 +52,5 @@ export default function Home(){
 
   <footer><div className="footerbrand"><span className="needle">E</span><strong>EAZY</strong><small>CLOTHING EXQUISITES</small></div><p>CRAFTED IN LAGOS. DESIGNED FOR EVERYWHERE.</p><div className="footlinks"><a href="#house">The House</a><a href="#collections">Collections</a><a href="#atelier">Atelier</a><a href="/slekon-eazy">SLEKON EAZY</a><a href="#journal">Journal</a></div><small>© {new Date().getFullYear()} EAZY CLOTHING EXQUISITES. LAGOS.</small></footer>
 
- </main>\n}\n
+ </main>
+}
