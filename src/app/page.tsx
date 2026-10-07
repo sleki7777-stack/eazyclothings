@@ -33,7 +33,7 @@ export default function Home(){
 
   <section id="house" className="statement section"><div><p className="eyebrow">THE HOUSE</p><h2>Lagos is the soil.<br/>Craft is the foundation.<br/><em>Design is the expression.</em></h2></div><div className="copy"><p>EAZY does not simply make clothes. We create works shaped by Lagos — its movement, heat, craft, nights, people and contradictions — translated into contemporary form for the world.</p><a href="#journal">Discover the House ↗</a></div></section>
 
-  <section id="collections" className="works section"><div className="sectionhead"><div><p className="eyebrow">EAZY WORKS</p><h2>Classic, current, EAZY.</h2></div><a href="#journal">View archive ↗</a></div>
+  <section id="collections" className="works section"><div className="sectionhead"><div><p className="eyebrow">EAZY WORKS</p><h2>Classic, current, EAZY.</h2></div><a href="/collections">View all collections ↗</a></div>
    <div className="filters">{categories.map(c=><button key={c} className={filter===c?"active":""} onClick={()=>setFilter(c)}>{c}</button>)}</div>
    <div className="grid">{visible.map((x,i)=><article className="work" key={x.code}><div className="workimg"><img src={x.img} alt={x.name}/><span className="workno">{String(i+1).padStart(2,"0")}</span><span className="workseal">E</span></div><div className="workmeta"><div><span>{x.code}</span><h3>{x.name}</h3></div><p>{x.type}</p></div></article>)}</div>
   </section>
