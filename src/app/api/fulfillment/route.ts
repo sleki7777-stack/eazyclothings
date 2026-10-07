@@ -6,7 +6,7 @@ import {
   evaluateSupplierReturn,
   isReceivingAddressConfigured,
   type EazyFulfillmentOrder,
-  type SupplierReturnTerms,
+  type SupplierReturnTerms,\n  type FulfillmentStage,\n  canTransitionFulfillment,\n  FULFILLMENT_STAGES,
 } from "@/lib/fulfillment";
 
 export async function GET() {
@@ -88,4 +88,46 @@ export async function POST(request: Request) {
     brandProtection,
     customerRefundRequired: brandProtection.decision === "REFUND_CUSTOMER",
   });
+}
+
+
+export async function PATCH(request: Request) {
+  const secret = process.env.EAZY_FULFILLMENT_WEBHOOK_SECRET;
+  if (secret && request.headers.get("x-eazy-fulfillment-secret") !== secret) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = (await request.json()) as {
+    shopifyOrderId?: string;
+    stage?: FulfillmentStage;
+  };
+
+  if (!body.shopifyOrderId || !body.stage || !FULFILLMENT_STAGES.includes(body.stage)) {
+    return NextResponse.json({ ok: false, error: "shopifyOrderId and a valid stage are required." }, { status: 400 });
+  }
+
+  try {
+    const { getEazyFulfillmentFromOrder, persistEazyFulfillmentOnOrder } = await import("@/lib/shopify");
+    const existing = await getEazyFulfillmentFromOrder(body.shopifyOrderId);
+    if (!existing) {
+      return NextResponse.json({ ok: false, error: "No EAZY fulfillment record exists for this Shopify order." }, { status: 404 });
+    }
+
+    const currentStage = String(existing.stage || "ORDER_CREATED") as FulfillmentStage;
+    if (!canTransitionFulfillment(currentStage, body.stage)) {
+      return NextResponse.json({
+        ok: false,
+        error: `Invalid fulfillment transition: ${currentStage} → ${body.stage}`,
+        currentStage,
+        requestedStage: body.stage,
+      }, { status: 409 });
+    }
+
+    const updated = { ...existing, stage: body.stage, updatedAt: new Date().toISOString() };
+    await persistEazyFulfillmentOnOrder(body.shopifyOrderId, updated);
+
+    return NextResponse.json({ ok: true, shopifyOrderId: body.shopifyOrderId, stage: body.stage, fulfillment: updated });
+  } catch {
+    return NextResponse.json({ ok: false, error: "Unable to transition fulfillment state." }, { status: 500 });
+  }
 }
