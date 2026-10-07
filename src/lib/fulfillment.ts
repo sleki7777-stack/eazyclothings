@@ -137,3 +137,62 @@ export function buildSupplierInstruction(
       "SHIP TO EAZY RECEIVING ONLY. DO NOT SHIP DIRECTLY TO THE CUSTOMER. EAZY must receive and QC-check the product before customer fulfillment. Include the order/component reference on the parcel.",
   };
 }
+
+
+export type SupplierReturnOutcome = "REFUND" | "REPLACEMENT" | "CREDIT" | "PENDING_SUPPLIER_DECISION";
+export type SupplierReturnStatus = "NOT_REQUIRED" | "ELIGIBLE" | "REQUESTED" | "AUTHORIZED" | "IN_TRANSIT" | "REFUNDED" | "REPLACED" | "CREDITED" | "DISPUTED";
+
+export type SupplierReturnTerms = {
+  supplier: string;
+  returnWindowDays?: number;
+  returnShippingPaidBy: "EAZY" | "SUPPLIER" | "SHARED" | "UNKNOWN";
+  fullProductRefund: boolean | "UNKNOWN";
+  shippingRefunded: boolean | "UNKNOWN";
+  restockingFeePercent?: number;
+  qualityFailureCovered: boolean | "UNKNOWN";
+};
+
+export type SupplierReturn = {
+  componentId: string;
+  supplier: string;
+  reason: string;
+  requestedOutcome: SupplierReturnOutcome;
+  status: SupplierReturnStatus;
+  returnShippingPaidBy: "EAZY" | "SUPPLIER" | "SHARED" | "UNKNOWN";
+  refundAmount?: number;
+  returnAuthorization?: string;
+  requestedAt?: string;
+  resolvedAt?: string;
+};
+
+export const SLEEK_EAZY_QUALITY_LAW = "QUALITY FIRST. ALWAYS. A PRODUCT THAT FAILS EAZY QC MUST NOT REACH THE CUSTOMER.";
+export const SLEEK_EAZY_RETURN_LAW = "FAILED PRODUCTS ARE HELD AT EAZY AND RETURNED, REPLACED, CREDITED OR REFUNDED ACCORDING TO VERIFIED SUPPLIER TERMS.";
+
+export function evaluateSupplierReturn(component: FulfillmentComponent, terms: SupplierReturnTerms): SupplierReturn {
+  const supplier = component.supplier || terms.supplier;
+  const failed = component.qualityStatus === "FAILED" || component.qualityStatus === "REPLACEMENT_REQUIRED";
+  if (!failed) return {
+    componentId: component.id, supplier,
+    reason: "No EAZY quality failure requiring supplier recovery.",
+    requestedOutcome: "PENDING_SUPPLIER_DECISION",
+    status: "NOT_REQUIRED",
+    returnShippingPaidBy: terms.returnShippingPaidBy,
+  };
+
+  const requestedOutcome: SupplierReturnOutcome =
+    terms.qualityFailureCovered === true && terms.fullProductRefund === true
+      ? "REFUND"
+      : terms.qualityFailureCovered === true
+        ? "REPLACEMENT"
+        : "PENDING_SUPPLIER_DECISION";
+
+  return {
+    componentId: component.id,
+    supplier,
+    reason: "EAZY QC failed the product. Hold it and recover the supplier cost before any customer fulfillment.",
+    requestedOutcome,
+    status: terms.qualityFailureCovered === true ? "ELIGIBLE" : "DISPUTED",
+    returnShippingPaidBy: terms.returnShippingPaidBy,
+    requestedAt: new Date().toISOString(),
+  };
+}
