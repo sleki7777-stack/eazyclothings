@@ -1,0 +1,29 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { eazyCollections } from "@/lib/eazy-collections";
+
+export default function CollectionsPage() {
+  const [active, setActive] = useState("all");
+  const collections = useMemo(() => active === "all" ? eazyCollections : eazyCollections.filter((item) => item.slug === active), [active]);
+
+  return <main className="collections-page">
+    <header className="collections-hero">
+      <a href="/" className="collections-back">← EAZY</a>
+      <p className="eyebrow">EAZY CLOTHING EXQUISITES · COLLECTIONS</p>
+      <h1>The complete<br/><em>men’s world.</em></h1>
+      <p>From Senator and African tailoring to denim, knitwear, active, resort and night — a growing library of EAZY works, all viewed through Lagos.</p>
+    </header>
+    <nav className="collection-nav" aria-label="EAZY collections">
+      <button className={active === "all" ? "active" : ""} onClick={() => setActive("all")}>ALL WORLDS</button>
+      {eazyCollections.map((item) => <button key={item.slug} className={active === item.slug ? "active" : ""} onClick={() => setActive(item.slug)}>{item.title.toUpperCase()}</button>)}
+    </nav>
+    {collections.map((collection) => <section className="collection-world" key={collection.slug}>
+      <div className="collection-heading"><div><p className="eyebrow">{collection.eyebrow}</p><h2>{collection.title}</h2></div><p>{collection.description}</p></div>
+      <div className="collection-grid">{collection.works.map((item) => <article className="collection-card" key={item.code}>
+        <div className="collection-image"><img src={item.image} alt={item.name} loading="lazy"/><span>{item.code}</span></div>
+        <div className="collection-meta"><div><small>{item.form}</small><h3>{item.name}</h3></div><small>{item.direction}</small></div>
+      </article>)}</div>
+    </section>)}
+  </main>;
+}
