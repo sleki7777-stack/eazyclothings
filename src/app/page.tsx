@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import EazyCompositionTray from "@/components/EazyCompositionTray";
 
 const looks = [
   {code:"WORK 001",name:"Lagos Soil",type:"Native / Senator",img:"https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1400&q=88"},
@@ -15,7 +16,7 @@ const categories=["ALL","TAILORING","NATIVE","SHIRTING","KNITWEAR","OUTERWEAR","
 export default function Home(){
  const [menu,setMenu]=useState(false); const [filter,setFilter]=useState("ALL");
  const visible=filter==="ALL"?looks:looks.filter(x=>x.type.toUpperCase().includes(filter.replace(" / "," / ")));
- return <main>
+ return <main id="top">
   <header className="nav">
    <a className="brand" href="#top"><span className="needle">E</span><span>EAZY</span></a>
    <nav className={menu?"navlinks open":"navlinks"}>
@@ -56,5 +57,6 @@ export default function Home(){
 
   <footer><div className="footerbrand"><span className="needle">E</span><strong>EAZY</strong><small>CLOTHING EXQUISITES</small></div><p>CRAFTED IN LAGOS. DESIGNED FOR EVERYWHERE.</p><div className="footlinks"><a href="#house">The House</a><a href="#collections">Collections</a><a href="#atelier">Atelier</a><a href="/sleek-eazy">SLEEK EAZY</a><a href="#journal">Journal</a></div><small>© {new Date().getFullYear()} EAZY CLOTHING EXQUISITES. LAGOS.</small></footer>
 
+  <EazyCompositionTray />
  </main>
 }
