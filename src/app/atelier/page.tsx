@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import EazyThread from "@/components/EazyThread";
 
 const sizes = ["XS","S","M","L","XL","XXL","3XL"];
 const garmentTypes = ["Native / Senator","Tailoring","Shirting","Resort","Relaxed","Outerwear"];
@@ -75,6 +76,7 @@ export default function Atelier() {
 
   return (
     <main className="atelier-page">
+      <EazyThread current="atelier" />
       <header className="atelier-nav">
         <a href="/" className="atelier-brand">EAZY</a>
         <span>DIGITAL ATELIER</span>
