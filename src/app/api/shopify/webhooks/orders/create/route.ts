@@ -19,7 +19,18 @@ export async function POST(request: NextRequest) {
   const rawBody = await request.text();
 
   if (!verifyShopifyHmac(rawBody, request.headers.get("x-shopify-hmac-sha256"))) {
-    return NextResponse.json({ ok: false, error: "Invalid Shopify webhook signature." }, { status: 401 });
+    const garmentComponent = composition["EAZY Garment"] ? [{
+    id: `composition-${orderId}`,
+    orderId,
+    kind: "EAZY_GARMENT",
+    name: composition["EAZY Garment"],
+    sku: "EAZY-COMPOSITION",
+    quantity: 1,
+    inboundStatus: "NOT_REQUIRED",
+    qualityStatus: "PENDING",
+  }] : [];
+
+  return NextResponse.json({ ok: false, error: "Invalid Shopify webhook signature." }, { status: 401 });
   }
 
   let payload: Record<string, any>;
@@ -30,6 +41,8 @@ export async function POST(request: NextRequest) {
   }
 
   const shopDomain = request.headers.get("x-shopify-shop-domain");
+  const noteAttributes = Array.isArray(payload.note_attributes) ? payload.note_attributes : [];
+  const composition = Object.fromEntries(noteAttributes.filter((x:any)=>x && x.name).map((x:any)=>[String(x.name),String(x.value||"")]));
   const webhookId = request.headers.get("x-shopify-webhook-id");
   const orderId = payload?.id ? String(payload.id) : null;
 
@@ -73,7 +86,8 @@ export async function POST(request: NextRequest) {
         email: payload.email || payload.contact_email || "",
         shippingAddress: payload.shipping_address || {},
       },
-      components: sleekComponents,
+      components: [...garmentComponent, ...sleekComponents],
+      composition,
       qualityFirst: true,
       universalReceiving: true,
       rule: "SHOPIFY ORDER → EAZY FULFILLMENT → SUPPLIER → EAZY QC → CUSTOMER",
