@@ -1,9 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const sizes = ["XS","S","M","L","XL","XXL","3XL"];
-const garmentTypes = ["Native / Senator","Tailoring","Shirting","Resort","Relaxed","Outerwear"];\nconst textiles = ["Lagos Earth","Midnight Cotton","Oyo Sand","House Linen"];\nconst collars = ["Band Collar","Classic Spread","Open Collar","Mandarin"];\nconst sleeves = ["Short","Long","Cuffed"];\nconst fits = ["Relaxed","Regular","Tailored"];\nconst finishes = ["Clean Edge","Contrast Stitch","Hand Finish"];
+const garmentTypes = ["Native / Senator","Tailoring","Shirting","Resort","Relaxed","Outerwear"];
+const textiles = ["Lagos Earth","Midnight Cotton","Oyo Sand","House Linen"];
+const collars = ["Band Collar","Classic Spread","Open Collar","Mandarin"];
+const sleeves = ["Short","Long","Cuffed"];
+const fits = ["Relaxed","Regular","Tailored"];
+const finishes = ["Clean Edge","Contrast Stitch","Hand Finish"];
 
 export default function Atelier() {
   const [photo, setPhoto] = useState<string | null>(null);
@@ -13,19 +18,53 @@ export default function Atelier() {
   const [designerOpen, setDesignerOpen] = useState(false);
   const [designerMessage, setDesignerMessage] = useState("");
   const [designerReply, setDesignerReply] = useState("");
-  const [approved, setApproved] = useState(false);\n  const [textile, setTextile] = useState("Lagos Earth");\n  const [collar, setCollar] = useState("Band Collar");\n  const [sleeve, setSleeve] = useState("Long");\n  const [fit, setFit] = useState("Tailored");\n  const [finish, setFinish] = useState("Hand Finish");
+  const [approved, setApproved] = useState(false);
+  const [textile, setTextile] = useState("Lagos Earth");
+  const [collar, setCollar] = useState("Band Collar");
+  const [sleeve, setSleeve] = useState("Long");
+  const [fit, setFit] = useState("Tailored");
+  const [finish, setFinish] = useState("Hand Finish");
   const [previewTone, setPreviewTone] = useState("earth");
   const [measureValues, setMeasureValues] = useState<Record<string,string>>({});
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("eazy-atelier");
+      if (!saved) return;
+      const state = JSON.parse(saved);
+      if (state.photo !== undefined) setPhoto(state.photo);
+      if (state.size) setSize(state.size);
+      if (state.garment) setGarment(state.garment);
+      if (typeof state.measurements === "boolean") setMeasurements(state.measurements);
+      if (state.measureValues) setMeasureValues(state.measureValues);
+      if (typeof state.approved === "boolean") setApproved(state.approved);
+      if (state.textile) setTextile(state.textile);
+      if (state.collar) setCollar(state.collar);
+      if (state.sleeve) setSleeve(state.sleeve);
+      if (state.fit) setFit(state.fit);
+      if (state.finish) setFinish(state.finish);
+      if (state.previewTone) setPreviewTone(state.previewTone);
+    } catch {}
+  }, []);
+
+  const persist = (overrides: Record<string, unknown> = {}) => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem("eazy-atelier", JSON.stringify({
+      photo, size, garment, measurements, measureValues, approved,
+      textile, collar, sleeve, fit, finish, previewTone, ...overrides
+    }));
+  };
 
   const reference = useMemo(() => ({
     work: "WORK 001",
     name: "Lagos Soil",
     edition: "EDITION 07 OF 24",
     fit: size,
-    textile: textile + " / House Textile",\n    collar, sleeve, finish,
+    textile: textile + " / House Textile",
+    collar, sleeve, finish,
   }), [size, textile, collar, sleeve, fit, finish]);
 
-  function saveState(next: Record<string, unknown>) { if (typeof window !== "undefined") localStorage.setItem("eazy-atelier", JSON.stringify(next)); }
+  function saveState(next: Record<string, unknown>) { persist(next); }
 
   function handlePhoto(file: File | undefined) {
     if (!file) return;
@@ -72,7 +111,7 @@ export default function Atelier() {
               )}
               <input type="file" accept="image/*" onChange={(e) => handlePhoto(e.target.files?.[0])} />
             </label>
-            {photo && <button className="text-action" onClick={() => setPhoto(null)}>Replace image</button>}
+            {photo && <button className="text-action" onClick={() => { setPhoto(null); persist({ photo: null, approved: false }); }}>Replace image</button>}
           </div>
         </div>
 
@@ -147,11 +186,11 @@ export default function Atelier() {
           <p>Choose from EAZY-controlled options. Your configuration becomes the reference your designer and atelier work from.</p>
         </div>
         <div className="config-grid">
-          <div><span>TEXTILE</span><div className="config-options">{textiles.map(v=><button key={v} className={textile===v?"selected":""} onClick={()=>{setTextile(v);setApproved(false)}}>{v}</button>)}</div></div>
-          <div><span>COLLAR</span><div className="config-options">{collars.map(v=><button key={v} className={collar===v?"selected":""} onClick={()=>{setCollar(v);setApproved(false)}}>{v}</button>)}</div></div>
-          <div><span>SLEEVE</span><div className="config-options">{sleeves.map(v=><button key={v} className={sleeve===v?"selected":""} onClick={()=>{setSleeve(v);setApproved(false)}}>{v}</button>)}</div></div>
-          <div><span>FIT</span><div className="config-options">{fits.map(v=><button key={v} className={fit===v?"selected":""} onClick={()=>{setFit(v);setApproved(false)}}>{v}</button>)}</div></div>
-          <div><span>FINISHING</span><div className="config-options">{finishes.map(v=><button key={v} className={finish===v?"selected":""} onClick={()=>{setFinish(v);setApproved(false)}}>{v}</button>)}</div></div>
+          <div><span>TEXTILE</span><div className="config-options">{textiles.map(v=><button key={v} className={textile===v?"selected":""} onClick={()=>{setTextile(v);persist({ textile: v, approved: false })}}>{v}</button>)}</div></div>
+          <div><span>COLLAR</span><div className="config-options">{collars.map(v=><button key={v} className={collar===v?"selected":""} onClick={()=>{setCollar(v);persist({ collar: v, approved: false })}}>{v}</button>)}</div></div>
+          <div><span>SLEEVE</span><div className="config-options">{sleeves.map(v=><button key={v} className={sleeve===v?"selected":""} onClick={()=>{setSleeve(v);persist({ sleeve: v, approved: false })}}>{v}</button>)}</div></div>
+          <div><span>FIT</span><div className="config-options">{fits.map(v=><button key={v} className={fit===v?"selected":""} onClick={()=>{setFit(v);persist({ fit: v, approved: false })}}>{v}</button>)}</div></div>
+          <div><span>FINISHING</span><div className="config-options">{finishes.map(v=><button key={v} className={finish===v?"selected":""} onClick={()=>{setFinish(v);persist({ finish: v, approved: false })}}>{v}</button>)}</div></div>
         </div>
         <div className="config-reference">
           <span>LIVE DESIGN REFERENCE</span>
@@ -178,7 +217,7 @@ export default function Atelier() {
           <h2>From your choices<br/><em>to a living reference.</em></h2>
           <p>The visual reference shifts with your configuration. This is a design-stage preview, not a promise of exact drape or fit.</p>
           <div className="tone-row">
-            {["earth","midnight","sand"].map(v=><button key={v} className={previewTone===v?"selected":""} onClick={()=>setPreviewTone(v)}>{v}</button>)}
+            {["earth","midnight","sand"].map(v=><button key={v} className={previewTone===v?"selected":""} onClick={()=>{ setPreviewTone(v); persist({ previewTone: v }); }}>{v}</button>)}
           </div>
           <div className="visualizer-facts">
             <span>{garment}</span><span>{textile}</span><span>{collar}</span><span>{fit} fit</span>
@@ -203,7 +242,7 @@ export default function Atelier() {
             This is the design reference you will approve before EAZY produces the physical garment.
             The approved reference becomes part of its provenance.
           </p>
-          <button className="primary atelier-approve" onClick={() => { setApproved(true); saveState({photo,size,garment,measurements,measureValues,approved:true,textile,collar,sleeve,fit,finish}); }}>
+          <button className="primary atelier-approve" onClick={() => { setApproved(true); persist({ approved: true }); }}>
             {approved ? "Design reference locked ✓" : "Approve this direction ↗"}
           </button>
         </div>
