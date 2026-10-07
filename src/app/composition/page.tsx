@@ -50,7 +50,7 @@ export default function Composition(){
   async function prepareShopify(){
     setShopBusy(true); setShopError("");
     try{
-      const response=await fetch("/api/shopify/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items:accessories.filter((item)=>item.variantId).map((item)=>({variantId:item.variantId,quantity:1}))})});
+      const response=await fetch("/api/shopify/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items:accessories.filter((item)=>item.variantId).map((item)=>({variantId:item.variantId,quantity:1})),composition:{garment:atelier.garment,textile:atelier.textile,collar:atelier.collar,sleeve:atelier.sleeve,fit:atelier.fit||atelier.size,finish:atelier.finish,edition:"07 of 24"}})});
       const data=await response.json();
       if(!response.ok||!data?.checkoutUrl)throw new Error(data?.error||"Unable to prepare checkout.");
       setShopUrl(data.checkoutUrl);
