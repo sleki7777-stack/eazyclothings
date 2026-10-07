@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const items=[
  {name:"Obsidian Link Bracelet",type:"Bracelets",price:"₦48,000",img:"https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1200&q=88"},
@@ -16,6 +16,8 @@ const cats=["ALL","BRACELETS","WATCHES","BAGS","BELTS","EYEWEAR","FOOTWEAR","GIF
 export default function SleekEazy(){
  const [cat,setCat]=useState("ALL");
  const [bag,setBag]=useState<string[]>([]);
+ useEffect(()=>{try{const saved=localStorage.getItem("eazy-sleek-bag");if(saved)setBag(JSON.parse(saved));}catch{}},[]);
+ function addToComposition(name:string){const next=[...bag,name];setBag(next);localStorage.setItem("eazy-sleek-bag",JSON.stringify(next));}
  const filtered=cat==="ALL"?items:items.filter(x=>x.type.toUpperCase()===cat||cat==="GIFTS");
 
  return <main className="sleek-page">
@@ -55,7 +57,7 @@ export default function SleekEazy(){
     {filtered.map(x=><article className="sleek-card" key={x.name}>
      <div className="sleek-img">
       <img src={x.img} alt={x.name}/>
-      <button onClick={()=>setBag([...bag,x.name])}>Add</button>
+      <button onClick={()=>addToComposition(x.name)}>Add</button>
      </div>
      <p>{x.type}</p><h3>{x.name}</h3><strong>{x.price}</strong>
     </article>)}
