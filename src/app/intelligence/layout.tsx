@@ -1,0 +1,1 @@
+import "../globals.css"; import "./intelligence.css"; export default function Layout({children}:{children:React.ReactNode}){return children}
