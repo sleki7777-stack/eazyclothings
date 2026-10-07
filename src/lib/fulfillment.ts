@@ -14,6 +14,7 @@ export type FulfillmentStage =
   | "DELIVERED";
 
 export type QualityStatus = "PENDING" | "PASSED" | "FAILED" | "REPLACEMENT_REQUIRED";
+export type BrandProtectionDecision = "RELEASE" | "HOLD" | "REFUND_CUSTOMER" | "REPLACE_COMPONENT";
 
 export type FulfillmentComponent = {
   id: string;
@@ -54,6 +55,11 @@ export type EazyFulfillmentOrder = {
   masterSealReady?: boolean;
   compositionAssembled?: boolean;
   packageReady?: boolean;
+  brandProtection?: {
+    decision: BrandProtectionDecision;
+    reason?: string;
+    decidedAt?: string;
+  };
 };
 
 export const EAZY_RECEIVING_ADDRESS = {
@@ -69,6 +75,29 @@ export const EAZY_RECEIVING_ADDRESS = {
 
 export function isReceivingAddressConfigured() {
   return EAZY_RECEIVING_ADDRESS.address1 !== "CONFIGURE_EAZY_RECEIVING_ADDRESS";
+}
+
+export function shouldRefundForBrandProtection(order: EazyFulfillmentOrder) {
+  return order.brandProtection?.decision === "REFUND_CUSTOMER";
+}
+
+export function evaluateBrandProtection(order: EazyFulfillmentOrder) {
+  const failedSleekProduct = order.components.some(
+    component => component.kind === "SLEEK_EAZY" &&
+      (component.qualityStatus === "FAILED" || component.qualityStatus === "REPLACEMENT_REQUIRED")
+  );
+
+  if (failedSleekProduct) {
+    return {
+      decision: "REFUND_CUSTOMER" as const,
+      reason: "A SLEEK EAZY component failed EAZY quality standards and must not be released under the EAZY name.",
+    };
+  }
+
+  return {
+    decision: "RELEASE" as const,
+    reason: "All received SLEEK EAZY components meet the EAZY quality gate.",
+  };
 }
 
 export function canReleaseComposition(order: EazyFulfillmentOrder) {
