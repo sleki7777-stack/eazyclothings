@@ -47,7 +47,7 @@ export async function GET() {
 
   try {
     const data = await shopifyAdminGraphql<ShopifyCatalogue>(QUERY);
-    const products = data.products.nodes.map((product) => ({
+    const products = data.products.nodes.filter((product) => product.tags.some((tag) => tag.toUpperCase() === "SLEEK_EAZY") || product.productType.toUpperCase().includes("SLEEK EAZY") || product.vendor.toUpperCase().includes("SLEEK EAZY")).map((product) => ({
       id: product.id,
       title: product.title,
       handle: product.handle,
