@@ -196,3 +196,26 @@ export function evaluateSupplierReturn(component: FulfillmentComponent, terms: S
     requestedAt: new Date().toISOString(),
   };
 }
+
+
+const FULFILLMENT_STAGE_ORDER: FulfillmentStage[] = [
+  "ORDER_CREATED","SUPPLIER_PROCUREMENT","INBOUND_TO_EAZY","RECEIVED","EAZY_QC",
+  "GARMENT_PRODUCTION","GARMENT_QC","AWAITING_CONSOLIDATION","COMPOSITION_ASSEMBLY",
+  "MASTER_SEAL","PACKAGED","FINAL_SHIPMENT","DELIVERED",
+];
+
+export function canTransitionFulfillment(from: FulfillmentStage, to: FulfillmentStage) {
+  const fromIndex = FULFILLMENT_STAGE_ORDER.indexOf(from);
+  const toIndex = FULFILLMENT_STAGE_ORDER.indexOf(to);
+  if (fromIndex < 0 || toIndex < 0) return false;
+  return toIndex === fromIndex + 1;
+}
+
+export function transitionFulfillment(order: EazyFulfillmentOrder, to: FulfillmentStage) {
+  if (!canTransitionFulfillment(order.stage, to)) {
+    throw new Error(`Invalid fulfillment transition: ${order.stage} → ${to}`);
+  }
+  return { ...order, stage: to };
+}
+
+export const FULFILLMENT_STAGES = FULFILLMENT_STAGE_ORDER;
