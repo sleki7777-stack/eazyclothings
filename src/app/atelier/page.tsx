@@ -14,6 +14,7 @@ export default function Atelier() {
   const [designerMessage, setDesignerMessage] = useState("");
   const [designerReply, setDesignerReply] = useState("");
   const [approved, setApproved] = useState(false);\n  const [textile, setTextile] = useState("Lagos Earth");\n  const [collar, setCollar] = useState("Band Collar");\n  const [sleeve, setSleeve] = useState("Long");\n  const [fit, setFit] = useState("Tailored");\n  const [finish, setFinish] = useState("Hand Finish");
+  const [previewTone, setPreviewTone] = useState("earth");
   const [measureValues, setMeasureValues] = useState<Record<string,string>>({});
 
   const reference = useMemo(() => ({
@@ -157,6 +158,31 @@ export default function Atelier() {
           <strong>{reference.name} · {garment}</strong>
           <p>{textile} · {collar} · {sleeve} sleeve · {fit} fit · {finish}</p>
           <small>{approved ? "LOCKED — APPROVED FOR COMPOSITION" : "Changes reopen approval so the final reference always matches your decision."}</small>
+        </div>
+      </section>
+
+      <section className="atelier-visualizer">
+        <div className={"garment-stage " + previewTone}>
+          <div className="garment-glow"></div>
+          <div className="garment-silhouette">
+            <div className="garment-body"></div>
+            <div className="garment-sleeve left"></div>
+            <div className="garment-sleeve right"></div>
+            <div className="garment-collar"></div>
+            <div className="garment-stitch"></div>
+          </div>
+          <div className="visualizer-label"><span>LIVE</span> DESIGN REFERENCE</div>
+        </div>
+        <div className="visualizer-copy">
+          <p className="eyebrow">06 · SEE THE WORK</p>
+          <h2>From your choices<br/><em>to a living reference.</em></h2>
+          <p>The visual reference shifts with your configuration. This is a design-stage preview, not a promise of exact drape or fit.</p>
+          <div className="tone-row">
+            {["earth","midnight","sand"].map(v=><button key={v} className={previewTone===v?"selected":""} onClick={()=>setPreviewTone(v)}>{v}</button>)}
+          </div>
+          <div className="visualizer-facts">
+            <span>{garment}</span><span>{textile}</span><span>{collar}</span><span>{fit} fit</span>
+          </div>
         </div>
       </section>
 
