@@ -13,7 +13,7 @@ const looks = [
 const categories=["ALL","TAILORING","NATIVE","SHIRTING","KNITWEAR","OUTERWEAR","UTILITY","RELAXED","RESORT","DENIM","ACTIVE / SWIM","LOUNGE / NIGHT","HEADWEAR"];
 
 export default function Home(){
- const [menu,setMenu]=useState(false); const [filter,setFilter]=useState("ALL"); const [atelier,setAtelier]=useState(false);
+ const [menu,setMenu]=useState(false); const [filter,setFilter]=useState("ALL");
  const visible=filter==="ALL"?looks:looks.filter(x=>x.type.toUpperCase().includes(filter.replace(" / "," / ")));
  return <main>
   <header className="nav">
@@ -52,6 +52,4 @@ export default function Home(){
 
   <footer><div className="footerbrand"><span className="needle">E</span><strong>EAZY</strong><small>CLOTHING EXQUISITES</small></div><p>CRAFTED IN LAGOS. DESIGNED FOR EVERYWHERE.</p><div className="footlinks"><a href="#house">The House</a><a href="#collections">Collections</a><a href="#atelier">Atelier</a><a href="/slekon-eazy">SLEKON EAZY</a><a href="#journal">Journal</a></div><small>© {new Date().getFullYear()} EAZY CLOTHING EXQUISITES. LAGOS.</small></footer>
 
-  {false&&<div className="modal"><div className="modalcard"><button className="close" onClick={()=>setAtelier(false)}>×</button><p className="eyebrow">DIGITAL ATELIER</p><h2>Begin your EAZY work.</h2><p>Select a design family to continue. Configuration, textile and commission controls will connect to the production system.</p><div className="modalchoices"><button>Native / Senator</button><button>Tailoring</button><button>Shirting</button><button>Resort / Relaxed</button></div><a className="primary dark" href="/composition">Continue to Composition ↗</a></div></div>}
- </main>
-}
+ </main>\n}\n
