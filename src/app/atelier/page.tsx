@@ -11,7 +11,8 @@ export default function Atelier() {
   const [garment, setGarment] = useState("Native / Senator");
   const [measurements, setMeasurements] = useState(false);
   const [designerOpen, setDesignerOpen] = useState(false);
-  const [approved, setApproved] = useState(false);\n  const [measureValues, setMeasureValues] = useState<Record<string,string>>({});
+  const [approved, setApproved] = useState(false);
+  const [measureValues, setMeasureValues] = useState<Record<string,string>>({});
 
   const reference = useMemo(() => ({
     work: "WORK 001",
@@ -21,7 +22,9 @@ export default function Atelier() {
     textile: "Lagos Earth / House Textile",
   }), [size]);
 
-  function saveState(next: Record<string, unknown>) { if (typeof window !== "undefined") localStorage.setItem("eazy-atelier", JSON.stringify(next)); }\n\n  function handlePhoto(file: File | undefined) {
+  function saveState(next: Record<string, unknown>) { if (typeof window !== "undefined") localStorage.setItem("eazy-atelier", JSON.stringify(next)); }
+
+  function handlePhoto(file: File | undefined) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => { const value = String(reader.result); setPhoto(value); saveState({photo:value,size,garment,measurements,measureValues,approved}); };
