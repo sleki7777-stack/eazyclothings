@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const items=[
+const fallbackItems=[
  {name:"Obsidian Link Bracelet",type:"Bracelets",price:"₦48,000",img:"https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1200&q=88"},
  {name:"House Meridian Watch",type:"Watches",price:"₦165,000",img:"https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=88"},
  {name:"Lagos Frame",type:"Eyewear",price:"₦72,000",img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=88"},
@@ -20,8 +20,12 @@ export default function SleekEazy(){
  const [products,setProducts]=useState<CatalogueProduct[]>([]);
  const [catalogueLive,setCatalogueLive]=useState(false);
  useEffect(()=>{try{const saved=localStorage.getItem("eazy-sleek-bag");if(saved)setBag(JSON.parse(saved));}catch{} fetch("/api/shopify/products").then(r=>r.json()).then(data=>{if(data?.configured&&Array.isArray(data.products)&&data.products.length){setProducts(data.products);setCatalogueLive(true);}}).catch(()=>{});},[]);
- function addToComposition(name:string){const next=[...bag,name];setBag(next);localStorage.setItem("eazy-sleek-bag",JSON.stringify(next));}
- const source=products.length?products:items.map((x,i)=>({id:String(i),title:x.name,productType:x.type,tags:["SLEEK_EAZY"],image:x.img,alt:x.name,variants:[{id:String(i),title:"Default",price:x.price.replace("₦","").replace(/,/g,""),availableForSale:true}]}));
+ function addToComposition(product:CatalogueProduct){
+ const variant=product.variants[0]; if(!variant)return;
+ const entry=JSON.stringify({productId:product.id,variantId:variant.id,title:product.title,productType:product.productType,price:variant.price});
+ const next=[...bag,entry]; setBag(next); localStorage.setItem("eazy-sleek-bag",JSON.stringify(next));
+}
+ const source=products.length?products:fallbackItems.map((x,i)=>({id:String(i),title:x.name,productType:x.type,tags:["SLEEK_EAZY"],image:x.img,alt:x.name,variants:[{id:String(i),title:"Default",price:x.price.replace("₦","").replace(/,/g,""),availableForSale:true}]}));
  const filtered=cat==="ALL"?source:source.filter(x=>x.productType.toUpperCase()===cat||x.tags.some(t=>t.toUpperCase()===cat)||cat==="GIFTS");
 
  return <main className="sleek-page">
@@ -61,7 +65,7 @@ export default function SleekEazy(){
     {filtered.map(x=><article className="sleek-card" key={x.id}>
      <div className="sleek-img">
       <img src={x.image || ""} alt={x.alt || x.title}/>
-      <button onClick={()=>addToComposition(x.title)}>Add</button>
+      <button onClick={()=>addToComposition(x)}>Add</button>
      </div>
      <p>{x.productType}</p><h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price||0).toLocaleString()}</strong>
     </article>)}
