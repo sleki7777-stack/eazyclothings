@@ -8,11 +8,37 @@ The customer's Shopify shipping address remains attached to the master order. It
 
 SLEEK EAZY suppliers receive only the EAZY receiving destination plus a component/order reference.
 
-## Order model
+## Shopify Admin API
 
-A Shopify order may contain EAZY garments and SLEEK EAZY components. The EAZY fulfillment layer creates inbound supplier instructions for SLEEK EAZY components.
+The app now contains a server-side Shopify Admin GraphQL client in `src/lib/shopify.ts`.
 
-Each supplier instruction contains supplier, SKU, product, quantity, component/order reference, EAZY receiving address, and an explicit instruction not to ship to the customer.
+It uses:
+
+- `SHOPIFY_STORE_DOMAIN`
+- `SHOPIFY_ADMIN_ACCESS_TOKEN`
+- `SHOPIFY_API_VERSION` (default `2026-10`)
+- `SHOPIFY_WEBHOOK_SECRET` for signed Shopify event handling
+
+The access token is server-only and must never be exposed to the browser.
+
+The fulfillment API can query an authoritative Shopify order using its Admin GraphQL ID.
+
+## Required Shopify app permissions
+
+For the EAZY fulfillment/order-management model, Shopify documents fulfillment-order access through scopes such as:
+
+- `read_merchant_managed_fulfillment_orders`
+- `write_merchant_managed_fulfillment_orders`
+- `read_third_party_fulfillment_orders`
+- `write_third_party_fulfillment_orders`
+
+The exact scopes should match whether the app acts as an order-management app, fulfillment service, or both.
+
+## Webhooks
+
+Production must subscribe the Shopify app to order and fulfillment-order events needed by the orchestration layer, then verify every webhook signature before processing it.
+
+At minimum, the production design needs order creation/updates and fulfillment-order state/request events.
 
 ## Consolidation gate
 
@@ -24,25 +50,11 @@ Shopify is the commerce/order/payment source of truth.
 
 EAZY fulfillment owns supplier procurement instructions, inbound receiving, QC, consolidation, Master Seal readiness and final release.
 
-Production should use Shopify Admin APIs/webhooks to ingest order and fulfillment events and write final fulfillment/tracking updates back to Shopify.
-
-## Environment configuration
-
-EAZY_RECEIVING_NAME
-EAZY_RECEIVING_ADDRESS1
-EAZY_RECEIVING_ADDRESS2
-EAZY_RECEIVING_CITY
-EAZY_RECEIVING_STATE
-EAZY_RECEIVING_COUNTRY
-EAZY_RECEIVING_POSTAL_CODE
-EAZY_RECEIVING_PHONE
-EAZY_FULFILLMENT_WEBHOOK_SECRET
-
-Never commit Shopify credentials or webhook secrets.
+Final fulfillment/tracking must be written back to Shopify only after the EAZY consolidation gate passes.
 
 ## Privacy rule
 
-The supplier does not need the customer's final address for a consolidated Composition. The customer's address stays in the Shopify/EAZY order record and is used only for the final EAZY shipment.
+The supplier does not receive the customer's final address for a consolidated Composition. The customer's address stays in the Shopify/EAZY order record and is used only for the final EAZY shipment.
 
 ## Standalone SLEEK EAZY
 
