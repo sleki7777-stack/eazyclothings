@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import EazyCompositionTray from "@/components/EazyCompositionTray";
+import EazyThread from "@/components/EazyThread";
 
 const looks = [
   {code:"WORK 001",name:"Lagos Soil",type:"Native / Senator",img:"https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1400&q=88"},
@@ -57,6 +58,7 @@ export default function Home(){
 
   <footer><div className="footerbrand"><span className="needle">E</span><strong>EAZY</strong><small>CLOTHING EXQUISITES</small></div><p>CRAFTED IN LAGOS. DESIGNED FOR EVERYWHERE.</p><div className="footlinks"><a href="#house">The House</a><a href="#collections">Collections</a><a href="#atelier">Atelier</a><a href="/sleek-eazy">SLEEK EAZY</a><a href="#journal">Journal</a></div><small>© {new Date().getFullYear()} EAZY CLOTHING EXQUISITES. LAGOS.</small></footer>
 
+  <EazyThread current="work" />
   <EazyCompositionTray />
  </main>
 }
