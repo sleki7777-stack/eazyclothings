@@ -2,13 +2,19 @@
 
 import { useEffect, useState } from "react";
 
-const fallbackAccessories=["Obsidian Link Bracelet","House Meridian Watch","Lagos Frame"];
+const fallbackAccessories:string[]=[];
 
 type AtelierState = {
   photo?: string;
   size?: string;
   garment?: string;
   approved?: boolean;
+  textile?: string;
+  collar?: string;
+  sleeve?: string;
+  fit?: string;
+  finish?: string;
+  previewTone?: string;
 };
 
 export default function Composition(){
@@ -47,15 +53,15 @@ export default function Composition(){
         <div className="composition-meta">
           <span>WORK 001 · LAGOS SOIL</span>
           <h2>{atelier.garment || "Modern Native / Senator"}</h2>
-          <p>Textile: Lagos Soil · Fit: {atelier.size || "L"} · Edition: 07 of 24</p>
-          {!approved&&<small>Approve your design reference in Atelier before validation.</small>}
+          <p>{atelier.textile || "Lagos Earth"} · {atelier.collar || "Band Collar"} · {atelier.sleeve || "Long"} sleeve · {atelier.fit || atelier.size || "L"} fit · {atelier.finish || "Hand Finish"} · Edition: 07 of 24</p>
+          {!approved&&<small>Approve the exact design reference in Atelier before validation. Any later change reopens approval.</small>}
         </div>
       </div>
       <aside>
         <p className="eyebrow">YOUR ADDITIONS</p>
         {accessories.map((x,i)=><div className="addition" key={x+i}><span>{String(i+1).padStart(2,"0")}</span><div><strong>{x}</strong><small>SLEEK EAZY · SELECTED</small></div><button onClick={()=>{const next=accessories.filter((_,index)=>index!==i);setAccessories(next);localStorage.setItem("eazy-sleek-bag",JSON.stringify(next));}}>×</button></div>)}
         <a className="composition-add" href="/sleek-eazy">+ Add from SLEEK EAZY</a>
-        <div className={validated?"validation approved":"validation"}><span>{validated?"VALIDATED":"READY TO VALIDATE"}</span><p>{validated?"Your composition is locked for the next commissioning step.":"We will check garment configuration, textile availability, edition, selected additions and final composition before production."}</p></div>
+        <div className={validated?"validation approved":"validation"}><span>{validated?"VALIDATED":"READY TO VALIDATE"}</span><p>{validated?"Your composition is locked for the next commissioning step.":"We will check the locked garment configuration, textile availability, edition, selected additions and final composition before production."}</p></div>
         <button className="primary dark validate" disabled={!approved} onClick={()=>setValidated(true)}>{!approved?"Approve Design First":validated?"Composition Locked ✓":"Validate My Composition →"}</button>
       </aside>
     </section>
