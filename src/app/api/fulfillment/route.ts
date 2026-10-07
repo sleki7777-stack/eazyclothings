@@ -3,28 +3,32 @@ import {
   EAZY_RECEIVING_ADDRESS,
   buildSupplierInstruction,
   evaluateBrandProtection,
+  evaluateSupplierReturn,
   isReceivingAddressConfigured,
   type EazyFulfillmentOrder,
+  type SupplierReturnTerms,
 } from "@/lib/fulfillment";
 
 export async function GET() {
   return NextResponse.json({
     ok: true,
     receivingAddressConfigured: isReceivingAddressConfigured(),
+    qualityFirst: true,
     policy:
-      "SLEEK EAZY composition components ship to EAZY first. EAZY receives, QC-checks, consolidates and sends one final package to the customer.",
+      "SLEEK EAZY products ship to EAZY first. EAZY receives, QC-checks and either approves for fulfillment or holds the product for supplier recovery.",
   });
 }
 
 export async function POST(request: Request) {
   const secret = process.env.EAZY_FULFILLMENT_WEBHOOK_SECRET;
 
-  // Fail closed when a production secret has been configured.
   if (secret && request.headers.get("x-eazy-fulfillment-secret") !== secret) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = (await request.json()) as EazyFulfillmentOrder;
+  const body = (await request.json()) as EazyFulfillmentOrder & {
+    supplierReturnTerms?: Record<string, SupplierReturnTerms>;
+  };
 
   if (!body?.id || !body.customer?.shippingAddress || !Array.isArray(body.components)) {
     return NextResponse.json(
@@ -40,7 +44,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // The receiving address is always server-owned. Never trust a value from the client/webhook body.
   const order: EazyFulfillmentOrder = {
     ...body,
     eazyReceivingAddress: EAZY_RECEIVING_ADDRESS,
@@ -52,15 +55,36 @@ export async function POST(request: Request) {
     .filter(component => component.kind === "SLEEK_EAZY")
     .map(component => buildSupplierInstruction(order, component));
 
+  const supplierRecovery = order.components
+    .filter(component => component.kind === "SLEEK_EAZY")
+    .filter(component => component.qualityStatus === "FAILED" || component.qualityStatus === "REPLACEMENT_REQUIRED")
+    .map(component => {
+      const terms = body.supplierReturnTerms?.[component.id] ?? {
+        supplier: component.supplier || "UNKNOWN_SUPPLIER",
+        returnShippingPaidBy: "UNKNOWN" as const,
+        fullProductRefund: "UNKNOWN" as const,
+        shippingRefunded: "UNKNOWN" as const,
+        qualityFailureCovered: "UNKNOWN" as const,
+      };
+      return evaluateSupplierReturn(component, terms);
+    });
+
+  const recoveryRequired = supplierRecovery.length > 0;
+
   return NextResponse.json({
     ok: true,
     orderId: order.id,
     customerDestination: order.customer.shippingAddress,
     eazyReceivingDestination: EAZY_RECEIVING_ADDRESS,
     supplierInstructions,
-    rule: "SUPPLIER → EAZY → CUSTOMER",
+    supplierRecovery,
+    recoveryRequired,
+    rule: "SUPPLIER → EAZY → QC → APPROVE OR RECOVER → CUSTOMER",
     universalReceiving: true,
+    qualityFirst: true,
     receivingLaw: "Every SLEEK EAZY product is received by EAZY first and QC-checked before final customer fulfillment.",
+    qualityLaw: "QUALITY FIRST. ALWAYS. A product that fails EAZY QC must not reach the customer.",
+    returnLaw: "Failed products are held at EAZY and returned, replaced, credited or refunded according to verified supplier terms.",
     brandProtection,
     customerRefundRequired: brandProtection.decision === "REFUND_CUSTOMER",
   });
