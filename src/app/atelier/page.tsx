@@ -11,7 +11,7 @@ export default function Atelier() {
   const [garment, setGarment] = useState("Native / Senator");
   const [measurements, setMeasurements] = useState(false);
   const [designerOpen, setDesignerOpen] = useState(false);
-  const [approved, setApproved] = useState(false);
+  const [approved, setApproved] = useState(false);\n  const [measureValues, setMeasureValues] = useState<Record<string,string>>({});
 
   const reference = useMemo(() => ({
     work: "WORK 001",
