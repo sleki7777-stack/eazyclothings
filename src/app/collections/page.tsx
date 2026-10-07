@@ -20,10 +20,10 @@ export default function CollectionsPage() {
     </nav>
     {collections.map((collection) => <section className="collection-world" key={collection.slug}>
       <div className="collection-heading"><div><p className="eyebrow">{collection.eyebrow}</p><h2>{collection.title}</h2></div><p>{collection.description}</p></div>
-      <div className="collection-grid">{collection.works.map((item) => <article className="collection-card" key={item.code}>
+      <div className="collection-grid">{collection.works.map((item) => <a className="collection-card" key={item.code} href={`/works/${item.code.toLowerCase().replace(/\s+/g, "-")}`}>
         <div className="collection-image"><img src={item.image} alt={item.name} loading="lazy"/><span>{item.code}</span></div>
         <div className="collection-meta"><div><small>{item.form}</small><h3>{item.name}</h3></div><small>{item.direction}</small></div>
-      </article>)}</div>
+      </a>)}</div>
     </section>)}
   </main>;
 }
