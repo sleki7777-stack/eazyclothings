@@ -133,3 +133,49 @@ export type ShopifyOrderSnapshot = {
 export async function getShopifyOrder(id: string) {
   return shopifyAdminGraphql<ShopifyOrderSnapshot>(SHOPIFY_ORDER_QUERY, { id });
 }
+
+
+export async function persistEazyFulfillmentOnOrder(orderId: string, payload: Record<string, unknown>) {
+  const gid = orderId.startsWith("gid://") ? orderId : `gid://shopify/Order/${orderId}`;
+  const mutation = `#graphql
+mutation SetEazyFulfillment($input: OrderInput!) {
+  orderUpdate(input: $input) {
+    order { id }
+    userErrors { field message }
+  }
+}`;
+  const data = await shopifyAdminGraphql<{
+    orderUpdate: { order?: { id: string } | null; userErrors: Array<{ field?: string[] | null; message: string }> }
+  }>(mutation, {
+    input: {
+      id: gid,
+      metafields: [{
+        namespace: "eazy",
+        key: "fulfillment",
+        type: "json",
+        value: JSON.stringify(payload),
+      }],
+    },
+  });
+  if (data.orderUpdate.userErrors.length) {
+    throw new Error(data.orderUpdate.userErrors.map(error => error.message).join("; "));
+  }
+  return data.orderUpdate.order;
+}
+
+export async function getEazyFulfillmentFromOrder(orderId: string) {
+  const gid = orderId.startsWith("gid://") ? orderId : `gid://shopify/Order/${orderId}`;
+  const query = `#graphql
+query GetEazyFulfillment($id: ID!) {
+  order(id: $id) {
+    metafield(namespace: "eazy", key: "fulfillment") { value }
+  }
+}`;
+  const data = await shopifyAdminGraphql<{
+    order: { metafield?: { value?: string | null } | null } | null
+  }>(query, { id: gid });
+  const raw = data.order?.metafield?.value;
+  if (!raw) return null;
+  try { return JSON.parse(raw) as Record<string, unknown>; }
+  catch { return null; }
+}
