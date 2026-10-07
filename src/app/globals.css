@@ -97,3 +97,21 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 .composition-tray-spec span{display:inline-flex;align-items:center;min-height:28px;padding-right:12px;border-right:1px solid rgba(255,255,255,.12)}
 .composition-tray-spec span:last-child{border-right:0}
 @media(max-width:700px){.composition-tray-spec{gap:8px;line-height:1.5}.composition-tray-spec span{border-right:0;padding-right:0}}
+
+
+.eazy-thread{position:relative;padding:34px 8vw 38px;background:#0d0d0d;color:#fff;overflow:hidden;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.eazy-thread-line{position:absolute;left:12%;right:12%;top:76px;height:1px;background:linear-gradient(90deg,transparent,rgba(195,33,145,.7),rgba(201,164,92,.55),transparent);transform-origin:left}
+.eazy-thread-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;position:relative;z-index:1;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.eazy-thread-head small{color:#8e8a84}
+.eazy-thread-stages{display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:2}
+.thread-stage{display:grid;grid-template-columns:28px auto;grid-template-rows:30px auto;gap:2px 10px;color:#777;transition:color .3s ease}
+.thread-stage:hover,.thread-stage.active,.thread-stage.complete{color:#fff}
+.thread-node{grid-row:1/3;width:12px;height:12px;margin-top:4px;border:1px solid #777;border-radius:50%;display:grid;place-items:center;background:#0d0d0d}
+.thread-node i{width:4px;height:4px;border-radius:50%;background:transparent}
+.thread-stage.complete .thread-node,.thread-stage.active .thread-node{border-color:#c32191}
+.thread-stage.complete .thread-node i,.thread-stage.active .thread-node i{background:#c32191}
+.thread-stage small{font-size:8px;letter-spacing:.15em;color:#777}
+.thread-stage strong{font-size:10px;letter-spacing:.14em;font-weight:500}
+.thread-stage.active strong{color:#c9a45c}
+.eazy-thread-note{margin:26px 0 0 38px;color:#777;font-size:11px;letter-spacing:.04em}
+@media(max-width:700px){.eazy-thread{padding:28px 6vw 30px}.eazy-thread-line{left:11%;right:11%;top:69px}.eazy-thread-stages{grid-template-columns:repeat(4,1fr)}.thread-stage{grid-template-columns:1fr;grid-template-rows:22px auto;gap:5px}.thread-node{grid-row:auto}.thread-stage small{display:none}.thread-stage strong{font-size:8px;line-height:1.25}.eazy-thread-note{margin-left:0;font-size:10px;line-height:1.5}}
