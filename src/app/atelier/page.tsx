@@ -21,10 +21,10 @@ export default function Atelier() {
     textile: "Lagos Earth / House Textile",
   }), [size]);
 
-  function handlePhoto(file: File | undefined) {
+  function saveState(next: Record<string, unknown>) { if (typeof window !== "undefined") localStorage.setItem("eazy-atelier", JSON.stringify(next)); }\n\n  function handlePhoto(file: File | undefined) {
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => setPhoto(String(reader.result));
+    reader.onload = () => { const value = String(reader.result); setPhoto(value); saveState({photo:value,size,garment,measurements,measureValues,approved}); };
     reader.readAsDataURL(file);
   }
 
@@ -81,7 +81,7 @@ export default function Atelier() {
             </p>
             <div className="size-row">
               {sizes.map((item) => (
-                <button key={item} className={size === item ? "selected" : ""} onClick={() => setSize(item)}>
+                <button key={item} className={size === item ? "selected" : ""} onClick={() => { setSize(item); saveState({photo,size:item,garment,measurements,measureValues,approved}); }}>
                   {item}
                 </button>
               ))}
@@ -95,7 +95,7 @@ export default function Atelier() {
                 <p>Measurements can refine the fit, but they are never required to start.</p>
                 <div className="measurement-grid">
                   {["Chest","Waist","Shoulder","Sleeve","Neck","Trouser length"].map((label) => (
-                    <label key={label}>{label}<input placeholder="cm" inputMode="decimal" /></label>
+                    <label key={label}>{label}<input placeholder="cm" inputMode="decimal" value={measureValues[label] || ""} onChange={(e) => { const next={...measureValues,[label]:e.target.value}; setMeasureValues(next); saveState({photo,size,garment,measurements,measureValues:next,approved}); }} /></label>
                   ))}
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function Atelier() {
             <h2>What are we<br/><em>making today?</em></h2>
             <div className="garment-grid">
               {garmentTypes.map((item) => (
-                <button key={item} className={garment === item ? "selected" : ""} onClick={() => setGarment(item)}>
+                <button key={item} className={garment === item ? "selected" : ""} onClick={() => { setGarment(item); saveState({photo,size,garment:item,measurements,measureValues,approved}); }}>
                   {item}
                 </button>
               ))}
@@ -151,7 +151,7 @@ export default function Atelier() {
             This is the design reference you will approve before EAZY produces the physical garment.
             The approved reference becomes part of its provenance.
           </p>
-          <button className="primary atelier-approve" onClick={() => setApproved(true)}>
+          <button className="primary atelier-approve" onClick={() => { setApproved(true); saveState({photo,size,garment,measurements,measureValues,approved:true}); }}>
             {approved ? "Design reference locked ✓" : "Approve this direction ↗"}
           </button>
         </div>
