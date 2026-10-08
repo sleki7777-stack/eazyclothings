@@ -1045,3 +1045,68 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Current leather backpack listing shows 5.0/5 from 56 brand reviews and 4.9 product quality; listing states ethically sourced/fair-trade production."
   }
 );
+
+
+// 2026-10-08: heritage ceremony + Lagos accessory specialists.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"jiro-g-mens-coral-beads", supplierId:"jiro-g-collections", title:"Groom / Men's Coral Bead Royal Edit",
+    sourceUrl:"https://jirogcollections.com.ng/", tier:"CULTURAL_HOUSE", world:"Ceremony", brand:"Jiro-G Collections",
+    material:"Coral beads / premium traditional beads; exact composition requires documentation", origin:"Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Jiro-G Collections storefront.",
+    provenanceEvidence:"Official site presents groom/men beads, coral beads, bespoke accessories and worldwide delivery, with a focus on Nigerian traditional ceremonies.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE"],
+    reviewerNotes:"Strong ceremony relationship candidate for the African Heritage lane. Supplier testimonials emphasize quality and traditional-wedding use. Exact material authenticity, provenance, pricing, resale terms and fulfilment must be verified before approval."
+  },
+  {
+    id:"adebisi-black-cowhide-wallet", supplierId:"adebisi-and-co", title:"Black Cowhide Wallet",
+    sourceUrl:"https://www.adebisiandco.com/", tier:"ENTRY", world:"Objects", brand:"Adebisi & Co",
+    material:"Cowhide leather", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Adebisi & Co storefront.",
+    provenanceEvidence:"Official site identifies the wallet as black cowhide and states every piece is handcrafted in Lagos.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE"],
+    reviewerNotes:"Strong Lagos-made everyday-object candidate. Official site identifies it as a new wallet and presents customer feedback praising leather quality and gifting appeal. Exact SKU price, dimensions, packaging and commercial partnership required."
+  },
+  {
+    id:"adebisi-sterling-executive-bag", supplierId:"adebisi-and-co", title:"Sterling Executive Bag",
+    sourceUrl:"https://www.adebisiandco.com/", tier:"STRONGER", world:"Leather", brand:"Adebisi & Co",
+    material:"Leather; exact grade requires SKU verification", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Adebisi & Co storefront.",
+    provenanceEvidence:"Official site identifies Sterling as a refined leather laptop bag made in Lagos and finished with a signature wax-sealed envelope detail.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong executive-carry candidate with distinctive presentation. Exact leather grade, laptop dimensions, internal construction, current price and reseller fulfilment need verification."
+  },
+  {
+    id:"adebisi-cufflinks-edit", supplierId:"adebisi-and-co", title:"Adebisi & Co Cufflinks — Black / Bronze / Silver / Gold Edit",
+    sourceUrl:"https://www.adebisiandco.com/", tier:"ACCESSIBLE", world:"Ceremony", brand:"Adebisi & Co",
+    material:"Metal; exact composition requires SKU verification", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Adebisi & Co storefront.",
+    provenanceEvidence:"Official site presents a dedicated cufflinks collection and states products are handcrafted in Lagos.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_HERITAGE"],
+    reviewerNotes:"Potentially excellent Lagos-made formal finishing line. Select only the strongest SKUs after metal composition, plating/finish, packaging and commercial terms are documented."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"jiro-g-collections", name:"Jiro-G Collections", website:"https://jirogcollections.com.ng/", country:"Nigeria",
+    categories:["Men's Coral Beads","Ceremony","Traditional Accessories"], manufacturingOrigin:"Nigeria",
+    materials:["Coral beads","Traditional beads","Mixed ceremonial materials"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Current site presents Groom/Men Beads, Coral Beads and bespoke traditional-ceremony accessories with worldwide shipping and sales/rental options."
+  },
+  {
+    id:"adebisi-and-co", name:"Adebisi & Co", website:"https://www.adebisiandco.com/", country:"Nigeria",
+    categories:["Wallets","Executive Bags","Cufflinks","Belts","Watch Boxes","Gifts"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Cowhide leather","Leather","Metal"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site currently presents 69 handcrafted pieces spanning wallets, bags, cufflinks, watch boxes and belts, with specific new arrivals in the men's-object range. Customer testimonials repeatedly mention leather quality, gifting and craftsmanship."
+  },
+  {
+    id:"joellani", name:"Joellani", website:"https://joellani.com/", country:"Nigeria",
+    categories:["Leather Bags","Phone Pouches","Cases","Luxury Leather Accessories"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Cow leather","Snakeskin","Crocodile leather","Caiman leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official brand story states handmade leather accessories are handcrafted in Lagos using mainly locally sourced materials and homegrown artisans. Current catalogue is strongly women's-facing, so SLEEK EAZY should only pursue genuinely suitable men's/unisex objects, not force-fit women's bags."
+  }
+);
