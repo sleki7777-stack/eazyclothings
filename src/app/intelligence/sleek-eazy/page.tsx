@@ -1,7 +1,7 @@
 "use client";
 import { useEffect,useMemo,useState } from "react";
 import { REAL_SOURCING_CANDIDATES, REAL_SUPPLIER_CANDIDATES } from "@/lib/sleek-eazy-candidates";
-import { SUPPLIER_PIPELINE, supplierStatusLabel, type SupplierPipelineStatus } from "@/lib/sleek-eazy-intelligence";
+import { SUPPLIER_PIPELINE, supplierStatusLabel, evaluateQualityGate, type SupplierPipelineStatus, type ProductCandidate } from "@/lib/sleek-eazy-intelligence";
 
 type Candidate={id:string;title:string;vendor?:string;brand?:string;productType?:string;world?:string;status:string;sourceType?:string;sourceUrl:string;material?:string;origin?:string;qualityCheck?:string;provenance?:string;retail?:number|string|null};
 
@@ -46,6 +46,7 @@ export default function SleekEazyIntelligence(){
   </section>
 
   <section className="sourcing-table">
+   <div className="quality-banner"><span>QUALITY GATE</span><strong>NO APPROVED QC · NO CUSTOMER SALE</strong><small>Candidate records are scored for evidence completeness. A score is not approval.</small></div>
    <div className="sourcing-row sourcing-label"><span>PRODUCT</span><span>SOURCE</span><span>ORIGIN</span><span>QC</span><span>STATUS</span></div>
    {loading
     ? <div className="sourcing-empty">Loading live sourcing records…</div>
@@ -82,7 +83,7 @@ export default function SleekEazyIntelligence(){
         <div className="supplier-card-top"><p className="eyebrow">{s.country} · {s.categories[0]}</p><b>{supplierStatusLabel(status)}</b></div>
         <h3>{s.name}</h3>
         <p>{s.notes||"Supplier candidate. Verification required."}</p>
-        <div className="supplier-meta"><span>Materials: {s.materials.join(", ")}</span><span>Sample: {s.sampleAvailable ? "Available" : "Not confirmed"}</span></div>
+        <div className="supplier-meta"><span>Materials: {s.materials.join(", ")}</span><span>Sample: {s.sampleAvailable ? "Available" : "Not confirmed"}</span><span>Approval remains blocked until evidence + physical QC are complete.</span></div>
         <div className="supplier-progress" aria-label={"Supplier stage "+(currentIndex+1)+" of "+SUPPLIER_PIPELINE.length}>
           {SUPPLIER_PIPELINE.map((stage,i)=><span key={stage} className={i<=currentIndex?"is-complete":""}/>)}
         </div>
