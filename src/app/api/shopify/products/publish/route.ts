@@ -88,7 +88,7 @@ export async function POST(req:Request){
         inventoryPolicy:"CONTINUE",
         price:String(defaultVariant.retailPrice),
         ...(defaultVariant.sku ? {sku:defaultVariant.sku} : {}),
-        ...(defaultMediaId ? {mediaId:defaultMediaId} : {}),
+        ...(defaultVariant.imageUrls?.length ? {mediaSrc:defaultVariant.imageUrls.slice(0,10)} : {}),
         ...(optionValueFor(defaultVariant).length ? {optionValues:optionValueFor(defaultVariant)} : {}),
         metafields:[
           {namespace:"eazy",key:"supplier_price",type:"number_decimal",value:String(defaultVariant.supplierPrice)},
@@ -115,7 +115,7 @@ mutation ConfigureSleekEazyVariants($productId: ID!, $variants: [ProductVariants
           price:String(variant.retailPrice),
           inventoryPolicy:"CONTINUE",
           ...(variant.sku ? {sku:variant.sku} : {}),
-          ...(mediaByUrl.get(variant.imageUrls?.[0] || "") ? {mediaId:mediaByUrl.get(variant.imageUrls[0])} : {}),
+          ...(variant.imageUrls?.length ? {mediaSrc:variant.imageUrls.slice(0,10)} : {}),
           ...(optionValueFor(variant).length ? {optionValues:optionValueFor(variant)} : {}),
           metafields:[
             {namespace:"eazy",key:"supplier_price",type:"number_decimal",value:String(variant.supplierPrice)},
