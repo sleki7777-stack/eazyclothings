@@ -9,7 +9,7 @@ export default function CollectionsPage() {
   useEffect(() => {
     fetch("/api/shopify/products").then((res) => res.json()).then((data) => {
       if (!data?.products) return;
-      const next: Record<string, { image: string; title: string; handle: string }[]> = {};
+      const next: Record<string, any[]> = {};
       for (const product of data.products) {
         if (!product.purchaseReady) continue;
         const collectionTags = (product.tags || []).filter((tag: string) => tag.toUpperCase().startsWith("COLLECTION:"));
