@@ -136,4 +136,4 @@ export const REAL_SUPPLIER_CANDIDATES: SupplierRecord[] = [
     imageRights:"Supplier terms must be verified", authenticityEvidence:"Official vendor storefront",
     notes:"Supplier rating 4.88/5 from 17 customer ratings on surfaced products. Commercial resale/fulfilment terms are not publicly established.", rating:4.88
   },
-];\n
+];
