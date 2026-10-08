@@ -3,17 +3,17 @@
 import { useEffect, useMemo, useState } from "react";
 
 const collections = [
-  { name: "Watches", key: "WATCHES", description: "Timepieces", image: "https://vincerocollective.com/cdn/shop/files/Kairos-Black-Gold_Frontal-_Hi-Res_-Padding_2480x.jpg?v=1762440372" },
-  { name: "Jewellery", key: "JEWELLERY", description: "Metal · leather · stone", image: "https://vincerocollective.com/cdn/shop/files/Built-Different-Lion-Set_4d7034f9-3606-4146-816c-91d38dfa4aa6_2134x.jpg?v=1762440621" },
-  { name: "Eyewear", key: "EYEWEAR", description: "Frames & sun", image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1400&q=90" },
-  { name: "Leather", key: "LEATHER", description: "Carry · belts · cases", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=90" },
-  { name: "Footwear", key: "FOOTWEAR", description: "Dress · resort · street", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=90" },
-  { name: "Ceremony", key: "CEREMONY", description: "The finishing details", image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=1200&q=85" },
-  { name: "Fragrance & Grooming", key: "FRAGRANCE", description: "Scent · care · presence", image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=85" },
-  { name: "After Dark", key: "AFTER_DARK", description: "Night · lounge · objects", image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=85" },
-  { name: "Resort", key: "RESORT", description: "Sun · water · escape", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85" },
-  { name: "Objects", key: "OBJECTS", description: "Valet · tech · desk", image: "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1200&q=85" },
-  { name: "Gifts", key: "GIFTS", description: "For moments that matter", image: "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&w=1200&q=85" }
+  { name: "Watches", key: "WATCHES", description: "Timepieces" },
+  { name: "Jewellery", key: "JEWELLERY", description: "Metal · leather · stone" },
+  { name: "Eyewear", key: "EYEWEAR", description: "Frames & sun" },
+  { name: "Leather", key: "LEATHER", description: "Carry · belts · cases" },
+  { name: "Footwear", key: "FOOTWEAR", description: "Dress · resort · street" },
+  { name: "Ceremony", key: "CEREMONY", description: "The finishing details" },
+  { name: "Fragrance & Grooming", key: "FRAGRANCE", description: "Scent · care · presence" },
+  { name: "After Dark", key: "AFTER_DARK", description: "Night · lounge · objects" },
+  { name: "Resort", key: "RESORT", description: "Sun · water · escape" },
+  { name: "Objects", key: "OBJECTS", description: "Valet · tech · desk" },
+  { name: "Gifts", key: "GIFTS", description: "For moments that matter" }
 ];
 
 const cultureLanes = [
@@ -39,7 +39,17 @@ type CatalogueProduct = {
   purchaseReady: boolean;
   edition?: "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";
   limitedEdition?: { editionSize?: number; unitsAvailable?: number; scarcityReason?: string };
-  variants: Array<{ id: string; title: string; price: string; availableForSale: boolean }>;
+  variants: Array<{
+    id: string;
+    title: string;
+    price: string;
+    availableForSale: boolean;
+    selectedOptions: Array<{ name: string; value: string }>;
+    image: string | null;
+    sourceImage: string | null;
+    exactImageMatch: boolean;
+    imageRightsVerified: boolean;
+  }>;
 };
 
 function belongs(product: CatalogueProduct, key: string) {
@@ -76,6 +86,7 @@ export default function SleekEazy() {
   const [catalogueLive, setCatalogueLive] = useState(false);
   const [catalogueError, setCatalogueError] = useState<string | null>(null);
   const [bagOpen, setBagOpen] = useState(false);
+  const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({});
 
   useEffect(() => {
     try {
@@ -91,10 +102,23 @@ export default function SleekEazy() {
     }).catch(() => setCatalogueError("The live catalogue could not be reached."));
   }, []);
 
+  function selectedVariant(product: CatalogueProduct) {
+    const selectedId = selectedVariants[product.id];
+    return product.variants.find((variant) => variant.id === selectedId) || product.variants[0];
+  }
+
   function addToComposition(product: CatalogueProduct) {
-    const variant = product.variants[0];
+    const variant = selectedVariant(product);
     if (!variant) return;
-    const entry = JSON.stringify({ productId: product.id, variantId: variant.id, title: product.title, productType: product.productType, price: variant.price });
+    const entry = JSON.stringify({
+      productId: product.id,
+      variantId: variant.id,
+      title: product.title,
+      productType: product.productType,
+      price: variant.price,
+      variantTitle: variant.title,
+      selectedOptions: variant.selectedOptions
+    });
     const next = [...bag, entry];
     setBag(next);
     localStorage.setItem("eazy-sleek-bag", JSON.stringify(next));
@@ -161,14 +185,24 @@ export default function SleekEazy() {
           <div><p className="eyebrow">THE WORLDS</p><h2>Curated worlds, not endless categories.</h2></div>
         </div>
         <div className="sleek-collection-grid">
-          {collections.map((collection) => (
-            <button key={collection.key} className={cat === collection.key ? "sleek-collection active" : "sleek-collection"} onClick={() => { setCat(collection.key); document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" }); }}>
-              <span className="sleek-collection-image">
-                <img src={collection.image} alt={collection.name} />
-              </span>
-              <span className="sleek-collection-meta"><span><small>{collection.description}</small><strong>{collection.name}</strong></span><i>↗</i></span>
-            </button>
-          ))}
+          {collections.map((collection) => {
+            const collectionProducts = source.filter((product) =>
+              (product.tags || []).some((tag) =>
+                tag.toUpperCase().startsWith("COLLECTION:") &&
+                tag.slice("COLLECTION:".length).trim().toUpperCase() === collection.key
+              )
+            );
+            return (
+              <button key={collection.key} className={cat === collection.key ? "sleek-collection active" : "sleek-collection"} onClick={() => { setCat(collection.key); document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" }); }}>
+                <span className="sleek-collection-image">
+                  {collectionProducts.length ? collectionProducts.slice(0, 4).map((product) => (
+                    <img key={product.id} src={product.image || ""} alt={collection.name + " — " + product.title} loading="lazy" />
+                  )) : <span className="sleek-collection-pending">COLLECTION IMAGE PENDING<small>VERIFIED PRODUCTS REQUIRED</small></span>}
+                </span>
+                <span className="sleek-collection-meta"><span><small>{collection.description}</small><strong>{collection.name}</strong></span><i>↗</i></span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -184,22 +218,39 @@ export default function SleekEazy() {
         {catalogueError && <div className="sleek-empty"><p className="eyebrow">CATALOGUE STATUS</p><h3>Live catalogue unavailable.</h3><p>{catalogueError}</p></div>}
         <div className="sleek-edit-banner"><p className="eyebrow">THE EDIT</p><h3>New discoveries, carefully chosen.</h3><p>We update Sleek Eazy regularly, but never for the sake of volume. Weekly discoveries and monthly edits are made from products that have already earned the house standard.</p></div>
         <div className="sleek-grid">
-          {filtered.length ? filtered.map((x) => (
-            <article className="sleek-card" key={x.id}>
-              <div className="sleek-img">
-                {x.image ? <>
-                  <img src={x.image} alt={x.alt || x.title} />
-                </> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
-                <button onClick={() => addToComposition(x)} disabled={!x.purchaseReady}>Add to composition</button>
-              </div>
-              <p>{x.productType}</p>{x.edition === "LIMITED_EDITION" && <span className="sleek-edition-badge">LIMITED EDITION{x.limitedEdition?.editionSize ? ` · ${x.limitedEdition.editionSize} MADE` : ""}</span>}{x.edition === "SEASONAL_EDIT" && <span className="sleek-edition-badge">CURRENT EDIT</span>}<h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price || 0).toLocaleString()}</strong>
-              <div className="sleek-transparency">
-                <span>{x.vendor || "Supplier not recorded"}</span>
-                <span>{x.origin || "Origin not recorded"}</span>
-                <span>{x.transparencyReady ? "PROVENANCE READY" : "HOUSE APPROVED"}</span>
-              </div>
-            </article>
-          )) : (
+          {filtered.length ? filtered.map((x) => {
+            const variant = selectedVariant(x);
+            const displayImage = variant?.image || x.image;
+            return (
+              <article className="sleek-card" key={x.id}>
+                <div className="sleek-img">
+                  {displayImage ? <img src={displayImage} alt={x.alt || x.title + " — " + (variant?.title || "")} /> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
+                  <button onClick={() => addToComposition(x)} disabled={!x.purchaseReady || !variant?.availableForSale}>Add to composition</button>
+                </div>
+                <p>{x.productType}</p>
+                {x.edition === "LIMITED_EDITION" && <span className="sleek-edition-badge">LIMITED EDITION{x.limitedEdition?.editionSize ? ` · ${x.limitedEdition.editionSize} MADE` : ""}</span>}
+                {x.edition === "SEASONAL_EDIT" && <span className="sleek-edition-badge">CURRENT EDIT</span>}
+                <h3>{x.title}</h3>
+                {x.variants.length > 1 && <label className="sleek-variant-picker">
+                  <span>SELECT VARIANT</span>
+                  <select value={variant?.id || ""} onChange={(event) => setSelectedVariants((current) => ({ ...current, [x.id]: event.target.value }))}>
+                    {x.variants.map((option) => (
+                      <option key={option.id} value={option.id} disabled={!option.availableForSale}>
+                        {option.selectedOptions?.length ? option.selectedOptions.map((item) => item.name + ": " + item.value).join(" · ") : option.title} — ₦{Number(option.price).toLocaleString()}
+                      </option>
+                    ))}
+                  </select>
+                </label>}
+                <strong>₦{Number(variant?.price || 0).toLocaleString()}</strong>
+                <div className="sleek-transparency">
+                  <span>{x.vendor || "Supplier not recorded"}</span>
+                  <span>{x.origin || "Origin not recorded"}</span>
+                  <span>{x.transparencyReady ? "PROVENANCE READY" : "HOUSE APPROVED"}</span>
+                  {variant?.exactImageMatch && variant?.imageRightsVerified && <span>EXACT VARIANT IMAGE VERIFIED</span>}
+                </div>
+              </article>
+            );
+          }) : (
             <div className="sleek-empty"><p className="eyebrow">HOUSE EDIT</p><h3>No verified products yet.</h3><p>SLEEK EAZY will not display placeholders or unverified products. A product enters only after source, material, origin and quality records are present.</p></div>
           )}
         </div>
