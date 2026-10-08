@@ -27,7 +27,7 @@ export async function POST(req:Request){
     const tags=["SLEEK_EAZY","EAZY_APPROVED","EAZY_VERIFIED"];
     if(candidate.artisanMade) tags.push("SLEEK_ARTISAN");
     for(const lane of candidate.cultureLanes||[]) tags.push("SLEEK_"+lane);
-    const input:any={
+    const product:any={
       title:candidate.title,
       vendor:candidate.brand||"Sleek Eazy",
       productType:"Sleek Eazy",
@@ -44,9 +44,9 @@ export async function POST(req:Request){
         {namespace:"eazy",key:"edition",type:"single_line_text_field",value:(candidate.edition||"CORE")},
       ]
     };
-    const data=await shopifyAdminGraphql<any>(MUTATION,{input});
+    const media=(candidate.imageUrls||[]).slice(0,10).map((url:string)=>({originalSource:url,mediaContentType:"IMAGE",alt:"Sleek Eazy — "+candidate.title}));\n    const data=await shopifyAdminGraphql<any>(MUTATION,{product,media});
     const errors=data.productCreate.userErrors||[];
-    if(errors.length) return NextResponse.json({ok:false,error:errors.map((e:any)=>e.message).join("; ")},{status:422});
+    if(errors.length) return NextResponse.json({ok:false,error:errors.map((e:any)=>e.message).join("; ")},{status:422});\n    const created=data.productCreate.product;\n    if(candidate.retail && created?.id){\n      const variantData=await shopifyAdminGraphql<any>(`#graphql\nmutation SetInitialPrice($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {\n  productVariantsBulkUpdate(productId: $productId, variants: $variants) {\n    productVariants { id price compareAtPrice }\n    userErrors { field message }\n  }\n}`,{productId:created.id,variants:[{id:created.variants?.nodes?.[0]?.id,price:String(candidate.retail)}]});\n      if(variantData.productVariantsBulkUpdate?.userErrors?.length) return NextResponse.json({ok:false,error:variantData.productVariantsBulkUpdate.userErrors.map((e:any)=>e.message).join("; "),product:created},{status:422});\n    }
     return NextResponse.json({ok:true,published:false,status:"DRAFT",product:data.productCreate.product,message:"House-approved product created in Shopify as a draft. Final storefront activation remains a separate publishing action."});
   }catch(error){
     return NextResponse.json({ok:false,error:error instanceof Error?error.message:"Shopify product creation failed."},{status:502});
