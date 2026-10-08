@@ -67,9 +67,9 @@ export default function CollectionsPage() {
         </div>
       </div>}
       {catalogue[collection.slug]?.length ? <div className="collection-grid">
-        {catalogue[collection.slug].map((item) => <a className="collection-card" key={item.handle} href={`/sleek-eazy#${encodeURIComponent(item.handle)}`}>
+        {catalogue[collection.slug].map((item) => <a className="collection-card" key={item.handle} href={`/products/${encodeURIComponent(item.handle)}`}>
           <div className="collection-image"><img src={item.image} alt={collection.title + " — " + item.title} loading="lazy"/><span>VERIFIED PRODUCT</span></div>
-          <div className="collection-meta"><div><small>{item.productType}</small><h3>{item.title}</h3></div><small>{item.variants.length} VARIANT{item.variants.length === 1 ? "" : "S"}</small></div>
+          <div className="collection-meta"><div><small>{item.productType}</small><h3>{item.title}</h3></div><small>{item.variants.length} VARIANT{item.variants.length === 1 ? "" : "S"} · VIEW PRODUCT ↗</small></div>
         </a>)}
       </div> : <div className="collection-promo collection-promo-empty">
         <div className="collection-promo-copy">
