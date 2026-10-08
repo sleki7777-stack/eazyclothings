@@ -31,6 +31,9 @@ export async function POST(req:Request){
       descriptionHtml:candidate.qualityNotes||"",
       metafields:[
         {namespace:"eazy",key:"source_url",type:"url",value:candidate.sourceUrl},
+        {namespace:"eazy",key:"source_image_url",type:"url",value:candidate.exactImageEvidence?.sourceImageUrl||candidate.imageUrls[0]||""},
+        {namespace:"eazy",key:"exact_image_match",type:"boolean",value:String(candidate.exactImageMatchesSource===true)},
+        {namespace:"eazy",key:"image_rights_verified",type:"boolean",value:String(candidate.imageRightsVerified===true)},
         {namespace:"eazy",key:"material",type:"single_line_text_field",value:candidate.material||""},
         {namespace:"eazy",key:"origin",type:"single_line_text_field",value:candidate.origin||""},
         {namespace:"eazy",key:"provenance",type:"multi_line_text_field",value:candidate.provenanceEvidence||""},
