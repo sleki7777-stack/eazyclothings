@@ -45,6 +45,8 @@ export default function Atelier() {
       if (state.fit) setFit(state.fit);
       if (state.finish) setFinish(state.finish);
       if (state.previewTone) setPreviewTone(state.previewTone);
+      if (state.designerMessage) setDesignerMessage(state.designerMessage);
+      if (state.designerReply) setDesignerReply(state.designerReply);
     } catch {}
   }, []);
 
@@ -52,7 +54,7 @@ export default function Atelier() {
     if (typeof window === "undefined") return;
     localStorage.setItem("eazy-atelier", JSON.stringify({
       photo, size, garment, measurements, measureValues, approved,
-      textile, collar, sleeve, fit, finish, previewTone, ...overrides
+      textile, collar, sleeve, fit, finish, previewTone, designerMessage, designerReply, ...overrides
     }));
   };
 
@@ -299,7 +301,11 @@ export default function Atelier() {
               <button>“I have an idea — let me explain.”</button>
             </div>
             <textarea className="designer-input" value={designerMessage} onChange={(e) => setDesignerMessage(e.target.value)} placeholder="Tell your designer what you are imagining..." />
-            <button className="primary designer-send" onClick={() => setDesignerReply(designerMessage ? "I’ve captured that direction. Let’s shape the silhouette, textile and occasion around your idea." : "Start with an occasion, garment, mood or reference.")}>Send to your designer ↗</button>
+            <button className="primary designer-send" onClick={() => {
+              const reply = designerMessage ? "I’ve captured that direction. Let’s shape the silhouette, textile and occasion around your idea." : "Start with an occasion, garment, mood or reference.";
+              setDesignerReply(reply);
+              persist({ designerMessage, designerReply: reply });
+            }}>Send to your designer ↗</button>
             {designerReply && <p className="designer-reply">{designerReply}</p>}
             <small>Your designer advises. You decide.</small>
           </div>
