@@ -11,6 +11,7 @@ export default function CollectionsPage() {
       if (!data?.products) return;
       const next: Record<string, { image: string; title: string; handle: string }[]> = {};
       for (const product of data.products) {
+        if (!product.purchaseReady) continue;
         const collectionTags = (product.tags || []).filter((tag: string) => tag.toUpperCase().startsWith("COLLECTION:"));
         for (const tag of collectionTags) {
           const slug = tag.slice("COLLECTION:".length).trim().toLowerCase().replace(/\s+/g, "-");
