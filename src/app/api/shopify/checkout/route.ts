@@ -63,7 +63,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       checkoutUrl: `https://${domain}/cart/${cart}?${query}`,
-      itemCount: lines.reduce((sum, line) => sum + line.quantity, 0),\n      compositionLocked: true,
+      itemCount: lines.reduce((sum, line) => sum + line.quantity, 0),
+      compositionLocked: true,
     });
   } catch {
     return NextResponse.json({ ok: false, error: "Unable to prepare Shopify checkout." }, { status: 500 });
