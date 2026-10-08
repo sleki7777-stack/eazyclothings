@@ -24,11 +24,11 @@ export async function GET() {
           id:p.id,title:p.title,handle:p.handle,vendor:p.vendor,productType:p.productType,
           status:p.tags.some((t:string)=>t.toUpperCase()==="EAZY_APPROVED")?"APPROVED":"EVIDENCE_REQUIRED",
           sourceType:meta.source_type||"",sourceUrl:meta.source_url||"",material:meta.material||"",
-          origin:meta.origin||"",qualityCheck:meta.quality_check||"",provenance:meta.provenance||"",
+          origin:meta.origin||"",qualityCheck:meta.quality_check||"",provenance:meta.provenance||"",\n          marketProof:{salesSignal:meta.sales_signal||meta.sales_proof||"",reviewCount:meta.review_count?Number(meta.review_count):0,rating:meta.review_rating?Number(meta.review_rating):0,reviewEvidence:meta.review_evidence||"",source:meta.market_source||""},
           retail:p.variants.nodes[0]?.price||null
         };
       });
-    return NextResponse.json({ok:true,configured:true,candidates});
+    const summary = {\n      total:candidates.length,\n      withMarketProof:candidates.filter((c:any)=>Boolean(c.marketProof.salesSignal)).length,\n      withPositiveReviews:candidates.filter((c:any)=>c.marketProof.rating >= 4.5 && c.marketProof.reviewCount > 0).length,\n      approved:candidates.filter((c:any)=>c.status === "APPROVED").length\n    };\n    return NextResponse.json({ok:true,configured:true,candidates,summary});
   } catch(error) {
     return NextResponse.json({ok:false,configured:true,candidates:[],error:error instanceof Error?error.message:"Unable to load sourcing records."},{status:502});
   }
