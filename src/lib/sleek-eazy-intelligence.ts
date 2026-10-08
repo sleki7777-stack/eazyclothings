@@ -240,6 +240,7 @@ export type ProductCandidate = {
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
   variants?:SupplierProductVariant[];
+  collections?: string[];
   imageRightsVerified?:boolean; commercialTermsVerified?:boolean; exactImageMatchesSource?:boolean; exactImageEvidence?:ExactProductImageEvidence;
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
   status:ProductReviewStatus;
