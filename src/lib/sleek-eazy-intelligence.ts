@@ -307,6 +307,55 @@ export function selectBestOfSupplier(
   return ranked.slice(0, Math.max(0, maxProducts)).map(x => x.candidate);
 }
 
+export type SupplierSelectionReport = {
+  supplierId:string;
+  supplierName:string;
+  candidatesConsidered:number;
+  marketProofEligible:number;
+  qualityEligible:number;
+  selected:string[];
+  rejected:Array<{candidateId:string;title:string;score:number;reasons:string[]}>;
+};
+
+export function buildSupplierSelectionReport(
+  candidates:ProductCandidateWithMarketProof[],
+  supplier:SupplierRecord,
+  maxProducts=SLEEK_EAZY_CURATION_RULE.defaultMaxProductsPerSupplier
+):SupplierSelectionReport {
+  const supplierCandidates=candidates.filter(c=>c.supplierId===supplier.id);
+  const evaluated=supplierCandidates.map(candidate=>{
+    const quality=evaluateQualityGate(candidate,supplier);
+    const market=evaluateMarketProof(candidate.marketProof ? {
+      storefrontUrl:candidate.sourceUrl,
+      salesEvidence:candidate.marketProof.salesEvidence,
+      reviewEvidence:candidate.marketProof.reviewEvidence || (candidate.marketProof.reviewEvidence ? [{value:candidate.marketProof.reviewEvidence,sourceUrl:candidate.sourceUrl,capturedAt:candidate.updatedAt,confidence:"MEDIUM"}] : []),
+      rating:candidate.marketProof.rating,
+      reviewCount:candidate.marketProof.reviewCount
+    } : undefined);
+    const reasons=[...quality.blockers];
+    if(!market.qualifies) reasons.unshift(market.reason);
+    return {candidate,quality,market,reasons};
+  });
+  const ranked=evaluated
+    .filter(x=>x.market.qualifies && x.quality.passed && x.quality.score>=SLEEK_EAZY_CURATION_RULE.minimumQualityScore)
+    .sort((a,b)=>b.quality.score-a.quality.score || (b.candidate.marketProof?.reviewCount||0)-(a.candidate.marketProof?.reviewCount||0));
+  const selected=new Set(ranked.slice(0,Math.max(0,maxProducts)).map(x=>x.candidate.id));
+  return {
+    supplierId:supplier.id,
+    supplierName:supplier.name,
+    candidatesConsidered:supplierCandidates.length,
+    marketProofEligible:evaluated.filter(x=>x.market.qualifies).length,
+    qualityEligible:ranked.length,
+    selected:[...selected],
+    rejected:evaluated.filter(x=>!selected.has(x.candidate.id)).map(x=>({
+      candidateId:x.candidate.id,
+      title:x.candidate.title,
+      score:x.quality.score,
+      reasons:x.reasons.length?x.reasons:["Below the supplier selection cutoff."]
+    }))
+  };
+}
+
 export function supplierStatusLabel(status:SupplierPipelineStatus){
   return status.replaceAll("_"," ");
 }
