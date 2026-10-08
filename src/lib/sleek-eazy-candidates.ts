@@ -734,3 +734,109 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Current Faire watch/eyewear listings show 5.0/5 Ashford ratings across multiple product groups, but EAZY must verify authorisation, warranties and SKU provenance before approval."
   }
 );
+
+
+// Nigerian craft and executive-carry expansion.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"beads-by-tricia-mens-premium", supplierId:"beads-by-tricia", title:"Beads by Tricia — Men's Handcrafted Premium Beaded Edit",
+    sourceUrl:"https://beadsbytricia.com/", tier:"CULTURAL_HOUSE", world:"African Heritage", brand:"Beads by Tricia",
+    material:"Handcrafted beads; exact stone/material varies by SKU", origin:"Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Beads by Tricia storefront with dedicated Men's Collection.",
+    provenanceEvidence:"Official site states handcrafted-to-order premium beaded jewelry rooted in African heritage and offers men's collection, groom/Owambe sets and worldwide shipping.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"High-fit African Heritage relationship candidate. The House should select only the most refined men's SKUs after material disclosure, craftsmanship review, pricing and reseller/fulfilment terms are agreed."
+  },
+  {
+    id:"indulgence-royal-ember", supplierId:"the-indulgence", title:"Royal Ember — Traditional Red-Brown Bead Set with Bracelet",
+    sourceUrl:"https://www.homeofindulgence.com/product/royal-ember-native-agbada-bead-set/", tier:"STRONGER", world:"Ceremony", brand:"The Indulgence",
+    material:"Mixed natural/stone beads; exact materials require documentation", origin:"Surulere, Lagos, Nigeria", retail:190800, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official The Indulgence product page.",
+    provenanceEvidence:"Official page states handmade in Surulere, Lagos and describes the four-layer necklace and matching bracelet set.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","LAGOS_MADE"],
+    reviewerNotes:"Strong ceremonial statement candidate at ₦190,800. Designed for agbada, isi agu, senator and other native ceremonial dressing. Need exact stone/material documentation, current availability and commercial partnership terms."
+  },
+  {
+    id:"indulgence-odenigbo-eagle-onyx", supplierId:"the-indulgence", title:"Odenigbo's Eagle Onyx Men's Neck Bead & Bracelet Set",
+    sourceUrl:"https://www.homeofindulgence.com/product/odenigbos-eagle-onyx-mens-neck-bead-bracelet-set-the-indulgence/", tier:"STRONGER", world:"African Heritage", brand:"The Indulgence",
+    material:"Onyx beads; metallic/gold-tone accents", origin:"Surulere, Lagos, Nigeria", retail:79350, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official The Indulgence product page.",
+    provenanceEvidence:"Official page states handcrafted by master artisans in Surulere and describes onyx construction with eagle pendant.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["IGBO_HERITAGE","AFRICAN_HERITAGE","LAGOS_MADE"],
+    reviewerNotes:"High-potential heritage piece at ₦79,350 with strong visual identity. Exact material authenticity, cultural naming/provenance, fulfilment and resale terms must be verified."
+  },
+  {
+    id:"zachi-112-briefcase", supplierId:"zachi-leather", title:"112-Zachi Briefcase",
+    sourceUrl:"https://zachileather.com/", tier:"STRONGER", world:"Leather", brand:"ZACHI LEATHER",
+    material:"Leather; exact grade/details require SKU verification", origin:"Lagos, Nigeria", retail:150000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official ZACHI LEATHER storefront.",
+    provenanceEvidence:"Official site states handmade in Lagos and lists the 112-Zachi Briefcase among best sellers.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong executive-carry candidate at ₦150,000. The store also lists tech folios, office/work bags and Aso-oke backpack. Need exact leather grade, construction, warranty and commercial fulfilment agreement."
+  },
+  {
+    id:"zachi-aso-oke-backpack", supplierId:"zachi-leather", title:"Aso-oke Backpack",
+    sourceUrl:"https://zachileather.com/", tier:"ACCESSIBLE", world:"Leather", brand:"ZACHI LEATHER",
+    material:"Aso-oke textile; leather construction/details require SKU verification", origin:"Lagos, Nigeria", retail:80625, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official ZACHI LEATHER storefront.",
+    provenanceEvidence:"Official site lists an Aso-oke backpack and states the brand is proudly handmade in Lagos.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_HERITAGE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong African/global carry candidate at ₦80,625, especially for Objects/Travel/Leather. Verify construction, hardware, lining, load capacity, durability and EAZY commercial terms."
+  },
+  {
+    id:"morin-o-emperor-briefcase", supplierId:"morin-o", title:"Emperor Briefcase",
+    sourceUrl:"https://morin-o.com/", tier:"PREMIUM", world:"Leather", brand:"Morin.O Leather Goods",
+    material:"Leather / exotic-skin craftsmanship; exact SKU material must be verified", origin:"Lagos, Nigeria", retail:442500, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Morin.O storefront.",
+    provenanceEvidence:"Official site states named leather works are handcrafted in its Lagos atelier and lists Emperor Briefcase for Men.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Premium executive-carry candidate at ₦442,500 from a Lagos leather atelier established in 2013. Strong fit for Premium/Objects, subject to exact leather specification, warranty, fulfilment and reseller partnership."
+  },
+  {
+    id:"sochis-eclat-mens-custom-jewelry", supplierId:"sochis-eclat", title:"Sochi's Éclat — Men's Handcrafted / Custom Jewelry Edit",
+    sourceUrl:"https://sochiseclat.com/", tier:"CULTURAL_HOUSE", world:"Jewellery", brand:"Sochi's Éclat",
+    material:"Wire-work and beads; exact material varies by piece", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Sochi's Éclat site.",
+    provenanceEvidence:"Official site states the brand is handcrafted in Lagos, offers a Men's Collection and Custom Jewelry, and ships nationwide and worldwide.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_HERITAGE"],
+    reviewerNotes:"Potential relationship for differentiated men's jewelry rather than commodity chains. Need a strict SKU-level selection and direct commercial terms before EAZY approval."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"beads-by-tricia", name:"Beads by Tricia", website:"https://beadsbytricia.com/", country:"Nigeria",
+    categories:["Men's Jewelry","Beaded Accessories","Ceremony"], manufacturingOrigin:"Nigeria",
+    materials:["Beads","Mixed natural stones"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official store has dedicated Men's Collection, groom/Owambe sets, handcrafted-to-order production and worldwide shipping."
+  },
+  {
+    id:"the-indulgence", name:"The Indulgence", website:"https://www.homeofindulgence.com/", country:"Nigeria",
+    categories:["Men's Beads","Ceremony","African Heritage Jewelry"], manufacturingOrigin:"Surulere, Lagos, Nigeria",
+    materials:["Onyx","Jasper","Mixed beads","Metal accents"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Current men's bead sets are presented as handcrafted by master artisans in Surulere, including the Royal Ember, Odenigbo's Eagle and other named cultural pieces."
+  },
+  {
+    id:"zachi-leather", name:"ZACHI LEATHER", website:"https://zachileather.com/", country:"Nigeria",
+    categories:["Briefcases","Office Bags","Tech Folios","Aso-oke Bags","Wallets"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Leather","Aso-oke"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official storefront states handmade in Lagos and currently lists 112-Zachi Briefcase and Aso-oke Backpack among its products."
+  },
+  {
+    id:"morin-o", name:"Morin.O Leather Goods", website:"https://morin-o.com/", country:"Nigeria",
+    categories:["Leather Briefcases","Leather Goods","Exotic Leather"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Leather","Exotic skins"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site lists Emperor Briefcase for Men at ₦442,500 and states named leather works are handcrafted in its Lagos atelier since 2013."
+  },
+  {
+    id:"sochis-eclat", name:"Sochi's Éclat", website:"https://sochiseclat.com/", country:"Nigeria",
+    categories:["Men's Jewelry","Beads","Custom Jewelry"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Beads","Wire work","Mixed materials"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site presents a 2026 collection, Men's Collection, custom jewelry and worldwide shipping from Lagos."
+  }
+);
