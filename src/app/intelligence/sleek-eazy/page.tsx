@@ -1,7 +1,7 @@
 "use client";
 import { useEffect,useMemo,useState } from "react";
 import { REAL_SOURCING_CANDIDATES, REAL_SUPPLIER_CANDIDATES } from "@/lib/sleek-eazy-candidates";
-import { SUPPLIER_PIPELINE, supplierStatusLabel, evaluateQualityGate, type SupplierPipelineStatus, type ProductCandidate } from "@/lib/sleek-eazy-intelligence";
+import { SUPPLIER_PIPELINE, supplierStatusLabel, type SupplierPipelineStatus } from "@/lib/sleek-eazy-intelligence";
 
 type Candidate={id:string;title:string;vendor?:string;brand?:string;productType?:string;world?:string;status:string;sourceType?:string;sourceUrl:string;material?:string;origin?:string;qualityCheck?:string;provenance?:string;retail?:number|string|null};
 
