@@ -108,16 +108,15 @@ export default function SupplierInvestigationPage(){
             authenticityEvidence:p.brand ? "Brand recorded from product evidence." : undefined,
             provenanceEvidence:p.description||undefined,
             qualityNotes:p.description||"",
-            sampleStatus:"INSPECTED",
-            qcStatus:"PASSED",
             status:"CANDIDATE",
             createdAt:new Date().toISOString(),
             updatedAt:new Date().toISOString(),
             marketProof:{
-              salesSignal:p.marketProof==="PASS"?"Product review/market signal detected.":undefined,
+              salesSignal:p.salesEvidence ? "Storefront traction signal detected." : undefined,
               reviewCount:p.reviewCount,
               rating:p.rating,
-              reviewEvidence:p.reviewCount ? "Product review evidence detected." : undefined
+              reviewEvidence:p.reviewCount ? "Product review evidence detected." : undefined,
+              salesEvidence:p.salesEvidence ? [{value:p.salesEvidence,sourceUrl:p.sourceUrl,capturedAt:new Date().toISOString(),confidence:"MEDIUM"}] : []
             }
           }));
           const res=await fetch("/api/sourcing/select",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
@@ -132,7 +131,7 @@ export default function SupplierInvestigationPage(){
       }}>{productLoading?"RANKING…":"RUN BEST-OF-SUPPLIER SELECTION"}</button>}
       <div className="sleek-investigation__rule">
         <b>HOUSE RULE</b>
-        <p>Market demand gets a supplier through the door. It does not get a product into the house. Material, craftsmanship, finish, durability, authenticity, verification and final EAZY approval still have to be earned.</p>
+        <p>Market demand gets a supplier through the door. It does not get a product into the house. Material, craftsmanship, finish, durability, authenticity, verification and final EAZY House approval still have to be earned. No sample stage is required.</p>
       </div>
       <small>{result.caveat}</small>
     </section>}
