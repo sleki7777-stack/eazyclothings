@@ -23,6 +23,93 @@ export type EvidenceRecord = {
   confidence:EvidenceConfidence;
 };
 
+export type SupplierInvestigationStage =
+  | "DISCOVERED"
+  | "STOREFRONT_ACCESSED"
+  | "MARKET_PROOF_REVIEW"
+  | "CANDIDATES_EXTRACTED"
+  | "QUALITY_SCREEN"
+  | "SAMPLE_QC"
+  | "HOUSE_DECISION";
+
+export type SupplierInvestigationDecision =
+  | "INVESTIGATE"
+  | "MOVE_ON"
+  | "SAMPLE"
+  | "APPROVE"
+  | "REJECT";
+
+export type SupplierInvestigation = {
+  supplierId:string;
+  stage:SupplierInvestigationStage;
+  decision:SupplierInvestigationDecision;
+  startedAt:string;
+  updatedAt:string;
+  storefrontUrl:string;
+  marketProof?:SupplierMarketProof;
+  candidateCount:number;
+  eligibleCandidateCount:number;
+  selectedCandidateIds:string[];
+  rejectionReasons:string[];
+  notes?:string;
+};
+
+export const SLEEK_EAZY_INVESTIGATION_RULES = {
+  storefrontMustBeInvestigated: true,
+  marketProofBeforeCandidateSelection: true,
+  positiveReviewsRequiredForDiscovery: true,
+  qualityStandardStillOverridesMarketDemand: true,
+  supplierCanYieldZeroProducts: true,
+  moveOnWhenNoFit: true
+} as const;
+
+export type QualityDimensions = {
+  material:number;
+  craftsmanship:number;
+  finish:number;
+  durability:number;
+  design:number;
+  consistency:number;
+  presentation:number;
+  provenance:number;
+};
+
+export const SLEEK_EAZY_QUALITY_WEIGHTS:QualityDimensions = {
+  material:20,
+  craftsmanship:20,
+  finish:15,
+  durability:15,
+  design:10,
+  consistency:10,
+  presentation:5,
+  provenance:5
+};
+
+export function scoreQualityDimensions(dimensions:QualityDimensions):number {
+  const total = Object.entries(SLEEK_EAZY_QUALITY_WEIGHTS).reduce((sum,[key,weight]) => {
+    const value = dimensions[key as keyof QualityDimensions];
+    return sum + Math.max(0, Math.min(100, value)) * weight;
+  }, 0);
+  return Math.round(total / 100);
+}
+
+export function decideSupplierInvestigation(
+  investigation:SupplierInvestigation,
+  selectedCount:number
+):{ decision:SupplierInvestigationDecision; reason:string } {
+  const proof = evaluateMarketProof(investigation.marketProof);
+  if (!proof.qualifies) {
+    return { decision:"MOVE_ON", reason:proof.reason };
+  }
+  if (investigation.candidateCount === 0 || selectedCount === 0) {
+    return { decision:"MOVE_ON", reason:"Supplier has market evidence, but no product meets the EAZY quality threshold." };
+  }
+  if (investigation.stage === "SAMPLE_QC") {
+    return { decision:"SAMPLE", reason:"Selected products have earned sample/QC review." };
+  }
+  return { decision:"INVESTIGATE", reason:"Supplier has passed discovery gates and requires the next investigation stage." };
+}
+
 export type SupplierMarketProof = {
   storefrontUrl?:string;
   salesEvidence?:EvidenceRecord[];
@@ -138,18 +225,21 @@ function premiumScore(candidate:ProductCandidateWithMarketProof, gates:QualityGa
   const hardPassed = gates.every(g => !g.blocking || g.passed);
   if (!hardPassed) return 0;
 
-  const craftsmanship = /craft|handmade|hand[- ]?finished|construction|stitched|machined/i.test(candidate.qualityNotes || "") ? 15 : 0;
-  const finish = /finish|polished|refined|detail/i.test(candidate.qualityNotes || "") ? 10 : 0;
-  const durability = /durab|stainless|solid|reinforced|long[- ]?lasting/i.test((candidate.material || "")+" "+(candidate.qualityNotes || "")) ? 10 : 0;
-  const design = candidate.qualityNotes ? 5 : 0;
-  const consistency = candidate.supplierId ? 5 : 0;
-  const presentation = candidate.imageUrls.length ? 5 : 0;
-  const provenance = candidate.provenanceEvidence ? 5 : 0;
-  const market = candidate.marketProof?.salesSignal ? 20 : 0;
-  const reviews = candidate.marketProof?.rating && (candidate.marketProof.reviewCount || 0) > 0 ? 10 : 0;
-  const material = candidate.material ? 15 : 0;
+  const notes = candidate.qualityNotes || "";
+  const text = (candidate.material || "") + " " + notes;
 
-  return Math.min(100, market + reviews + material + craftsmanship + finish + durability + design + consistency + presentation + provenance);
+  const dimensions:QualityDimensions = {
+    material: candidate.material ? (/solid|sterling|gold|silver|leather|acetate|stainless|silk|cashmere|cotton/i.test(text) ? 100 : 70) : 0,
+    craftsmanship: /craft|handmade|hand[- ]?finished|construction|stitched|machined|artisan/i.test(notes) ? 100 : 45,
+    finish: /finish|polished|refined|engraved|detail|precision/i.test(notes) ? 100 : 45,
+    durability: /durab|stainless|solid|reinforced|long[- ]?lasting|resistant/i.test(text) ? 100 : 45,
+    design: notes ? 75 : 0,
+    consistency: candidate.supplierId ? 75 : 0,
+    presentation: candidate.imageUrls.length >= 3 ? 100 : candidate.imageUrls.length ? 70 : 0,
+    provenance: candidate.provenanceEvidence ? 100 : 0
+  };
+
+  return scoreQualityDimensions(dimensions);
 }
 
 export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, supplier?:SupplierRecord):QualityGateResult {
