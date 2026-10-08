@@ -602,3 +602,68 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Current M|M chain listing shows 4.8/5 from 436 reviews."
   }
 );
+
+
+// Further coverage: belts and ceremony finishing pieces.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"meninas-bonitas-italian-leather-belt", supplierId:"meninas-bonitas-cork", title:"Made in Italy Genuine Leather Men's Belt — LEL-05-B",
+    sourceUrl:"https://www.faire.com/product/p_td63rf57cf", tier:"ACCESSIBLE", world:"Belts & Leather", brand:"Meninas Bonitas Cork",
+    material:"100% genuine leather; polished metal hardware", origin:"Portugal", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies the supplier and SKU.",
+    provenanceEvidence:"Current listing describes Italian leather and states Made in Portugal; exact tanning/production provenance should be documented for House approval.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent everyday/formal belt candidate: 4.9/5 brand rating from 453 reviews, 4.8 product quality and 4.9 fulfilment. Large review base makes this a stronger discovery candidate than low-volume 5-star listings."
+  },
+  {
+    id:"maison-unik-italian-belt", supplierId:"maison-unik-accessoires", title:"Genuine Leather Men's Belt — Italian Made",
+    sourceUrl:"https://www.faire.com/product/p_axqv7urb4a", tier:"ACCESSIBLE", world:"Belts & Leather", brand:"Maison Unik Accessoires",
+    material:"Textured genuine leather; gunmetal buckle", origin:"Italy", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Maison Unik Accessoires.",
+    provenanceEvidence:"Current listing states Made in Italy.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong clean belt candidate: 4.9/5 brand rating from 40 reviews with 4.8 product quality, fulfilment and communication. One-size adjustable design could reduce fit complexity, but EAZY must verify leather quality and finish."
+  },
+  {
+    id:"cuff-daddy-fiber-optic-cufflinks", supplierId:"cuff-daddy", title:"Gray & Silver Fiber Optic Cufflinks",
+    sourceUrl:"https://www.faire.com/product/p_nv7du63jyr", tier:"STRONGER", world:"Ceremony", brand:"Cuff-Daddy",
+    material:"Rhodium-coated polished silver frame; catseye/fiber optic stones", origin:"United States", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Cuff-Daddy.",
+    provenanceEvidence:"Current listing states Made in United States.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent ceremony candidate: current listing shows 4.9/5 brand rating, 5.0 product quality, fulfilment and communication, plus 13 product reviews. Neutral gray/silver treatment is especially suitable for broad formal styling."
+  },
+  {
+    id:"cuff-daddy-stainless-cufflinks", supplierId:"blackjack-mens-jewelry", title:"Men's Stainless Steel Cuff Links",
+    sourceUrl:"https://www.faire.com/product/p_s929svxcnk/", tier:"ENTRY", world:"Ceremony", brand:"Blackjack Mens Jewelry",
+    material:"Stainless steel", origin:"China", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies Blackjack Mens Jewelry.",
+    provenanceEvidence:"Current listing states Made in China.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong market-proof ceremony candidate: 4.9/5 brand rating from 76 reviews, 5.0 product quality and fulfilment. Verify exact finish, packaging and positioning for EAZY before inclusion."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"meninas-bonitas-cork", name:"Meninas Bonitas Cork", website:"https://www.faire.com/", country:"Portugal / supplier verification required",
+    categories:["Men's Belts","Italian Leather"], manufacturingOrigin:"Portugal",
+    materials:["Genuine leather","Metal"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current belt listing shows 4.9/5 brand rating from 453 reviews and 4.8 product quality."
+  },
+  {
+    id:"maison-unik-accessoires", name:"Maison Unik Accessoires", website:"https://www.faire.com/", country:"Italy / supplier verification required",
+    categories:["Men's Belts","Leather Accessories"], manufacturingOrigin:"Italy",
+    materials:["Genuine leather","Metal"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current men's belt listing shows 4.9/5 from 40 reviews and 4.8 product quality."
+  },
+  {
+    id:"blackjack-mens-jewelry", name:"Blackjack Mens Jewelry", website:"https://www.faire.com/", country:"United States / supplier verification required",
+    categories:["Cufflinks","Men's Jewellery","Rings","Chains"], manufacturingOrigin:"SKU verification required",
+    materials:["Stainless steel","Mixed metals"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current cufflink listing shows 4.9/5 from 76 reviews and 5.0 product quality."
+  }
+);
