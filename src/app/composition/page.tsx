@@ -17,6 +17,7 @@ type AtelierState = {
   fit?: string;
   finish?: string;
   previewTone?: string;
+  designerMessage?: string;
 };
 
 export default function Composition(){
@@ -40,6 +41,7 @@ export default function Composition(){
   },[]);
 
   const approved=atelier.approved===true;
+  const designerMessage=atelier.designerMessage||"";
 
   function removeAccessory(index:number){
     const next=accessories.filter((_,i)=>i!==index);
@@ -50,7 +52,7 @@ export default function Composition(){
   async function prepareShopify(){
     setShopBusy(true); setShopError("");
     try{
-      const response=await fetch("/api/shopify/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items:accessories.filter((item)=>item.variantId).map((item)=>({variantId:item.variantId,quantity:1})),composition:{garment:atelier.garment,textile:atelier.textile,collar:atelier.collar,sleeve:atelier.sleeve,fit:atelier.fit||atelier.size,finish:atelier.finish,edition:"07 of 24"}})});
+      const response=await fetch("/api/shopify/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items:accessories.filter((item)=>item.variantId).map((item)=>({variantId:item.variantId,quantity:1})),composition:{garment:atelier.garment,textile:atelier.textile,collar:atelier.collar,sleeve:atelier.sleeve,fit:atelier.fit||atelier.size,finish:atelier.finish,edition:"07 of 24",designerNotes:designerMessage}})});
       const data=await response.json();
       if(!response.ok||!data?.checkoutUrl)throw new Error(data?.error||"Unable to prepare checkout.");
       setShopUrl(data.checkoutUrl);
@@ -84,7 +86,7 @@ export default function Composition(){
         <p className="eyebrow">YOUR ADDITIONS</p>
         {accessories.map((x,i)=><div className="addition" key={(x.variantId||x.title||"item")+i}><span>{String(i+1).padStart(2,"0")}</span><div><strong>{x.title||"SLEEK EAZY object"}</strong><small>SLEEK EAZY · {x.productType||"SELECTED"} · {x.price?`₦${Number(x.price).toLocaleString()}`:"SELECTED"}</small></div><button onClick={()=>removeAccessory(i)}>×</button></div>)}
         <a className="composition-add" href="/sleek-eazy">+ Add from SLEEK EAZY</a>
-        <div className={validated?"validation approved":"validation"}><span>{validated?"VALIDATED":"READY TO VALIDATE"}</span><p>{validated?"Your composition is locked for the next commissioning step.":"We will check the locked garment configuration, textile availability, edition, selected additions and final composition before production."}</p></div>
+        <div className={validated?"validation approved":"validation"}><span>{validated?"VALIDATED":"READY TO VALIDATE"}</span><p>{validated?"Your composition is locked for the next commissioning step.":"We will check the locked garment configuration, textile availability, edition, selected additions and final composition before production."}</p>{designerMessage&&<small>Designer note carried with this composition.</small>}</div>
         <button className="primary dark validate" disabled={!approved} onClick={()=>setValidated(true)}>{!approved?"Approve Design First":validated?"Composition Locked ✓":"Validate My Composition →"}</button>{validated&&accessories.some((item)=>item.variantId)&&<>{!shopUrl?<button className="primary validate" onClick={prepareShopify} disabled={shopBusy}>{shopBusy?"Preparing Shopify…":"Continue to Shopify Checkout →"}</button>:<a className="primary validate" href={shopUrl}>Open Shopify Checkout →</a>}{shopError&&<small>{shopError}</small>}</>}
       </aside>
     </section>
