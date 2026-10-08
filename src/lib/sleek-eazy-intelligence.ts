@@ -1,5 +1,6 @@
 export type SourcingTier = "SELECT" | "PRIVATE" | "OBJECTS" | "CULTURAL_HOUSE";
 export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "SAMPLE_REQUIRED" | "QC_PENDING" | "APPROVED" | "REJECTED";
+export type SupplierPipelineStatus = "DISCOVERED" | "CONTACTED" | "ACCESS_GRANTED" | "TERMS_RECEIVED" | "SAMPLE_ORDERED" | "SAMPLE_RECEIVED" | "QC" | "APPROVED" | "REJECTED";
 
 export type SupplierRecord = {
   id:string; name:string; website:string; country:string; categories:string[];
@@ -19,6 +20,11 @@ export type ProductCandidate = {
   reviewerNotes?:string; createdAt:string; updatedAt:string;
 };
 
+export const SUPPLIER_PIPELINE: readonly SupplierPipelineStatus[] = [
+  "DISCOVERED","CONTACTED","ACCESS_GRANTED","TERMS_RECEIVED",
+  "SAMPLE_ORDERED","SAMPLE_RECEIVED","QC","APPROVED"
+];
+
 export const SLEEK_EAZY_APPROVAL_REQUIREMENTS = [
   "Identifiable supplier or brand source",
   "Verifiable product/material information",
@@ -36,4 +42,8 @@ export function transparencyReady(candidate:ProductCandidate, supplier?:Supplier
     candidate.imageUrls.length && candidate.qcStatus === "PASSED" &&
     candidate.provenanceEvidence && candidate.status === "APPROVED"
   );
+}
+
+export function supplierStatusLabel(status:SupplierPipelineStatus){
+  return status.replaceAll("_"," ");
 }
