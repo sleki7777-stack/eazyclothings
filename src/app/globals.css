@@ -260,3 +260,5 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 .sleek-investigation__productmeta{display:flex;flex-wrap:wrap;gap:8px}.sleek-investigation__productmeta b{font-size:9px;border:1px solid #302d29;padding:5px 7px;font-weight:500}
 .evidence-pass,.evidence-pending{font-size:9px;letter-spacing:.12em}.evidence-pass{color:#cdb879}.evidence-pending{color:#8b6d62}
 @media(max-width:760px){.sleek-investigation__products-head{align-items:flex-start;flex-direction:column}.sleek-investigation__products{grid-template-columns:1fr}.sleek-investigation__products article{grid-template-columns:120px 1fr}.sleek-investigation__products img,.sleek-investigation__noimage{width:120px;height:170px}}
+
+.collection-promo-empty{display:flex;align-items:center;min-height:360px;background:#111;color:#fff}.collection-promo-empty .collection-promo-copy{max-width:760px}
