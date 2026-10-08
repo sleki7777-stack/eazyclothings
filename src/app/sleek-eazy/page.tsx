@@ -36,6 +36,7 @@ type CatalogueProduct = {
   sourceType: string;
   origin: string;
   transparencyReady: boolean;
+  purchaseReady: boolean;
   edition?: "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";
   limitedEdition?: { editionSize?: number; unitsAvailable?: number; scarcityReason?: string };
   variants: Array<{ id: string; title: string; price: string; availableForSale: boolean }>;
@@ -182,7 +183,7 @@ export default function SleekEazy() {
                 {x.image ? <>
                   <img src={x.image} alt={x.alt || x.title} />
                 </> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
-                <button onClick={() => addToComposition(x)} disabled={!x.transparencyReady || !x.image || !x.variants[0]?.availableForSale}>Add to composition</button>
+                <button onClick={() => addToComposition(x)} disabled={!x.purchaseReady}>Add to composition</button>
               </div>
               <p>{x.productType}</p>{x.edition === "LIMITED_EDITION" && <span className="sleek-edition-badge">LIMITED EDITION{x.limitedEdition?.editionSize ? ` · ${x.limitedEdition.editionSize} MADE` : ""}</span>}{x.edition === "SEASONAL_EDIT" && <span className="sleek-edition-badge">CURRENT EDIT</span>}<h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price || 0).toLocaleString()}</strong>
               <div className="sleek-transparency">
