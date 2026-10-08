@@ -442,7 +442,7 @@ export function applyHouseReview(
 }
 
 export function canPublishToShopify(candidate:ProductCandidateWithMarketProof){
-  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && candidate.imageUrls.length>0;
+  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && !!candidate.provenanceEvidence && !!candidate.authenticityEvidence && candidate.imageUrls.length>0;
 }
 
 export function supplierStatusLabel(status:SupplierPipelineStatus){
