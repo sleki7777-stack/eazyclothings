@@ -10,7 +10,9 @@ const looks = [
   {code:"WORK 009",name:"Concrete",type:"Utility / Relaxed",img:"https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=1400&q=88"},
   {code:"WORK 012",name:"Waterline",type:"Resort / Shirting",img:"https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?auto=format&fit=crop&w=1400&q=88"},
   {code:"WORK 018",name:"House Quarter",type:"Knitwear / Heritage",img:"https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1400&q=88"},
-  {code:"WORK 021",name:"Indigo Night",type:"Denim / Relaxed",img:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1400&q=88"}
+  {code:"WORK 021",name:"Indigo Night",type:"Denim / Relaxed",img:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1400&q=88"},
+  {code:"WORK 024",name:"Igbo Crown",type:"Headwear / Igbo Heritage",img:"https://cdn.shopify.com/s/files/1/0725/3465/5094/files/wine-velvet-isiagu-cap.jpg?v=1791471572"},
+  {code:"WORK 025",name:"Aso Oke Fìlà",type:"Headwear / Yoruba Heritage",img:"https://cdn.shopify.com/s/files/1/0725/3465/5094/files/nigerian-green-aso-oke-cap.jpg?v=1791471577"}
 ];
 const categories=["ALL","TAILORING","NATIVE","SHIRTING","KNITWEAR","OUTERWEAR","UTILITY","RELAXED","RESORT","DENIM","ACTIVE / SWIM","LOUNGE / NIGHT","HEADWEAR"];
 
@@ -38,6 +40,18 @@ export default function Home(){
   <section id="collections" className="works section"><div className="sectionhead"><div><p className="eyebrow">EAZY WORKS</p><h2>Classic, current, EAZY.</h2></div><a href="/collections">View all collections ↗</a></div>
    <div className="filters">{categories.map(c=><button key={c} className={filter===c?"active":""} onClick={()=>setFilter(c)}>{c}</button>)}</div>
    <div className="grid">{visible.map((x,i)=><article className="work" key={x.code}><div className="workimg"><img src={x.img} alt={x.name}/><span className="workno">{String(i+1).padStart(2,"0")}</span><span className="workseal">E</span></div><div className="workmeta"><div><span>{x.code}</span><h3>{x.name}</h3></div><p>{x.type}</p></div></article>)}</div>
+  </section>
+
+  <section id="headwear" className="wardrobe section">
+   <p className="eyebrow">EAZY HEADWEAR</p>
+   <h2>The crown of the look.<br/><em>Never an afterthought.</em></h2>
+   <p className="worlds-intro">EAZY Headwear moves from heritage to contemporary: Fìlà Gobi, Fìlà Abeti Aja, Fìlà Akete, Igbo ceremonial caps, Kufi, structured contemporary caps, flat caps and other distinctive men's forms. We select the best examples — not mass-market filler.</p>
+   <div className="wardrobegrid">
+    <div><span>01</span><h3>Fìlà</h3><p>Gobi · Abeti Aja · Akete · refined Aso Oke forms for native dressing and modern tailoring.</p></div>
+    <div><span>02</span><h3>Igbo Heritage</h3><p>Ceremonial and contemporary caps with the dignity, proportion and presence of the look they complete.</p></div>
+    <div><span>03</span><h3>Kufi</h3><p>Clean, detailed forms for occasion dressing, prayer, everyday wear and African global styling.</p></div>
+    <div><span>04</span><h3>Modern Caps</h3><p>Structured baseball, flat, bucket and other modern silhouettes selected for material, finish and fit.</p></div>
+   </div>
   </section>
 
   <section id="designer" className="designer-entry section"><div><p className="eyebrow">YOUR DESIGNER</p><h2>Bring the idea.<br/><em>We shape the work.</em></h2></div><div><p>Your Designer helps you discover silhouettes, textiles, proportions and finishing details. They may suggest, guide, warn or inspire — but the creative decision remains yours.</p><div className="designer-actions"><a className="primary dark" href="/atelier">Talk to Your Designer ↗</a><a className="secondary" href="/atelier">Build from a reference</a></div></div></section>
