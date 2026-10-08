@@ -183,3 +183,13 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 .sleek-bag-row>span{font-size:12px;white-space:nowrap}
 .sleek-bag-row button{grid-column:1/-1;justify-self:start;border:0;background:none;padding:0;text-transform:uppercase;letter-spacing:.12em;font-size:7px;color:#777;cursor:pointer}
 .sleek-bag-foot{border-top:1px solid #c5beb4;padding-top:20px}
+
+
+/* SLEEK EAZY — real-product transparency */
+.sleek-image-missing{height:100%;min-height:320px;display:grid;place-items:center;text-align:center;background:#d9d3ca;color:#777;font-size:9px;letter-spacing:.16em}
+.sleek-image-missing small{font-size:7px;letter-spacing:.12em}
+.sleek-card button:disabled{opacity:.35;cursor:not-allowed}
+.sleek-transparency{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid #c9c2b8}
+.sleek-transparency span{font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:#777;padding-right:8px;border-right:1px solid #c9c2b8}
+.sleek-transparency span:last-child{border-right:0;color:#9b7a36}
+@media(max-width:620px){.sleek-transparency{gap:6px}.sleek-transparency span{font-size:6px}}
