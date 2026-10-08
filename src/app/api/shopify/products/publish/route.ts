@@ -63,7 +63,7 @@ export async function POST(req:Request){
       ]
     };
 
-    const media=(Array.from(new Set(variantSource.flatMap((v:any) => v.imageUrls || []))) as string[]).slice(0, 20).map((url:string)=>({originalSource:url,mediaContentType:"IMAGE",alt:"Sleek Eazy — "+candidate.title}));
+    const media=(Array.from(new Set(variantSource.flatMap((v:any) => v.imageUrls || []))) as string[]).slice(0, 20).map((url:string)=>({originalSource:url,mediaContentType:"IMAGE",alt:"Sleek Eazy — "+candidate.title+" — VARIANT "+variantSource.findIndex((v:any)=>v.imageUrls?.includes(url))}));
     const data=await shopifyAdminGraphql<any>(MUTATION,{product,media});
     const errors=data.productCreate.userErrors||[];
     if(errors.length) return NextResponse.json({ok:false,error:errors.map((e:any)=>e.message).join("; ")},{status:422});
@@ -89,7 +89,15 @@ export async function POST(req:Request){
         price:String(defaultVariant.retailPrice),
         ...(defaultVariant.sku ? {sku:defaultVariant.sku} : {}),
         ...(defaultMediaId ? {mediaId:defaultMediaId} : {}),
-        ...(optionValueFor(defaultVariant).length ? {optionValues:optionValueFor(defaultVariant)} : {})
+        ...(optionValueFor(defaultVariant).length ? {optionValues:optionValueFor(defaultVariant)} : {}),
+        metafields:[
+          {namespace:"eazy",key:"supplier_price",type:"number_decimal",value:String(defaultVariant.supplierPrice)},
+          {namespace:"eazy",key:"supplier_currency",type:"single_line_text_field",value:defaultVariant.supplierCurrency},
+          {namespace:"eazy",key:"retail_price_verified",type:"number_decimal",value:String(defaultVariant.retailPrice)},
+          {namespace:"eazy",key:"variant_source_image",type:"url",value:defaultVariant.exactImageEvidence?.sourceImageUrl || defaultVariant.imageUrls?.[0] || ""},
+          {namespace:"eazy",key:"variant_exact_image_match",type:"boolean",value:String(defaultVariant.exactImageMatchesSource === true)},
+          {namespace:"eazy",key:"variant_image_rights_verified",type:"boolean",value:String(defaultVariant.imageRightsVerified === true)}
+        ]
       };
 
       const variantData=await shopifyAdminGraphql<any>(`#graphql
@@ -108,7 +116,15 @@ mutation ConfigureSleekEazyVariants($productId: ID!, $variants: [ProductVariants
           inventoryPolicy:"CONTINUE",
           ...(variant.sku ? {sku:variant.sku} : {}),
           ...(mediaByUrl.get(variant.imageUrls?.[0] || "") ? {mediaId:mediaByUrl.get(variant.imageUrls[0])} : {}),
-          ...(optionValueFor(variant).length ? {optionValues:optionValueFor(variant)} : {})
+          ...(optionValueFor(variant).length ? {optionValues:optionValueFor(variant)} : {}),
+          metafields:[
+            {namespace:"eazy",key:"supplier_price",type:"number_decimal",value:String(variant.supplierPrice)},
+            {namespace:"eazy",key:"supplier_currency",type:"single_line_text_field",value:variant.supplierCurrency},
+            {namespace:"eazy",key:"retail_price_verified",type:"number_decimal",value:String(variant.retailPrice)},
+            {namespace:"eazy",key:"variant_source_image",type:"url",value:variant.exactImageEvidence?.sourceImageUrl || variant.imageUrls?.[0] || ""},
+            {namespace:"eazy",key:"variant_exact_image_match",type:"boolean",value:String(variant.exactImageMatchesSource === true)},
+            {namespace:"eazy",key:"variant_image_rights_verified",type:"boolean",value:String(variant.imageRightsVerified === true)}
+          ]
         }));
         const createData=await shopifyAdminGraphql<any>(`#graphql
 mutation CreateSleekEazyVariants($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
