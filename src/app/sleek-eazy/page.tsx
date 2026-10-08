@@ -158,7 +158,6 @@ export default function SleekEazy() {
             <button key={collection.key} className={cat === collection.key ? "sleek-collection active" : "sleek-collection"} onClick={() => { setCat(collection.key); document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" }); }}>
               <span className="sleek-collection-image">
                 <img src={collection.image} alt={collection.name} />
-                <span className="sleek-brand-stamp sleek-brand-stamp--collection" aria-hidden="true"><img src="/eazy-logo-mark.svg" alt="" /></span>
               </span>
               <span className="sleek-collection-meta"><span><small>{collection.description}</small><strong>{collection.name}</strong></span><i>↗</i></span>
             </button>
@@ -182,7 +181,6 @@ export default function SleekEazy() {
               <div className="sleek-img">
                 {x.image ? <>
                   <img src={x.image} alt={x.alt || x.title} />
-                  <span className="sleek-brand-stamp sleek-brand-stamp--product" aria-hidden="true"><img src="/eazy-logo-mark.svg" alt="" /></span>
                 </> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
                 <button onClick={() => addToComposition(x)} disabled={!x.transparencyReady || !x.image || !x.variants[0]?.availableForSale}>Add to composition</button>
               </div>
