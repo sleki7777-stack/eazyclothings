@@ -46,7 +46,11 @@ export default function SleekEazyIntelligence(){
   </section>
 
   <section className="sourcing-table">
-   <div className="quality-banner"><span>QUALITY GATE</span><strong>NO APPROVED QC · NO CUSTOMER SALE</strong><small>Candidate records are scored for evidence completeness. A score is not approval.</small></div>
+   <div className="quality-banner" style={{border:"1px solid #ffffff16",padding:"22px 0",marginBottom:"35px",display:"grid",gap:"7px"}}>
+    <span style={{fontSize:"8px",letterSpacing:".16em",color:"#c9a45c"}}>QUALITY GATE</span>
+    <strong style={{fontSize:"12px",letterSpacing:".1em"}}>NO APPROVED QC · NO CUSTOMER SALE</strong>
+    <small style={{color:"#666",fontSize:"10px"}}>Candidate records are scored for evidence completeness. A score is never a substitute for House approval.</small>
+   </div>
    <div className="sourcing-row sourcing-label"><span>PRODUCT</span><span>SOURCE</span><span>ORIGIN</span><span>QC</span><span>STATUS</span></div>
    {loading
     ? <div className="sourcing-empty">Loading live sourcing records…</div>
