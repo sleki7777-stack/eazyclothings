@@ -104,6 +104,7 @@ export default function SupplierInvestigationPage(){
             world:"GLOBAL_SELECT",
             brand:p.brand,
             material:p.material,
+            origin:p.origin,
             imageUrls:p.images||[],
             authenticityEvidence:p.brand ? "Brand recorded from product evidence." : undefined,
             provenanceEvidence:p.description||undefined,
