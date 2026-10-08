@@ -15,7 +15,7 @@ query SleekEazyCatalogue($cursor: String) {
       metafields(first: 20, namespace: "eazy") { nodes { key value } }
       featuredImage { url altText }
       images(first: 5) { nodes { url altText } }
-      variants(first: 20) {
+      variants(first: 100) {
         nodes {
           id
           title
@@ -24,6 +24,17 @@ query SleekEazyCatalogue($cursor: String) {
           compareAtPrice
           availableForSale
           inventoryQuantity
+          selectedOptions { name value }
+          media(first: 10) {
+            nodes {
+              id
+              alt
+              preview {
+                status
+                image { url }
+              }
+            }
+          }
           metafields(first: 20, namespace: "eazy") { nodes { key value } }
         }
       }
@@ -41,7 +52,18 @@ type ShopifyCatalogue = {
       metafields: { nodes: Array<{ key: string; value: string }> };
       featuredImage?: { url: string; altText?: string | null } | null;
       images: { nodes: Array<{ url: string; altText?: string | null }> };
-      variants: { nodes: Array<{ id: string; title: string; sku?: string | null; price: string; compareAtPrice?: string | null; availableForSale: boolean; inventoryQuantity?: number | null; metafields: { nodes: Array<{ key: string; value: string }> } }> };
+      variants: { nodes: Array<{
+        id: string;
+        title: string;
+        sku?: string | null;
+        price: string;
+        compareAtPrice?: string | null;
+        availableForSale: boolean;
+        inventoryQuantity?: number | null;
+        selectedOptions: Array<{ name: string; value: string }>;
+        media: { nodes: Array<{ id: string; alt?: string | null; preview?: { status: string; image?: { url: string } | null } | null }> };
+        metafields: { nodes: Array<{ key: string; value: string }> };
+      }> };
     }>;
   };
 };
@@ -85,6 +107,8 @@ export async function GET() {
           compareAtPrice: variant.compareAtPrice,
           availableForSale: variant.availableForSale,
           inventoryQuantity: variant.inventoryQuantity,
+          selectedOptions: variant.selectedOptions,
+          image: variant.media.nodes.find((media) => media.preview?.status === "READY" && media.preview.image?.url)?.preview?.image?.url || null,
           supplierPrice: vm.supplier_price ? Number(vm.supplier_price) : null,
           supplierCurrency: vm.supplier_currency || null,
           sourceImage: vm.variant_source_image || null,
