@@ -962,3 +962,86 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Current CT059 belt listing shows 4.9/5 from 21 brand reviews and 4.9 product quality/fulfilment."
   }
 );
+
+
+// Live research expansion: executive bags, wallets and Nigerian leathercraft.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"detail-africa-signature-briefcase", supplierId:"detail-africa", title:"Detail Africa Signature Briefcase — Burnt Orange Detail",
+    sourceUrl:"https://www.detailafrica.com/products/detail-africa-signature-briefcase-with-burnt-orange-detail", tier:"STRONGER", world:"Leather", brand:"Detail Africa",
+    material:"100% genuine full-grain leather", origin:"Nigeria", retail:170000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Detail Africa product page.",
+    provenanceEvidence:"Official page states handcrafted with 100% genuine full-grain leather and premium packaging; global tracked delivery is offered.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Excellent Nigerian executive-carry candidate at ₦170,000. Burnt-orange detail creates a distinctive EAZY pairing opportunity. Official page lists 1–2 business-day Lagos processing and worldwide delivery. Supplier relationship required before resale."
+  },
+  {
+    id:"zachi-nomad-backpack", supplierId:"zachi-leather", title:"Nomad Backpack",
+    sourceUrl:"https://zachileather.com/", tier:"STRONGER", world:"Objects", brand:"ZACHI LEATHER",
+    material:"Leather; exact grade/details require SKU verification", origin:"Lagos, Nigeria", retail:145000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official ZACHI LEATHER storefront.",
+    provenanceEvidence:"Official site lists Nomad Backpack and states products are handmade in Lagos.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong modern travel/work candidate at ₦145,000. Pair with EAZY relaxed, travel and resort worlds. Exact leather, hardware, compartments and commercial fulfilment must be verified."
+  },
+  {
+    id:"morin-o-emperor-briefcase-repeat", supplierId:"morin-o", title:"Emperor Briefcase",
+    sourceUrl:"https://morin-o.com/", tier:"PREMIUM", world:"Objects", brand:"Morin.O Leather Goods",
+    material:"Leather / exotic-skin craftsmanship; exact material must be verified", origin:"Lagos, Nigeria", retail:442500, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Morin.O storefront.",
+    provenanceEvidence:"Official site identifies Emperor Briefcase for Men and states named leather works are handcrafted in its Lagos atelier.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Premium anchor candidate for the executive Objects world. Current official price is ₦442,500. Verify exact leather, interior construction, warranty and reseller economics."
+  },
+  {
+    id:"renato-borzatta-rfid-card-holder", supplierId:"renato-borzatta", title:"RB12016A Black Full-Grain Leather RFID Card Holder",
+    sourceUrl:"https://www.faire.com/en-gb/product/p_vf28mnxcud", tier:"ENTRY", world:"Objects", brand:"Kaili mood / RENATO BORZATTA",
+    material:"Genuine full-grain leather; RFID protection", origin:"Italy / SKU production verification required", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies the supplier and SKU.",
+    provenanceEvidence:"Current listing describes genuine full-grain leather, RFID protection and gift-box packaging.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong small-object/gifting candidate from a 4.9/5 supplier with 41 reviews. The gift box and compact profile make it useful for EAZY gift sets. Verify current manufacturing location and landed economics before approval."
+  },
+  {
+    id:"firenze-artegiani-azzano-card-wallet", supplierId:"firenze-artegiani", title:"Azzano Genuine Italian Leather Card Wallet",
+    sourceUrl:"https://www.faire.com/product/p_cmhvp8gxq4", tier:"ACCESSIBLE", world:"Gifts", brand:"FIRENZE ARTEGIANI",
+    material:"Genuine Italian Dollaro leather", origin:"Italy", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies FIRENZE ARTEGIANI.",
+    provenanceEvidence:"Current listing states Made in Italy and genuine Italian leather with reinforced lacquered edges.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong giftable leather-object candidate: current supplier rating 4.9/5, product quality 5.0/5 and communication 5.0/5 from 11 reviews. Need product-level reviews, fulfilment cost and reseller terms."
+  },
+  {
+    id:"the-good-earth-italian-leather-backpack", supplierId:"the-good-earth", title:"Leather Backpack",
+    sourceUrl:"https://www.faire.com/product/p_wbj72nn3e8", tier:"PREMIUM", world:"Objects", brand:"The Good Earth",
+    material:"Leather", origin:"Italy", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing.",
+    provenanceEvidence:"Current listing states Made in Italy and ethically sourced/fair-trade production.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong travel object candidate: supplier 5.0/5 from 56 reviews and 4.9 product quality. Product has two reviews; one reports outstanding leather quality, craftsmanship and packaging on a related backpack. Confirm exact men's suitability and product presentation."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"detail-africa", name:"Detail Africa", website:"https://www.detailafrica.com/", country:"Nigeria",
+    categories:["Leather Briefcases","Executive Gifts","Leather Accessories"], manufacturingOrigin:"Nigeria",
+    materials:["Full-grain leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official Signature Briefcase is ₦170,000, made from 100% genuine full-grain leather, with premium dust bag/rigid gift box and worldwide tracked delivery."
+  },
+  {
+    id:"firenze-artegiani", name:"FIRENZE ARTEGIANI", website:"https://www.faire.com/", country:"Italy",
+    categories:["Leather Wallets","Card Holders","Gifts"], manufacturingOrigin:"Italy",
+    materials:["Italian leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Azzano card wallet listing shows 4.9/5 brand rating from 11 reviews and 5.0 product quality."
+  },
+  {
+    id:"the-good-earth", name:"The Good Earth", website:"https://www.faire.com/", country:"Italy / supplier verification required",
+    categories:["Leather Backpacks","Travel Objects"], manufacturingOrigin:"Italy",
+    materials:["Leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current leather backpack listing shows 5.0/5 from 56 brand reviews and 4.9 product quality; listing states ethically sourced/fair-trade production."
+  }
+);
