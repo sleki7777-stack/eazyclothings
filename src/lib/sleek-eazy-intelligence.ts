@@ -1,9 +1,12 @@
 export type SourcingTier = "SELECT" | "PRIVATE" | "OBJECTS" | "CULTURAL_HOUSE";
 export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "SAMPLE_REQUIRED" | "QC_PENDING" | "APPROVED" | "REJECTED";
+export type CultureLane = "AFRICAN_HERITAGE"|"LAGOS_MADE"|"CONTEMPORARY_AFRICAN"|"GLOBAL_SELECT"|"AFRICAN_GLOBAL_FUSION";
+export type MakerType = "AFRICAN_ARTISAN"|"AFRICAN_BRAND"|"INTERNATIONAL_BRAND"|"CURATED_TRADER";
+
 export type SupplierPipelineStatus = "DISCOVERED" | "CONTACTED" | "ACCESS_GRANTED" | "TERMS_RECEIVED" | "SAMPLE_ORDERED" | "SAMPLE_RECEIVED" | "QC" | "APPROVED" | "REJECTED";
 
 export type SupplierRecord = {
-  id:string; name:string; website:string; country:string; categories:string[];
+  id:string; name:string; website:string; country:string; categories:string[]; makerType?:MakerType; cultureLanes?:CultureLane[];
   manufacturingOrigin:string; materials:string[]; wholesaleAvailable:boolean;
   privateLabel:boolean; moq?:number; sampleAvailable:boolean; shippingTerms?:string;
   returnsTerms?:string; imageRights?:string; authenticityEvidence?:string;
@@ -11,7 +14,7 @@ export type SupplierRecord = {
 };
 
 export type ProductCandidate = {
-  id:string; supplierId:string; title:string; sourceUrl:string; tier:SourcingTier;
+  id:string; supplierId:string; title:string; sourceUrl:string; tier:SourcingTier; cultureLanes?:CultureLane[]; artisanMade?:boolean;
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
@@ -24,6 +27,14 @@ export const SUPPLIER_PIPELINE: readonly SupplierPipelineStatus[] = [
   "DISCOVERED","CONTACTED","ACCESS_GRANTED","TERMS_RECEIVED",
   "SAMPLE_ORDERED","SAMPLE_RECEIVED","QC","APPROVED"
 ];
+
+export const SLEEK_EAZY_MAKER_PRINCIPLES = [
+  "African makers and artisans can enter without a listing fee",
+  "No maker is published without verification and quality review",
+  "Cultural provenance is preserved and presented with respect",
+  "Eazy supplies discovery, presentation and commerce infrastructure",
+  "Commercial terms and maker economics are transparent before approval"
+] as const;
 
 export const SLEEK_EAZY_APPROVAL_REQUIREMENTS = [
   "Identifiable supplier or brand source",
