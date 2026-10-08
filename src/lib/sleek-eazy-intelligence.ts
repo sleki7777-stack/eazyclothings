@@ -404,6 +404,49 @@ export function buildSupplierSelectionQueue(
   });
 }
 
+export type HouseReviewDecision = "PENDING"|"APPROVE"|"REJECT";
+
+export type HouseReviewRecord = {
+  candidateId:string;
+  decision:HouseReviewDecision;
+  reviewer:string;
+  reviewedAt:string;
+  notes?:string;
+};
+
+export function evaluateHouseReviewEligibility(candidate:ProductCandidateWithMarketProof,supplier?:SupplierRecord){
+  const quality=evaluateQualityGate(candidate,supplier);
+  const market=evaluateMarketProof(candidate.marketProof ? {
+    storefrontUrl:candidate.sourceUrl,
+    salesEvidence:candidate.marketProof.salesEvidence,
+    reviewEvidence:candidate.marketProof.reviewEvidence,
+    rating:candidate.marketProof.rating,
+    reviewCount:candidate.marketProof.reviewCount
+  }:undefined);
+  if(!market.qualifies) return {eligible:false,reason:"Market proof has not met the discovery threshold."};
+  if(!quality.passed) return {eligible:false,reason:"One or more blocking quality gates are not passed.",blockers:quality.blockers};
+  if(quality.score<SLEEK_EAZY_CURATION_RULE.minimumQualityScore) return {eligible:false,reason:"Product is below the EAZY minimum quality score.",score:quality.score};
+  if(candidate.status==="REJECTED") return {eligible:false,reason:"Product has already been rejected."};
+  return {eligible:true,reason:"Product is eligible for explicit EAZY House review.",score:quality.score};
+}
+
+export function applyHouseReview(
+  candidate:ProductCandidateWithMarketProof,
+  decision:Exclude<HouseReviewDecision,"PENDING">,
+  reviewer:string,
+  notes?:string
+):{candidate:ProductCandidateWithMarketProof;allowed:boolean;reason:string;review:HouseReviewRecord}{
+  const eligibility=evaluateHouseReviewEligibility(candidate);
+  const review={candidateId:candidate.id,decision,reviewer,reviewedAt:new Date().toISOString(),notes};
+  if(!eligibility.eligible) return {candidate,allowed:false,reason:eligibility.reason,review};
+  const next={...candidate,updatedAt:review.reviewedAt,status:decision==="APPROVE"?"APPROVED":"REJECTED" as ProductReviewStatus};
+  return {candidate:next,allowed:true,reason:decision==="APPROVE"?"House approval granted. Product is unlocked for the Shopify publishing pipeline.":"House rejection recorded. Product remains blocked from Shopify.",review};
+}
+
+export function canPublishToShopify(candidate:ProductCandidateWithMarketProof){
+  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && candidate.imageUrls.length>0;
+}
+
 export function supplierStatusLabel(status:SupplierPipelineStatus){
   return status.replaceAll("_"," ");
 }
