@@ -5,7 +5,7 @@ import { eazyCollections } from "@/lib/eazy-collections";
 
 export default function CollectionsPage() {
   const [active, setActive] = useState("all");
-  const [catalogue, setCatalogue] = useState<Record<string, { image: string; title: string; handle: string }[]>>({});
+  const [catalogue, setCatalogue] = useState<Record<string, { image: string; title: string; handle: string; productType: string; variants: Array<{ id: string; title: string; price: string; availableForSale: boolean; image: string | null }> }[]>>({});
   useEffect(() => {
     fetch("/api/shopify/products").then((res) => res.json()).then((data) => {
       if (!data?.products) return;
@@ -16,7 +16,19 @@ export default function CollectionsPage() {
         for (const tag of collectionTags) {
           const slug = tag.slice("COLLECTION:".length).trim().toLowerCase().replace(/\s+/g, "-");
           if (!product.image) continue;
-          next[slug] = [...(next[slug] || []), { image: product.image, title: product.title, handle: product.handle }];
+          next[slug] = [...(next[slug] || []), {
+            image: product.image,
+            title: product.title,
+            handle: product.handle,
+            productType: product.productType,
+            variants: (product.variants || []).map((variant: any) => ({
+              id: variant.id,
+              title: variant.title,
+              price: variant.price,
+              availableForSale: variant.availableForSale,
+              image: variant.image || null
+            }))
+          }];
         }
       }
       setCatalogue(next);
@@ -54,10 +66,19 @@ export default function CollectionsPage() {
           <small>We will not use substitute or AI imagery here. The collection image appears only when verified catalogue products are assigned to this collection.</small>
         </div>
       </div>}
-      <div className="collection-grid">{collection.works.map((item) => <a className="collection-card" key={item.code} href={`/works/${item.code.toLowerCase().replace(/\s+/g, "-")}`}>
-        <div className="collection-image"><img src={item.image} alt={item.name} loading="lazy"/><span>{item.code}</span></div>
-        <div className="collection-meta"><div><small>{item.form}</small><h3>{item.name}</h3></div><small>{item.direction}</small></div>
-      </a>)}</div>
+      {catalogue[collection.slug]?.length ? <div className="collection-grid">
+        {catalogue[collection.slug].map((item) => <a className="collection-card" key={item.handle} href={`/sleek-eazy#${encodeURIComponent(item.handle)}`}>
+          <div className="collection-image"><img src={item.image} alt={collection.title + " — " + item.title} loading="lazy"/><span>VERIFIED PRODUCT</span></div>
+          <div className="collection-meta"><div><small>{item.productType}</small><h3>{item.title}</h3></div><small>{item.variants.length} VARIANT{item.variants.length === 1 ? "" : "S"}</small></div>
+        </a>)}
+      </div> : <div className="collection-promo collection-promo-empty">
+        <div className="collection-promo-copy">
+          <span className="eyebrow">PRODUCTS PENDING</span>
+          <strong>{collection.title}</strong>
+          <p>No verified purchase-ready products are assigned to this collection yet.</p>
+          <small>Concept imagery is not shown as inventory. This collection will display products only when real verified catalogue products are assigned to it.</small>
+        </div>
+      </div>}
     </section>)}
   </main>;
 }
