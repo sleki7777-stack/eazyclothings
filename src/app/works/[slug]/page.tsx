@@ -11,12 +11,12 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   if (!work) notFound();
 
   const collection = eazyCollections.find((item) => item.slug === work.slug);
-  const related = collection?.works.filter((item) => item.code !== work.code).slice(0, 3) ?? [];
+  const related = collection?.designStudies.filter((item) => item.code !== work.code).slice(0, 3) ?? [];
 
   return (
     <main className="work-detail-page">
       <header className="work-detail-nav">
-        <a href="/collections">← COLLECTIONS</a><span>{work.code}</span><a href="/atelier">ENTER ATELIER ↗</a>
+        <a href="/collections">← COLLECTIONS</a><span>{work.code} · DESIGN STUDY — NOT A PRODUCT</span><a href="/atelier">ENTER ATELIER ↗</a>
       </header>
       <section className="work-detail-hero">
         <div className="work-detail-image"><img src={work.image} alt={work.name} /><span>{work.code}</span></div>
@@ -30,7 +30,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
       <section className="work-detail-spec">
         <div><p className="eyebrow">THE WORK</p><h2>{work.form}</h2></div>
         <div className="work-detail-facts">
-          <p><span>WORK</span>{work.code}</p><p><span>DIRECTION</span>{work.direction}</p><p><span>WORLD</span>{collection?.title}</p><p><span>STATUS</span>DESIGN STUDY · ATELIER READY</p>
+          <p><span>WORK</span>{work.code}</p><p><span>DIRECTION</span>{work.direction}</p><p><span>WORLD</span>{collection?.title}</p><p><span>STATUS</span>DESIGN STUDY · NOT A PURCHASED PRODUCT</p>
         </div>
       </section>
       <section className="work-detail-story">
