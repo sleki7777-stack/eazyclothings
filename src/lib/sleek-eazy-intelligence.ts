@@ -562,7 +562,38 @@ export function applyHouseReview(
 }
 
 export function canPublishToShopify(candidate:ProductCandidateWithMarketProof){
-  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && !!candidate.provenanceEvidence && !!candidate.authenticityEvidence && candidate.imageUrls.length>0 && candidate.imageRightsVerified===true && candidate.exactImageMatchesSource===true && candidate.commercialTermsVerified===true;
+  const candidateReady =
+    candidate.status==="APPROVED" &&
+    candidate.sourceUrl.length>0 &&
+    !!candidate.material &&
+    !!candidate.origin &&
+    !!candidate.provenanceEvidence &&
+    !!candidate.authenticityEvidence &&
+    candidate.imageUrls.length>0 &&
+    candidate.imageRightsVerified===true &&
+    candidate.exactImageMatchesSource===true &&
+    candidate.commercialTermsVerified===true;
+
+  if (!candidateReady) return false;
+
+  // A product with explicit variants is only publishable when EVERY variant
+  // has its own commercial terms and exact, rights-verified source imagery.
+  if (!candidate.variants?.length) return true;
+
+  return candidate.variants.every((variant) =>
+    Number.isFinite(variant.supplierPrice) &&
+    variant.supplierPrice >= 0 &&
+    Number.isFinite(variant.retailPrice) &&
+    variant.retailPrice >= 0 &&
+    Boolean(variant.supplierCurrency) &&
+    Boolean(variant.retailCurrency) &&
+    variant.imageUrls.length > 0 &&
+    variant.imageRightsVerified === true &&
+    variant.exactImageMatchesSource === true &&
+    Boolean(variant.exactImageEvidence?.sourceImageUrl) &&
+    variant.exactImageEvidence?.exactImageMatchesSource === true &&
+    variant.exactImageEvidence?.usageRightsVerified === true
+  );
 }
 
 export function supplierStatusLabel(status:SupplierPipelineStatus){
