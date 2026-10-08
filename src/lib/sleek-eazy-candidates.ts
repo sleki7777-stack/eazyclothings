@@ -667,3 +667,70 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Current cufflink listing shows 4.9/5 from 76 reviews and 5.0 product quality."
   }
 );
+
+
+// Premium timepiece and eyewear expansion.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"bering-automatic-16743-307", supplierId:"bering", title:"BERING Automatic 16743-307",
+    sourceUrl:"https://www.faire.com/product/p_x92dcb5m42", tier:"PREMIUM", world:"Watches", brand:"BERING",
+    material:"Stainless steel case; sapphire crystal; Milanese bracelet", origin:"Japan", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies BERING and SKU 16743-307.",
+    provenanceEvidence:"Current listing states Made in Japan and documents sapphire crystal and stainless construction.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent watch candidate: automatic movement, sapphire crystal and 5.0/5 supplier rating from 5 reviews. Review volume is small, so EAZY must verify authorised distribution, warranty, packaging and fulfilment."
+  },
+  {
+    id:"glycine-combat-field-gl0585", supplierId:"ashford-wholesale", title:"Glycine Combat Field 40mm Automatic GL0585",
+    sourceUrl:"https://www.faire.com/product/p_7276dhysjj", tier:"PREMIUM", world:"Watches", brand:"Glycine",
+    material:"Stainless steel; sapphire crystal; automatic movement", origin:"Supplier/distributor; SKU origin and Swiss authenticity documentation required", imageUrls:[],
+    authenticityEvidence:"Ashford Wholesale listing states 100% authentic and sourced through established brand/authorized distributor relationships.",
+    provenanceEvidence:"Current wholesale listing documents sapphire crystal, 100m water resistance and automatic movement.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"High-potential premium timepiece: 5.0/5 Ashford rating from 12 reviews, 5.0 product quality and 4.9 fulfilment. Authorised distribution, warranty and Nigerian after-sales support are mandatory before House approval."
+  },
+  {
+    id:"tissot-carson-automatic", supplierId:"ashford-wholesale", title:"Tissot Carson 40mm Automatic T1224072203300",
+    sourceUrl:"https://www.faire.com/product/p_574juvw2xe", tier:"PREMIUM", world:"Watches", brand:"Tissot",
+    material:"Stainless steel; sapphire crystal; automatic movement", origin:"Supplier/distributor; exact Swiss provenance and authorization require verification", imageUrls:[],
+    authenticityEvidence:"Ashford Wholesale listing states 100% authentic and sourced through established brand/authorized distributor relationships.",
+    provenanceEvidence:"Current listing documents sapphire crystal, automatic movement and model reference.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong premium watch candidate: current Ashford result shows 5.0/5 rating from 7 reviews and 5.0 product quality/fulfilment. Need warranty, authorized-reseller proof and landed economics before approval."
+  },
+  {
+    id:"orient-star-contemporary-green", supplierId:"ashford-wholesale", title:"Orient Star Contemporary 38mm Automatic RE-AV0138V00B",
+    sourceUrl:"https://www.faire.com/product/p_6j7ynf55ug", tier:"PREMIUM", world:"Watches", brand:"Orient Star",
+    material:"Stainless steel; sapphire crystal; automatic movement", origin:"Japan / exact distributor documentation required", imageUrls:[],
+    authenticityEvidence:"Ashford Wholesale listing states 100% authentic and supplied through established brand/distributor relationships.",
+    provenanceEvidence:"Current listing gives model reference, sapphire crystal, 100m water resistance and automatic movement.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent premium watch candidate with a distinctive green dial: 5.0/5 Ashford rating from 10 reviews and 5.0 product quality/fulfilment/communication. Authorization and warranty remain hard gates."
+  },
+  {
+    id:"oakley-black-oo9081", supplierId:"ashford-wholesale", title:"Oakley Men's 50mm Black Sunglasses OO9081-26-203-28",
+    sourceUrl:"https://www.faire.com/discover/oakley-sunglasses", tier:"STRONGER", world:"Eyewear", brand:"Oakley",
+    material:"Brand eyewear; exact frame/lens specification and origin require SKU verification", origin:"Supplier/distributor; exact origin requires verification", imageUrls:[],
+    authenticityEvidence:"Current Faire discovery listing identifies Oakley and Ashford Wholesale.",
+    provenanceEvidence:"Wholesale discovery result places this model in Ashford Wholesale's current assortment.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Potential high-trust branded eyewear candidate: current Faire results show Ashford Wholesale at 5.0/5 from 12 reviews. Authorised distribution and exact SKU specifications must be proven before listing."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"bering", name:"BERING", website:"https://www.faire.com/", country:"Denmark / supplier verification required",
+    categories:["Automatic Watches","Timepieces"], manufacturingOrigin:"Japan for surfaced SKU",
+    materials:["Stainless steel","Sapphire crystal"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current surfaced automatic men's watch is 5.0/5 from 5 reviews with product-level positive reviews."
+  },
+  {
+    id:"ashford-wholesale", name:"Ashford Wholesale", website:"https://www.faire.com/", country:"United States",
+    categories:["Watches","Branded Eyewear"], manufacturingOrigin:"SKU-specific",
+    materials:["Stainless steel","Sapphire crystal","Optical materials"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/distributor terms must be verified", authenticityEvidence:"Current listings state 100% authenticity and established brand/authorized distributor relationships.",
+    notes:"Current Faire watch/eyewear listings show 5.0/5 Ashford ratings across multiple product groups, but EAZY must verify authorisation, warranties and SKU provenance before approval."
+  }
+);
