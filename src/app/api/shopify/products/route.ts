@@ -24,6 +24,7 @@ query SleekEazyCatalogue($cursor: String) {
           compareAtPrice
           availableForSale
           inventoryQuantity
+          metafields(first: 20, namespace: "eazy") { nodes { key value } }
         }
       }
     }
@@ -40,7 +41,7 @@ type ShopifyCatalogue = {
       metafields: { nodes: Array<{ key: string; value: string }> };
       featuredImage?: { url: string; altText?: string | null } | null;
       images: { nodes: Array<{ url: string; altText?: string | null }> };
-      variants: { nodes: Array<{ id: string; title: string; sku?: string | null; price: string; compareAtPrice?: string | null; availableForSale: boolean; inventoryQuantity?: number | null }> };
+      variants: { nodes: Array<{ id: string; title: string; sku?: string | null; price: string; compareAtPrice?: string | null; availableForSale: boolean; inventoryQuantity?: number | null; metafields: { nodes: Array<{ key: string; value: string }> } }> };
     }>;
   };
 };
@@ -74,7 +75,25 @@ export async function GET() {
       const edition = (meta.edition || "CORE").toUpperCase();
       const limitedEdition = meta.limited_edition ? (() => { try { return JSON.parse(meta.limited_edition); } catch { return undefined; } })() : undefined;
       const firstVariant = product.variants.nodes[0];
-      const purchaseReady = Boolean(approved && product.tags.some((tag) => tag.toUpperCase() === "MARKET-PROOF") && exactImageMatch && imageRightsVerified && (product.featuredImage?.url || product.images.nodes[0]?.url) && firstVariant?.availableForSale);
+      const variantRecords = product.variants.nodes.map((variant) => {
+        const vm = Object.fromEntries(variant.metafields.nodes.map((field) => [field.key.toLowerCase(), field.value]));
+        return {
+          id: variant.id,
+          title: variant.title,
+          sku: variant.sku,
+          price: variant.price,
+          compareAtPrice: variant.compareAtPrice,
+          availableForSale: variant.availableForSale,
+          inventoryQuantity: variant.inventoryQuantity,
+          supplierPrice: vm.supplier_price ? Number(vm.supplier_price) : null,
+          supplierCurrency: vm.supplier_currency || null,
+          sourceImage: vm.variant_source_image || null,
+          exactImageMatch: vm.variant_exact_image_match === "true",
+          imageRightsVerified: vm.variant_image_rights_verified === "true",
+        };
+      });
+      const everyVariantVerified = variantRecords.length > 0 && variantRecords.every((variant) => variant.exactImageMatch && variant.imageRightsVerified && Boolean(variant.sourceImage));
+      const purchaseReady = Boolean(approved && product.tags.some((tag) => tag.toUpperCase() === "MARKET-PROOF") && exactImageMatch && imageRightsVerified && everyVariantVerified && (product.featuredImage?.url || product.images.nodes[0]?.url) && firstVariant?.availableForSale);
       const transparencyReady = Boolean(sourceType && origin && material && qualityCheck && provenance && approved);
       return {
       id: product.id,
@@ -90,15 +109,7 @@ export async function GET() {
       transparency: { material, qualityCheck, provenance, approved },
       image: product.featuredImage?.url || product.images.nodes[0]?.url || null,
       alt: product.featuredImage?.altText || product.title,
-      variants: product.variants.nodes.map((variant) => ({
-        id: variant.id,
-        title: variant.title,
-        sku: variant.sku,
-        price: variant.price,
-        compareAtPrice: variant.compareAtPrice,
-        availableForSale: variant.availableForSale,
-        inventoryQuantity: variant.inventoryQuantity,
-      })),
+      variants: variantRecords,
       };
     });
     return NextResponse.json({ ok: true, configured: true, products });
