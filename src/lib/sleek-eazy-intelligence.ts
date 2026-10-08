@@ -1,5 +1,50 @@
 export type SourcingTier = "SELECT" | "PRIVATE" | "OBJECTS" | "CULTURAL_HOUSE";
-export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "APPROVED" | "REJECTED";\nexport type SleekEazyEdition = "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";\nexport type SleekEazyPriceTier = "ENTRY" | "ACCESSIBLE" | "STRONGER" | "PREMIUM" | "LIMITED_EDITION";\n\nexport const SLEEK_EAZY_PRICE_TIERS = {\n  ENTRY: { min: 0, maxExclusive: 50001, role: "The door into Sleek Eazy.", target: 250 },\n  ACCESSIBLE: { min: 50001, maxExclusive: 150001, role: "The everyday upgrade.", target: 150 },\n  STRONGER: { min: 150001, maxExclusive: 300001, role: "The gift and occasion tier.", target: 75 },\n  PREMIUM: { min: 300001, maxExclusive: Number.POSITIVE_INFINITY, role: "The top regular house range.", target: 20 },\n  LIMITED_EDITION: { min: 0, maxExclusive: Number.POSITIVE_INFINITY, role: "Rare, verified scarcity only.", target: 10 }\n} as const;\n\nexport const SLEEK_EAZY_CATALOG_TARGET = {\n  minimumDirectionalTarget: 505,\n  entryTarget: 250,\n  accessibleTarget: 150,\n  strongerTarget: 75,\n  premiumTarget: 20,\n  limitedEditionTarget: 10,\n  firstThreeTarget: 475,\n  premiumPlusLimitedTarget: 30,\n  targetsAreNotQuotas: true,\n  qualityCanYieldLess: true\n} as const;\n\nexport function classifySleekEazyPriceTier(price:number, edition?:SleekEazyEdition):SleekEazyPriceTier {\n  if (edition === "LIMITED_EDITION") return "LIMITED_EDITION";\n  if (price < 50001) return "ENTRY";\n  if (price < 150001) return "ACCESSIBLE";\n  if (price < 300001) return "STRONGER";\n  return "PREMIUM";\n}\n\nexport type LimitedEditionEvidence = {\n  isGenuinelyLimited:boolean;\n  editionSize?:number;\n  unitsAvailable?:number;\n  scarcityReason?:string;\n  evidence?:EvidenceRecord[];\n};\n\nexport type SleekEazyEditionDecision = {\n  edition:SleekEazyEdition;\n  eligible:boolean;\n  reason:string;\n};
+export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "APPROVED" | "REJECTED";
+export type SleekEazyEdition = "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";
+export type SleekEazyPriceTier = "ENTRY" | "ACCESSIBLE" | "STRONGER" | "PREMIUM" | "LIMITED_EDITION";
+
+export const SLEEK_EAZY_PRICE_TIERS = {
+  ENTRY: { min: 0, maxExclusive: 50001, role: "The door into Sleek Eazy.", target: 250 },
+  ACCESSIBLE: { min: 50001, maxExclusive: 150001, role: "The everyday upgrade.", target: 150 },
+  STRONGER: { min: 150001, maxExclusive: 300001, role: "The gift and occasion tier.", target: 75 },
+  PREMIUM: { min: 300001, maxExclusive: Number.POSITIVE_INFINITY, role: "The top regular house range.", target: 20 },
+  LIMITED_EDITION: { min: 0, maxExclusive: Number.POSITIVE_INFINITY, role: "Rare, verified scarcity only.", target: 10 }
+} as const;
+
+export const SLEEK_EAZY_CATALOG_TARGET = {
+  minimumDirectionalTarget: 505,
+  entryTarget: 250,
+  accessibleTarget: 150,
+  strongerTarget: 75,
+  premiumTarget: 20,
+  limitedEditionTarget: 10,
+  firstThreeTarget: 475,
+  premiumPlusLimitedTarget: 30,
+  targetsAreNotQuotas: true,
+  qualityCanYieldLess: true
+} as const;
+
+export function classifySleekEazyPriceTier(price:number, edition?:SleekEazyEdition):SleekEazyPriceTier {
+  if (edition === "LIMITED_EDITION") return "LIMITED_EDITION";
+  if (price < 50001) return "ENTRY";
+  if (price < 150001) return "ACCESSIBLE";
+  if (price < 300001) return "STRONGER";
+  return "PREMIUM";
+}
+
+export type LimitedEditionEvidence = {
+  isGenuinelyLimited:boolean;
+  editionSize?:number;
+  unitsAvailable?:number;
+  scarcityReason?:string;
+  evidence?:EvidenceRecord[];
+};
+
+export type SleekEazyEditionDecision = {
+  edition:SleekEazyEdition;
+  eligible:boolean;
+  reason:string;
+};
 export type CultureLane = "AFRICAN_HERITAGE"|"IGBO_HERITAGE"|"LAGOS_MADE"|"CONTEMPORARY_AFRICAN"|"GLOBAL_SELECT"|"AFRICAN_GLOBAL_FUSION";
 export type MakerType = "AFRICAN_ARTISAN"|"AFRICAN_BRAND"|"INTERNATIONAL_BRAND"|"CURATED_TRADER";
 
@@ -138,7 +183,8 @@ export type ProductCandidate = {
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
   status:ProductReviewStatus;
-  reviewerNotes?:string; createdAt:string; updatedAt:string;\n  edition?:SleekEazyEdition; limitedEdition?:LimitedEditionEvidence;
+  reviewerNotes?:string; createdAt:string; updatedAt:string;
+  edition?:SleekEazyEdition; limitedEdition?:LimitedEditionEvidence;
 };
 
 export const SUPPLIER_PIPELINE: readonly SupplierPipelineStatus[] = [
@@ -258,7 +304,28 @@ export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, s
  * Market demand and positive customer evidence are discovery gates, not substitutes
  * for physical/product QC. A supplier can contribute zero products.
  */
-export const SLEEK_EAZY_EDITION_RULES = {\n  limitedEditionRequiresVerifiedScarcity: true,\n  limitedEditionRequiresHouseApproval: true,\n  limitedEditionRequiresQcPassed: true,\n  limitedEditionRequiresMarketProof: true,\n  limitedEditionNeverArtificial: true,\n  archiveWhenSoldOut: true,\n  weeklyUpdatesAreCurated: true,\n  monthlyEditIsCurated: true\n} as const;\n\nexport function decideEdition(candidate:ProductCandidateWithMarketProof):SleekEazyEditionDecision {\n  if (candidate.status !== "APPROVED") return {edition:"CORE", eligible:false, reason:"Product is not House-approved."};\n  if (!candidate.marketProof || !candidate.marketProof.salesSignal) return {edition:"CORE", eligible:false, reason:"Market proof is required before an edition can be published."};\n  const limited = candidate.limitedEdition;\n  if (limited?.isGenuinelyLimited && (limited.editionSize || limited.unitsAvailable) && limited.scarcityReason && limited.evidence?.length) {\n    return {edition:"LIMITED_EDITION", eligible:true, reason:"Verified genuine scarcity supports limited-edition treatment."};\n  }\n  return {edition:candidate.edition || "SEASONAL_EDIT", eligible:true, reason:"Approved product belongs in the current curated edit."};\n}\n\nexport const SLEEK_EAZY_CURATION_RULE = {
+export const SLEEK_EAZY_EDITION_RULES = {
+  limitedEditionRequiresVerifiedScarcity: true,
+  limitedEditionRequiresHouseApproval: true,
+  limitedEditionRequiresQcPassed: true,
+  limitedEditionRequiresMarketProof: true,
+  limitedEditionNeverArtificial: true,
+  archiveWhenSoldOut: true,
+  weeklyUpdatesAreCurated: true,
+  monthlyEditIsCurated: true
+} as const;
+
+export function decideEdition(candidate:ProductCandidateWithMarketProof):SleekEazyEditionDecision {
+  if (candidate.status !== "APPROVED") return {edition:"CORE", eligible:false, reason:"Product is not House-approved."};
+  if (!candidate.marketProof || !candidate.marketProof.salesSignal) return {edition:"CORE", eligible:false, reason:"Market proof is required before an edition can be published."};
+  const limited = candidate.limitedEdition;
+  if (limited?.isGenuinelyLimited && (limited.editionSize || limited.unitsAvailable) && limited.scarcityReason && limited.evidence?.length) {
+    return {edition:"LIMITED_EDITION", eligible:true, reason:"Verified genuine scarcity supports limited-edition treatment."};
+  }
+  return {edition:candidate.edition || "SEASONAL_EDIT", eligible:true, reason:"Approved product belongs in the current curated edit."};
+}
+
+export const SLEEK_EAZY_CURATION_RULE = {
   principle: "BEST_OF_SUPPLIER_ONLY",
   defaultMaxProductsPerSupplier: 27,
   minimumQualityScore: 90,
