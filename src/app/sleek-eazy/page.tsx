@@ -36,6 +36,8 @@ type CatalogueProduct = {
   sourceType: string;
   origin: string;
   transparencyReady: boolean;
+  edition?: "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";
+  limitedEdition?: { editionSize?: number; unitsAvailable?: number; scarcityReason?: string };
   variants: Array<{ id: string; title: string; price: string; availableForSale: boolean }>;
 };
 
@@ -154,7 +156,10 @@ export default function SleekEazy() {
         <div className="sleek-collection-grid">
           {collections.map((collection) => (
             <button key={collection.key} className={cat === collection.key ? "sleek-collection active" : "sleek-collection"} onClick={() => { setCat(collection.key); document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" }); }}>
-              <span className="sleek-collection-image"><img src={collection.image} alt={collection.name} /></span>
+              <span className="sleek-collection-image">
+                <img src={collection.image} alt={collection.name} />
+                <span className="sleek-brand-stamp sleek-brand-stamp--collection" aria-hidden="true"><img src="/eazy-logo-mark.svg" alt="" /></span>
+              </span>
               <span className="sleek-collection-meta"><span><small>{collection.description}</small><strong>{collection.name}</strong></span><i>↗</i></span>
             </button>
           ))}
@@ -175,7 +180,10 @@ export default function SleekEazy() {
           {filtered.length ? filtered.map((x) => (
             <article className="sleek-card" key={x.id}>
               <div className="sleek-img">
-                {x.image ? <img src={x.image} alt={x.alt || x.title} /> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
+                {x.image ? <>
+                  <img src={x.image} alt={x.alt || x.title} />
+                  <span className="sleek-brand-stamp sleek-brand-stamp--product" aria-hidden="true"><img src="/eazy-logo-mark.svg" alt="" /></span>
+                </> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
                 <button onClick={() => addToComposition(x)} disabled={!x.transparencyReady || !x.image || !x.variants[0]?.availableForSale}>Add to composition</button>
               </div>
               <p>{x.productType}</p>{x.edition === "LIMITED_EDITION" && <span className="sleek-edition-badge">LIMITED EDITION{x.limitedEdition?.editionSize ? ` · ${x.limitedEdition.editionSize} MADE` : ""}</span>}{x.edition === "SEASONAL_EDIT" && <span className="sleek-edition-badge">CURRENT EDIT</span>}<h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price || 0).toLocaleString()}</strong>
