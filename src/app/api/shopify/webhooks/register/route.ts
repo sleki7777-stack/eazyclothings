@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { isShopifyConfigured, shopifyAdminGraphql } from "@/lib/shopify";
 
