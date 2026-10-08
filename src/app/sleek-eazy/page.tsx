@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 
 const collections = [
-  { name: "Watches", key: "WATCHES", description: "Timepieces", image: "" },
-  { name: "Jewellery", key: "JEWELLERY", description: "Metal · leather · stone", image: "" },
-  { name: "Eyewear", key: "EYEWEAR", description: "Frames & sun", image: "" },
-  { name: "Leather", key: "LEATHER", description: "Carry · belts · cases", image: "" },
-  { name: "Footwear", key: "FOOTWEAR", description: "Dress · resort · street", image: "" },
+  { name: "Watches", key: "WATCHES", description: "Timepieces", image: "https://vincerocollective.com/cdn/shop/files/Kairos-Black-Gold_Frontal-_Hi-Res_-Padding_2480x.jpg?v=1762440372" },
+  { name: "Jewellery", key: "JEWELLERY", description: "Metal · leather · stone", image: "https://vincerocollective.com/cdn/shop/files/Built-Different-Lion-Set_4d7034f9-3606-4146-816c-91d38dfa4aa6_2134x.jpg?v=1762440621" },
+  { name: "Eyewear", key: "EYEWEAR", description: "Frames & sun", image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1400&q=90" },
+  { name: "Leather", key: "LEATHER", description: "Carry · belts · cases", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1400&q=90" },
+  { name: "Footwear", key: "FOOTWEAR", description: "Dress · resort · street", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=90" },
   { name: "Ceremony", key: "CEREMONY", description: "The finishing details", image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=1200&q=85" },
   { name: "Fragrance & Grooming", key: "FRAGRANCE", description: "Scent · care · presence", image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=85" },
   { name: "After Dark", key: "AFTER_DARK", description: "Night · lounge · objects", image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=85" },
