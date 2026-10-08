@@ -100,7 +100,7 @@ export default function SleekEazy() {
     localStorage.setItem("eazy-sleek-bag", JSON.stringify(next));
   }
 
-  const source = useMemo(() => products, [products]);
+  const source = useMemo(() => products.filter((product) => product.purchaseReady), [products]);
 
   const filtered = cat === "ALL" ? source : source.filter((product) => belongs(product, cat));
   const activeCollection = collections.find((collection) => collection.key === cat);
@@ -175,7 +175,7 @@ export default function SleekEazy() {
       <section id="shop" className="sleek-shop">
         <div className="sectionhead">
           <div><p className="eyebrow">SLEEK EAZY {catalogueLive ? "· LIVE CATALOGUE" : "· CATALOGUE"}</p><h2>{activeCollection?.name || "The edit"}</h2></div>
-          <p className="sleek-shop-note">{activeCollection ? activeCollection.description : "The current house selection"}</p>
+          <p className="sleek-shop-note">{activeCollection ? activeCollection.description : "The current house selection"} · Only purchase-ready House-approved pieces are shown.</p>
         </div>
         <div className="filters">
           {cultureLanes.map((lane) => <button key={lane.key} className={cat === lane.key ? "active" : ""} onClick={() => setCat(lane.key)}>{lane.name}</button>)}
@@ -196,7 +196,7 @@ export default function SleekEazy() {
               <div className="sleek-transparency">
                 <span>{x.vendor || "Supplier not recorded"}</span>
                 <span>{x.origin || "Origin not recorded"}</span>
-                <span>{x.transparencyReady ? "PROVENANCE READY" : "VERIFICATION REQUIRED"}</span>
+                <span>{x.transparencyReady ? "PROVENANCE READY" : "HOUSE APPROVED"}</span>
               </div>
             </article>
           )) : (
