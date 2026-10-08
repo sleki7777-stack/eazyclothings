@@ -5,7 +5,7 @@ import { canPublishToShopify, type ProductCandidateWithMarketProof } from "@/lib
 const MUTATION = `#graphql
 mutation CreateSleekEazyProduct($product: ProductCreateInput!, $media: [CreateMediaInput!]) {
   productCreate(product: $product, media: $media) {
-    product { id title handle status tags variants(first: 1) { nodes { id price compareAtPrice } } }
+    product { id title handle status tags options { id name values } variants(first: 100) { nodes { id title sku price compareAtPrice } } media(first: 20) { nodes { id mediaContentType ... on MediaImage { image { url } } } } }
     userErrors { field message }
   }
 }`;
@@ -22,12 +22,31 @@ export async function POST(req:Request){
     if(candidate.artisanMade) tags.push("SLEEK_ARTISAN");
     for(const lane of candidate.cultureLanes||[]) tags.push("SLEEK_"+lane);
 
+    const variantSource = candidate.variants?.length ? candidate.variants : [{
+      id: candidate.id+"-default",
+      title: "Default",
+      supplierPrice: candidate.cost || 0,
+      supplierCurrency: candidate.currency || "NGN",
+      retailPrice: candidate.retail || 0,
+      retailCurrency: candidate.currency || "NGN",
+      imageUrls: candidate.imageUrls,
+      imageRightsVerified: candidate.imageRightsVerified,
+      exactImageMatchesSource: candidate.exactImageMatchesSource,
+      exactImageEvidence: candidate.exactImageEvidence
+    }];
+
+    const optionDefinitions = Object.keys(variantSource[0]?.attributes || {}).map((name) => ({
+      name,
+      values: [...new Set(variantSource.map((v:any) => v.attributes?.[name]).filter(Boolean))]
+    })).filter((option:any) => option.values.length);
+
     const product:any={
       title:candidate.title,
       vendor:candidate.brand||"Sleek Eazy",
       productType:"Sleek Eazy",
       status:"DRAFT",
       tags,
+      ...(optionDefinitions.length ? {productOptions: optionDefinitions.map((option:any) => ({name: option.name, values: option.values.map((name:string) => ({name}))}))} : {}),
       descriptionHtml:candidate.qualityNotes||"",
       metafields:[
         {namespace:"eazy",key:"source_url",type:"url",value:candidate.sourceUrl},
@@ -44,25 +63,66 @@ export async function POST(req:Request){
       ]
     };
 
-    const media=(candidate.imageUrls||[]).slice(0,10).map((url:string)=>({originalSource:url,mediaContentType:"IMAGE",alt:"Sleek Eazy — "+candidate.title}));
+    const media=(Array.from(new Set(variantSource.flatMap((v:any) => v.imageUrls || []))) as string[]).slice(0, 20).map((url:string)=>({originalSource:url,mediaContentType:"IMAGE",alt:"Sleek Eazy — "+candidate.title}));
     const data=await shopifyAdminGraphql<any>(MUTATION,{product,media});
     const errors=data.productCreate.userErrors||[];
     if(errors.length) return NextResponse.json({ok:false,error:errors.map((e:any)=>e.message).join("; ")},{status:422});
 
     const created=data.productCreate.product;
     if(created?.variants?.nodes?.[0]?.id){
+      const mediaByUrl = new Map<string,string>();
+      for (const mediaNode of created.media?.nodes || []) {
+        const url = mediaNode?.image?.url;
+        if (url) mediaByUrl.set(url, mediaNode.id);
+      }
+
+      const optionValueFor = (variant:any) => Object.entries(variant.attributes || {}).map(([name,value]) => ({
+        optionName: name,
+        name: String(value)
+      }));
+
+      const defaultVariant = variantSource[0];
+      const defaultMediaId = mediaByUrl.get(defaultVariant.imageUrls?.[0] || "");
+      const updatePayload:any = {
+        id: created.variants.nodes[0].id,
+        inventoryPolicy:"CONTINUE",
+        price:String(defaultVariant.retailPrice),
+        ...(defaultVariant.sku ? {sku:defaultVariant.sku} : {}),
+        ...(defaultMediaId ? {mediaId:defaultMediaId} : {}),
+        ...(optionValueFor(defaultVariant).length ? {optionValues:optionValueFor(defaultVariant)} : {})
+      };
+
       const variantData=await shopifyAdminGraphql<any>(`#graphql
-mutation ConfigureSleekEazyVariant($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+mutation ConfigureSleekEazyVariants($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
   productVariantsBulkUpdate(productId: $productId, variants: $variants) {
-    productVariants { id price compareAtPrice inventoryPolicy }
+    productVariants { id title sku price compareAtPrice inventoryPolicy }
     userErrors { field message }
   }
-}`,{productId:created.id,variants:[{id:created.variants.nodes[0].id,inventoryPolicy:"CONTINUE",...(candidate.retail?{price:String(candidate.retail)}:{})}]});
+}`,{productId:created.id,variants:[updatePayload]});
       const variantErrors=variantData.productVariantsBulkUpdate?.userErrors||[];
       if(variantErrors.length) return NextResponse.json({ok:false,error:variantErrors.map((e:any)=>e.message).join("; "),product:created},{status:422});
+
+      if (variantSource.length > 1) {
+        const additionalVariants = variantSource.slice(1).map((variant:any) => ({
+          price:String(variant.retailPrice),
+          inventoryPolicy:"CONTINUE",
+          ...(variant.sku ? {sku:variant.sku} : {}),
+          ...(mediaByUrl.get(variant.imageUrls?.[0] || "") ? {mediaId:mediaByUrl.get(variant.imageUrls[0])} : {}),
+          ...(optionValueFor(variant).length ? {optionValues:optionValueFor(variant)} : {})
+        }));
+        const createData=await shopifyAdminGraphql<any>(`#graphql
+mutation CreateSleekEazyVariants($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+  productVariantsBulkCreate(productId: $productId, variants: $variants, strategy: DEFAULT) {
+    productVariants { id title sku price compareAtPrice inventoryPolicy }
+    userErrors { field message }
+  }
+}`,{productId:created.id,variants:additionalVariants});
+        const createErrors=createData.productVariantsBulkCreate?.userErrors||[];
+        if(createErrors.length) return NextResponse.json({ok:false,error:createErrors.map((e:any)=>e.message).join("; "),product:created},{status:422});
+      }
     }
 
-    return NextResponse.json({ok:true,published:false,status:"DRAFT",product:created,fulfillmentMode:"SUPPLIER_FULFILLED",inventoryPolicy:"CONTINUE",message:"House-approved product created in Shopify as a draft with supplier-fulfilled checkout enabled. Storefront activation remains separate."});
+    return NextResponse.json({ok:true,published:false,status:"DRAFT",product:created,fulfillmentMode:"SUPPLIER_FULFILLED",inventoryPolicy:"CONTINUE",message:"House-approved product created in Shopify as a draft. Each verified supplier variant carries its own supplier cost, EAZY retail price and exact variant image; storefront activation remains separate."});
   } catch(error) {
     return NextResponse.json({ok:false,error:error instanceof Error?error.message:"Shopify product creation failed."},{status:502});
   }
