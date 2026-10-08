@@ -521,3 +521,84 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Official site states 100% leather and handmade; Shumaka double-tassel loafer currently listed at ₦35,000."
   }
 );
+
+
+// Jewelry expansion from current wholesale discovery.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"we-are-all-smith-black-box-chain", supplierId:"we-are-all-smith", title:"Black Stainless Steel Chain Necklace for Men — 3MM",
+    sourceUrl:"https://www.faire.com/product/p_yrr5fq6ezu", tier:"ENTRY", world:"Jewellery", brand:"We Are All Smith",
+    material:"Black-plated stainless steel", origin:"United States", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies We Are All Smith.",
+    provenanceEvidence:"Current listing states Made in United States and gives chain dimensions/material.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong clean everyday-chain candidate: 4.9/5 brand rating from 35 reviews, 5.0 product quality and 5.0 fulfilment. Multiple lengths support styling and composition. Verify Nigerian fulfilment economics before approval."
+  },
+  {
+    id:"pinktown-24in-antique-chain", supplierId:"pinktownusa", title:"24in 4DC 12MM Antique Stainless Steel Chain",
+    sourceUrl:"https://www.faire.com/product/p_z9q2g9j7fj", tier:"ACCESSIBLE", world:"Jewellery", brand:"PinktownUSA",
+    material:"Stainless steel", origin:"China", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies PinktownUSA.",
+    provenanceEvidence:"Current listing states Made in China.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong statement-chain candidate: 4.9/5 brand rating from 698 reviews, 5.0 product quality and 5.0 fulfilment. Waterproof/corrosion-resistant claims should be validated against supplier documentation before EAZY approval."
+  },
+  {
+    id:"mio-queena-13mm-chain", supplierId:"mio-queena", title:"Men's Stainless Steel Chain Necklace MIO70821",
+    sourceUrl:"https://www.faire.com/product/p_q97dze5vm4", tier:"ENTRY", world:"Jewellery", brand:"Mio Queena",
+    material:"Stainless steel", origin:"China", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Mio Queena.",
+    provenanceEvidence:"Current listing states Made in China and describes 13mm, high-polish stainless construction.",
+    status:"EVIDENCE_REQUIRED",
+    reviewerNotes:"Exceptional market-proof candidate: 4.9/5 brand rating from more than 2,000 reviews, 4.9 product quality and 4.9 fulfilment. Because EAZY is premium, exact SKU quality and presentation still need House review rather than relying on the marketplace rating alone."
+  },
+  {
+    id:"mio-queena-woven-chain", supplierId:"mio-queena", title:"Men's Stainless Steel Woven Chain Necklace",
+    sourceUrl:"https://www.faire.com/product/p_hpeaensu4g", tier:"ENTRY", world:"Jewellery", brand:"Mio Queena",
+    material:"Titanium steel / 316 stainless steel", origin:"China", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Mio Queena.",
+    provenanceEvidence:"Current listing states Made in China with vacuum electroplating and manual polishing.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"High market-proof candidate: 4.9/5 brand rating from more than 1,700 reviews with strong fulfilment and communication. Keep below the House bar until finish consistency and image/presentation rights are verified."
+  },
+  {
+    id:"mad-man-mm-chain", supplierId:"mad-man", title:"M|M Stainless Chain Necklace",
+    sourceUrl:"https://www.faire.com/product/p_de54ldvy", tier:"ENTRY", world:"Jewellery", brand:"Mad Man",
+    material:"Stainless steel", origin:"China", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Mad Man.",
+    provenanceEvidence:"Current listing states Made in China.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong market-proof candidate: 4.8/5 brand rating from 436 reviews, 4.7 product quality, 5.0 fulfilment. Candidate for accessible chain edit after exact finish, packaging and reseller terms are verified."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"we-are-all-smith", name:"We Are All Smith", website:"https://www.faire.com/", country:"United States",
+    categories:["Men's Chains","Stainless Steel Jewellery"], manufacturingOrigin:"United States",
+    materials:["Stainless steel"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current black chain listing shows 4.9/5 from 35 reviews and 5.0 product quality."
+  },
+  {
+    id:"pinktownusa", name:"PinktownUSA", website:"https://www.faire.com/", country:"United States",
+    categories:["Men's Chains","Stainless Steel Jewellery"], manufacturingOrigin:"China",
+    materials:["Stainless steel"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current 24-inch chain listing shows 4.9/5 from 698 reviews and 5.0 product quality."
+  },
+  {
+    id:"mio-queena", name:"Mio Queena", website:"https://www.faire.com/", country:"China / supplier verification required",
+    categories:["Men's Chains","Stainless Steel Jewellery"], manufacturingOrigin:"China",
+    materials:["Stainless steel","Titanium steel"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listings",
+    notes:"Current products surfaced with 4.9/5 brand ratings across 1,700–2,000+ reviews and strong product-quality/fulfilment scores."
+  },
+  {
+    id:"mad-man", name:"Mad Man", website:"https://www.faire.com/", country:"United States",
+    categories:["Men's Chains","Stainless Steel Jewellery"], manufacturingOrigin:"China",
+    materials:["Stainless steel"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current M|M chain listing shows 4.8/5 from 436 reviews."
+  }
+);
