@@ -13,7 +13,44 @@ export type SupplierRecord = {
   notes?:string; rating?:number; verifiedAt?:string;
 };
 
-\nexport type EvidenceConfidence = "UNVERIFIED" | "LOW" | "MEDIUM" | "HIGH";\n\nexport type EvidenceRecord = {\n  value:string;\n  sourceUrl:string;\n  capturedAt:string;\n  confidence:EvidenceConfidence;\n};\n\nexport type SupplierMarketProof = {\n  storefrontUrl?:string;\n  salesEvidence?:EvidenceRecord[];\n  reviewEvidence?:EvidenceRecord[];\n  rating?:number;\n  reviewCount?:number;\n  positiveReviewRatio?:number;\n};\n\nexport type MarketEvidenceDecision = {\n  qualifies:boolean;\n  reason:string;\n  confidence:EvidenceConfidence;\n};\n\nexport function evaluateMarketProof(proof?:SupplierMarketProof):MarketEvidenceDecision {\n  if (!proof) return { qualifies:false, reason:"No market evidence supplied.", confidence:"UNVERIFIED" };\n  const sales = proof.salesEvidence?.length || 0;\n  const reviews = proof.reviewEvidence?.length || 0;\n  const rating = proof.rating || 0;\n  const count = proof.reviewCount || 0;\n  if (!sales) return { qualifies:false, reason:"No verified sales/traction evidence.", confidence:"UNVERIFIED" };\n  if (!reviews || count < 1 || rating < 4.5) return { qualifies:false, reason:"Insufficient positive customer-review evidence.", confidence:"LOW" };\n  const high = sales >= 2 && reviews >= 2 && rating >= 4.7 && count >= 10;\n  return { qualifies:true, reason:"Market demand and positive customer evidence meet discovery requirements.", confidence:high ? "HIGH" : "MEDIUM" };\n}\n\nexport type ProductCandidate = {
+
+export type EvidenceConfidence = "UNVERIFIED" | "LOW" | "MEDIUM" | "HIGH";
+
+export type EvidenceRecord = {
+  value:string;
+  sourceUrl:string;
+  capturedAt:string;
+  confidence:EvidenceConfidence;
+};
+
+export type SupplierMarketProof = {
+  storefrontUrl?:string;
+  salesEvidence?:EvidenceRecord[];
+  reviewEvidence?:EvidenceRecord[];
+  rating?:number;
+  reviewCount?:number;
+  positiveReviewRatio?:number;
+};
+
+export type MarketEvidenceDecision = {
+  qualifies:boolean;
+  reason:string;
+  confidence:EvidenceConfidence;
+};
+
+export function evaluateMarketProof(proof?:SupplierMarketProof):MarketEvidenceDecision {
+  if (!proof) return { qualifies:false, reason:"No market evidence supplied.", confidence:"UNVERIFIED" };
+  const sales = proof.salesEvidence?.length || 0;
+  const reviews = proof.reviewEvidence?.length || 0;
+  const rating = proof.rating || 0;
+  const count = proof.reviewCount || 0;
+  if (!sales) return { qualifies:false, reason:"No verified sales/traction evidence.", confidence:"UNVERIFIED" };
+  if (!reviews || count < 1 || rating < 4.5) return { qualifies:false, reason:"Insufficient positive customer-review evidence.", confidence:"LOW" };
+  const high = sales >= 2 && reviews >= 2 && rating >= 4.7 && count >= 10;
+  return { qualifies:true, reason:"Market demand and positive customer evidence meet discovery requirements.", confidence:high ? "HIGH" : "MEDIUM" };
+}
+
+export type ProductCandidate = {
   id:string; supplierId:string; title:string; sourceUrl:string; tier:SourcingTier; cultureLanes?:CultureLane[]; artisanMade?:boolean;
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
