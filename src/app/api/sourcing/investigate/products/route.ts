@@ -64,6 +64,7 @@ export async function POST(req:Request){
         sourceUrl:abs(url,text(p.url)||text(p["@id"]))||url.toString(),
         images:images.map((x:any)=>abs(url,text(x))).filter(Boolean).slice(0,8),
         material:text(p.material),
+        origin:text(p.countryOfOrigin || p.manufacturer?.address?.addressCountry || p.manufacturer?.addressCountry),
         brand:text(p.brand),
         description:text(p.description).slice(0,500),
         price:Number(offers?.price||0)||null,
