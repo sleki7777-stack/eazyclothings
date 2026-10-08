@@ -210,3 +210,31 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
   .sleek-brand-stamp--product{right:11px;bottom:11px;width:145px;max-width:42%}
   .sleek-brand-stamp--collection{right:10px;bottom:10px;width:46%}
 }
+
+/* Sleek Eazy Supplier Investigation */
+.sleek-investigation{min-height:100vh;padding:clamp(32px,7vw,96px) clamp(20px,6vw,96px);background:#080808;color:#f4eee4}
+.sleek-investigation__eyebrow{font-size:11px;letter-spacing:.28em;opacity:.62;margin-bottom:20px}
+.sleek-investigation h1{font-size:clamp(42px,7vw,86px);line-height:.94;letter-spacing:-.045em;max-width:900px;margin:0}
+.sleek-investigation h1 em{font-family:Georgia,serif;font-weight:400}
+.sleek-investigation__intro{max-width:720px;color:#b9b0a3;font-size:17px;line-height:1.7;margin:28px 0 42px}
+.sleek-investigation__form{max-width:900px;border:1px solid #2b2926;padding:24px;background:#0d0d0d}
+.sleek-investigation__form label{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+.sleek-investigation__inputrow{display:flex;gap:10px}
+.sleek-investigation__inputrow input{flex:1;min-width:0;background:#151515;border:1px solid #38332d;color:#fff;padding:17px 16px;font-size:15px}
+.sleek-investigation__inputrow button{background:#e8d19a;color:#111;border:0;padding:0 24px;font-weight:700;letter-spacing:.08em}
+.sleek-investigation__form small,.sleek-investigation__result>small{display:block;color:#756f66;margin-top:12px;line-height:1.5}
+.sleek-investigation__error{max-width:900px;margin-top:18px;border:1px solid #633b35;padding:14px;color:#e8aaa0}
+.sleek-investigation__result{max-width:1100px;margin-top:42px}
+.sleek-investigation__decision{border:1px solid #37332e;padding:22px 24px;display:flex;align-items:center;gap:20px}
+.sleek-investigation__decision span{font-size:11px;letter-spacing:.18em;font-weight:800}
+.sleek-investigation__decision strong{font-size:20px;font-weight:500}
+.sleek-investigation__decision.pass{border-color:#6b5d35}.sleek-investigation__decision.move{border-color:#4b3530}
+.sleek-investigation__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#2a2825;margin-top:18px}
+.sleek-investigation__grid article{background:#0d0d0d;padding:24px;min-height:160px}
+.sleek-investigation__grid span{font-size:10px;letter-spacing:.16em;color:#898178}
+.sleek-investigation__grid strong{display:block;font-size:28px;margin:18px 0 8px}
+.sleek-investigation__grid p{margin:0;color:#8e877e;line-height:1.5;font-size:13px}
+.sleek-investigation__rule{border-left:2px solid #c9a75c;padding:8px 0 8px 20px;margin-top:30px;max-width:800px}
+.sleek-investigation__rule b{font-size:10px;letter-spacing:.2em}.sleek-investigation__rule p{color:#b6aea2;line-height:1.65}
+@media(max-width:760px){.sleek-investigation__inputrow{flex-direction:column}.sleek-investigation__inputrow button{height:52px}.sleek-investigation__grid{grid-template-columns:1fr 1fr}.sleek-investigation__decision{align-items:flex-start;flex-direction:column;gap:8px}}
+@media(max-width:480px){.sleek-investigation__grid{grid-template-columns:1fr}}
