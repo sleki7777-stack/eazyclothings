@@ -1,6 +1,7 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getEazyFulfillmentFromOrder, getShopifyProductIdentities, persistEazyFulfillmentOnOrder } from "@/lib/shopify";
+import { buildSupplierInstruction, isReceivingAddressConfigured } from "@/lib/fulfillment";
 
 const SHOPIFY_WEBHOOK_SECRET =
   process.env.SHOPIFY_WEBHOOK_SECRET || process.env.EAZY_FULFILLMENT_WEBHOOK_SECRET || "";
@@ -63,12 +64,31 @@ export async function POST(request: NextRequest) {
   }] : [];
 
   const fulfillmentRecord = {
+    id:`eazy-order-${orderId}`,
     webhookId, shopDomain, shopifyOrderId:orderId, stage:"ORDER_CREATED",
     customer:{
       name:[payload.shipping_address?.first_name,payload.shipping_address?.last_name].filter(Boolean).join(" "),
       email:payload.email||payload.contact_email||"", shippingAddress:payload.shipping_address||{}
     },
-    composition, components:[...garmentComponent,...sleekComponents], createdAt:new Date().toISOString()
+    composition,
+    components:[...garmentComponent,...sleekComponents],
+    procurement:{
+      status:isReceivingAddressConfigured() ? "READY_FOR_SUPPLIER_ORDER" : "BLOCKED_RECEIVING_ADDRESS",
+      supplierInstructions:isReceivingAddressConfigured()
+        ? sleekComponents.map((component:any)=>buildSupplierInstruction({
+            id:`eazy-order-${orderId}`,
+            shopifyOrderId:orderId,
+            stage:"SUPPLIER_PROCUREMENT",
+            customer:{name:"",email:"",shippingAddress:{}},
+            components:[],
+            notes:[]
+          } as any, component))
+        : [],
+      note:isReceivingAddressConfigured()
+        ? "Supplier procurement begins after the paid Shopify order. EAZY does not pre-stock this component."
+        : "Configure the EAZY receiving address before supplier procurement can be released."
+    },
+    createdAt:new Date().toISOString()
   };
 
   await persistEazyFulfillmentOnOrder(orderId, fulfillmentRecord);
@@ -76,6 +96,6 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({
     ok:true, received:true, webhookId, shopDomain, shopifyOrderId:orderId,
     fulfillment:{...fulfillmentRecord, qualityFirst:true, universalReceiving:true,
-      rule:"SHOPIFY ORDER → EAZY FULFILLMENT → SUPPLIER → EAZY QC → CUSTOMER", persisted:true}
+      rule:"SHOPIFY ORDER → SUPPLIER PROCUREMENT → EAZY RECEIVING → EAZY QC → CUSTOMER", persisted:true}
   });
 }
