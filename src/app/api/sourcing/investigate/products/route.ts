@@ -41,7 +41,7 @@ export async function POST(req:Request){
     const res=await fetch(url.toString(),{signal:controller.signal,redirect:"follow",headers:{"User-Agent":"EAZY-Sleek-Eazy-Product-Investigator/1.0"}});
     clearTimeout(timer);
     const html=(await res.text()).slice(0,MAX_BYTES);
-    const plain=html.replace(/<script[\\s\\S]*?<\\/script>/gi," ").replace(/<style[\\s\\S]*?<\\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\\s+/g," ").toLowerCase();
+    const plain=html.replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\s+/g," ").toLowerCase();
     const products:any[]=[];
     for(const m of html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)){
       try{walk(JSON.parse(m[1]),products)}catch{}
