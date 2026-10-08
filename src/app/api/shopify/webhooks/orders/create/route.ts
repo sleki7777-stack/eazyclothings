@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     .filter((item:any) => {
       const productId = item.product_id ? (String(item.product_id).startsWith("gid://") ? String(item.product_id) : `gid://shopify/Product/${item.product_id}`) : "";
       const product = productIdentityById.get(productId);
-      const tags = Array.isArray(product?.tags) ? product.tags.map(tag => String(tag).toUpperCase()) : [];
+      const tags = Array.isArray(product?.tags) ? product.tags.map((tag: string) => String(tag).toUpperCase()) : [];
       return tags.includes("SLEEK_EAZY") ||
         tags.includes("EAZY_SOURCED") ||
         String(product?.vendor || item.vendor || "").toUpperCase().includes("SLEEK EAZY") ||
