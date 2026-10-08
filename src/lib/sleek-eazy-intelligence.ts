@@ -491,9 +491,10 @@ export function applyHouseReview(
   candidate:ProductCandidateWithMarketProof,
   decision:Exclude<HouseReviewDecision,"PENDING">,
   reviewer:string,
-  notes?:string
+  notes?:string,
+  supplier?:SupplierRecord
 ):{candidate:ProductCandidateWithMarketProof;allowed:boolean;reason:string;review:HouseReviewRecord}{
-  const eligibility=evaluateHouseReviewEligibility(candidate);
+  const eligibility=evaluateHouseReviewEligibility(candidate,supplier);
   const review={candidateId:candidate.id,decision,reviewer,reviewedAt:new Date().toISOString(),notes};
   if(!eligibility.eligible) return {candidate,allowed:false,reason:eligibility.reason,review};
   const next={...candidate,updatedAt:review.reviewedAt,status:decision==="APPROVE"?"APPROVED":"REJECTED" as ProductReviewStatus};
