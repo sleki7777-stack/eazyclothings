@@ -60,7 +60,7 @@ export const REAL_SOURCING_CANDIDATES: ProductCandidate[] = [
     provenanceEvidence:"Supplier brand page; SKU-level provenance required.", status:"EVIDENCE_REQUIRED",
     reviewerNotes:"Supplier-level candidate rather than a single approved SKU. Shortlist only the strongest leather goods, bags, jewelry and small objects after SKU-level inspection.",
     createdAt:"2026-10-08", updatedAt:"2026-10-08"
-  }
+  },
   {
     id:"zone-a-loveth-bamboo-mini", supplierId:"zone-a-limited", title:"Loveth Bamboo Handle Mini Bag — Adire, Aso Oke & Genuine Leather",
     sourceUrl:"https://shopzonea.com/shop/", tier:"SELECT", world:"African Heritage", brand:"Zone A Limited",
@@ -93,14 +93,12 @@ export const REAL_SOURCING_CANDIDATES: ProductCandidate[] = [
   }
 ];
 
-];
-
 export const REAL_SUPPLIER_CANDIDATES: SupplierRecord[] = [
   {
     id:"freyrs-eyewear", name:"FREYRS Eyewear", website:"https://www.faire.com/brand/b_6ea9t0p053",
     country:"United States", categories:["Eyewear"], manufacturingOrigin:"SKU verification required",
     materials:["Acetate","Stainless steel","CR39","Nylon"], wholesaleAvailable:true, privateLabel:false,
-    sampleAvailable:true, imageRights:"Supplier/platform terms must be verified", authenticityEvidence:"Wholesale brand listing",
+    sampleAvailable:false, imageRights:"Supplier/platform terms must be verified", authenticityEvidence:"Wholesale brand listing",
     notes:"5.0 brand rating surfaced on Faire; product quality 4.9 and fulfillment 5.0. Wholesale authorization for EAZY still requires account verification.",
     rating:5
   },
@@ -108,7 +106,7 @@ export const REAL_SUPPLIER_CANDIDATES: SupplierRecord[] = [
     id:"tres-cuervos", name:"Tres Cuervos", website:"https://www.faire.com/brand/b_9oyccg2p5s",
     country:"United States", categories:["Bracelets","Leather","After Dark","Accessories"], manufacturingOrigin:"SKU verification required",
     materials:["Waxed canvas","Leather","Brass"], wholesaleAvailable:true, privateLabel:false,
-    sampleAvailable:true, imageRights:"Supplier/platform terms must be verified", authenticityEvidence:"Wholesale brand listing",
+    sampleAvailable:false, imageRights:"Supplier/platform terms must be verified", authenticityEvidence:"Wholesale brand listing",
     notes:"5.0 brand rating and 5.0 product quality/fulfillment surfaced on Faire.",
     rating:5
   },
@@ -116,10 +114,10 @@ export const REAL_SUPPLIER_CANDIDATES: SupplierRecord[] = [
     id:"curated-basics", name:"Curated Basics", website:"https://www.faire.com/brand/b_94e8mnvjlr",
     country:"United States", categories:["Leather","Jewellery","Objects","Bags"], manufacturingOrigin:"SKU verification required",
     materials:["Leather","Metal","Mixed materials"], wholesaleAvailable:true, privateLabel:false,
-    sampleAvailable:true, imageRights:"Supplier/platform terms must be verified", authenticityEvidence:"Wholesale brand listing",
+    sampleAvailable:false, imageRights:"Supplier/platform terms must be verified", authenticityEvidence:"Wholesale brand listing",
     notes:"4.9 brand rating surfaced on Faire. Brand says it independently designs and works directly with factories on small-batch goods.",
     rating:4.9
-  }
+  },
   {
     id:"zone-a-limited", name:"Zone A Limited", website:"https://shopzonea.com/", country:"Nigeria", categories:["African Heritage","Leather","Aso-oke","Bags","Footwear"], manufacturingOrigin:"Benin City, Nigeria",
     materials:["Leather","Aso-oke","Ankara","Denim"], wholesaleAvailable:true, privateLabel:true, sampleAvailable:false,
