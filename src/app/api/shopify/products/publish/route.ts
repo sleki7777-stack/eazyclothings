@@ -18,7 +18,7 @@ export async function POST(req:Request){
     if (!candidate?.id) return NextResponse.json({ok:false,error:"Approved candidate is required."},{status:400});
     if (!canPublishToShopify(candidate)) return NextResponse.json({ok:false,error:"Candidate is not eligible for Shopify publishing."},{status:409});
 
-    const tags=["SLEEK_EAZY","EAZY_APPROVED","EAZY_VERIFIED","SUPPLIER_FULFILLED"];
+    const tags=["SLEEK_EAZY","EAZY_APPROVED","EAZY_VERIFIED","SUPPLIER_FULFILLED",...(candidate.collections||[]).map((slug:string) => "COLLECTION:"+slug)];
     if(candidate.artisanMade) tags.push("SLEEK_ARTISAN");
     for(const lane of candidate.cultureLanes||[]) tags.push("SLEEK_"+lane);
 
