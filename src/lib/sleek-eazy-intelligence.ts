@@ -1,34 +1,33 @@
 export type SourcingTier = "SELECT" | "PRIVATE" | "OBJECTS" | "CULTURAL_HOUSE";
 export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "APPROVED" | "REJECTED";
 export type SleekEazyEdition = "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";
-export type SleekEazyPriceTier = "ENTRY" | "ACCESSIBLE" | "STRONGER" | "PREMIUM" | "LIMITED_EDITION";
+export type SleekEazyPriceTier = "BELOW_HOUSE_RANGE" | "CORE" | "SIGNATURE" | "PREMIUM" | "LIMITED_EDITION";
 
 export const SLEEK_EAZY_PRICE_TIERS = {
-  ENTRY: { min: 0, maxExclusive: 50001, role: "The door into Sleek Eazy.", target: 250 },
-  ACCESSIBLE: { min: 50001, maxExclusive: 150001, role: "The everyday upgrade.", target: 150 },
-  STRONGER: { min: 150001, maxExclusive: 300001, role: "The gift and occasion tier.", target: 75 },
-  PREMIUM: { min: 300001, maxExclusive: Number.POSITIVE_INFINITY, role: "The top regular house range.", target: 20 },
-  LIMITED_EDITION: { min: 0, maxExclusive: Number.POSITIVE_INFINITY, role: "Rare, verified scarcity only.", target: 10 }
+  BELOW_HOUSE_RANGE: { min: 0, maxExclusive: 20000, role: "Generally outside the House's standard accessory range.", target: 0 },
+  CORE: { min: 20000, maxExclusive: 200000, role: "The main SLEEK EAZY range — the pieces that complete the man's look.", target: 350 },
+  SIGNATURE: { min: 200000, maxExclusive: 300000, role: "Elevated occasion and statement pieces.", target: 75 },
+  PREMIUM: { min: 300000, maxExclusive: 600000, role: "High-value regular House pieces.", target: 20 },
+  LIMITED_EDITION: { min: 600000, maxExclusive: Number.POSITIVE_INFINITY, role: "Elite tier — verified genuine scarcity only.", target: 10 }
 } as const;
 
 export const SLEEK_EAZY_CATALOG_TARGET = {
-  minimumDirectionalTarget: 505,
-  entryTarget: 250,
-  accessibleTarget: 150,
-  strongerTarget: 75,
+  minimumDirectionalTarget: 455,
+  coreTarget: 350,
+  signatureTarget: 75,
   premiumTarget: 20,
   limitedEditionTarget: 10,
-  firstThreeTarget: 475,
+  coreAndSignatureTarget: 425,
   premiumPlusLimitedTarget: 30,
   targetsAreNotQuotas: true,
   qualityCanYieldLess: true
 } as const;
 
 export function classifySleekEazyPriceTier(price:number, edition?:SleekEazyEdition):SleekEazyPriceTier {
-  if (edition === "LIMITED_EDITION") return "LIMITED_EDITION";
-  if (price < 50001) return "ENTRY";
-  if (price < 150001) return "ACCESSIBLE";
-  if (price < 300001) return "STRONGER";
+  if (edition === "LIMITED_EDITION" || price >= 600000) return "LIMITED_EDITION";
+  if (price < 20000) return "BELOW_HOUSE_RANGE";
+  if (price < 200000) return "CORE";
+  if (price < 300000) return "SIGNATURE";
   return "PREMIUM";
 }
 
@@ -177,11 +176,53 @@ export function evaluateMarketProof(proof?:SupplierMarketProof):MarketEvidenceDe
   return { qualifies:true, reason:"Market demand and positive customer evidence meet discovery requirements.", confidence:high ? "HIGH" : "MEDIUM" };
 }
 
+
+
+export const SLEEK_EAZY_OCCASION_LANES = [
+  "CHIEFTAINCY_AND_TITLE_CEREMONIES",
+  "BIG_MAN_FORMAL",
+  "TRADITIONAL_WEDDING_GROOM",
+  "TRADITIONAL_WEDDING_GUEST",
+  "OWAMBE_AND_CULTURAL_CELEBRATION",
+  "BIRTHDAY_PORTRAIT",
+  "EDITORIAL_AND_HOTOSHOOT",
+  "COMMANDER_AUTHORITY",
+  "ROYAL_AND_PALACE_STYLE",
+  "FUNERAL_AND_FAMILY_CEREMONY"
+] as const;
+
+export const SLEEK_EAZY_MENS_COMPLETION_CLASSES = [
+  "Walking Staff / Opa",
+  "Ceremonial Walking Stick / Cane",
+  "Horse-tail Flywhisk / Irukere",
+  "Ofor / Authority Staff",
+  "Men's Heritage Neck Beads",
+  "Men's Wrist Beads",
+  "Coral / Onyx / Agate Ceremonial Jewellery",
+  "Native Outfit Brooch / Lapel Pin",
+  "Traditional Cufflinks",
+  "Aso-Oke Pocket Square",
+  "Ceremonial Sash / Iborun",
+  "Premium Leather Belt",
+  "Ceremonial Loafers",
+  "Traditional Groom Accessories",
+  "Gift / Keepsake Accessories"
+] as const;
+
+export type ExactProductImageEvidence = {
+  exactImageMatchesSource:boolean;
+  sourceImageUrl:string;
+  sourcePageUrl:string;
+  usageRightsVerified:boolean;
+  verifiedAt?:string;
+  notes?:string;
+};
+
 export type ProductCandidate = {
   id:string; supplierId:string; title:string; sourceUrl:string; tier:SourcingTier; cultureLanes?:CultureLane[]; artisanMade?:boolean;
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
-  imageRightsVerified?:boolean; commercialTermsVerified?:boolean;
+  imageRightsVerified?:boolean; commercialTermsVerified?:boolean; exactImageMatchesSource?:boolean; exactImageEvidence?:ExactProductImageEvidence;
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
   status:ProductReviewStatus;
   reviewerNotes?:string; createdAt:string; updatedAt:string;
@@ -289,7 +330,7 @@ export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, s
     { id:"MATERIAL", label:"Material documented", passed:Boolean(candidate.material), blocking:true, evidence:candidate.material || "Material evidence missing" },
     { id:"ORIGIN", label:"Manufacturing origin", passed:Boolean(candidate.origin), blocking:true, evidence:candidate.origin || "Origin evidence missing" },
     { id:"AUTHENTICITY", label:"Authenticity / provenance", passed:Boolean(candidate.provenanceEvidence && (!candidate.brand || candidate.authenticityEvidence)), blocking:true, evidence:candidate.provenanceEvidence || "Provenance evidence missing" },
-    { id:"IMAGE_RIGHTS", label:"Product image rights", passed:Boolean(candidate.imageUrls.length && candidate.imageRightsVerified === true), blocking:true, evidence:candidate.imageRightsVerified ? "Product imagery and usage rights verified" : candidate.imageUrls.length ? "Images present; usage rights are not verified" : "Approved product imagery missing" },
+    { id:"IMAGE_RIGHTS", label:"Product image rights", passed:Boolean(candidate.imageUrls.length && candidate.imageRightsVerified === true && candidate.exactImageMatchesSource === true), blocking:true, evidence:candidate.imageRightsVerified === true && candidate.exactImageMatchesSource === true ? "Exact source product imagery and usage rights verified" : candidate.imageUrls.length ? "Images present, but exact source-image match and/or usage rights are not fully verified" : "Approved product imagery missing" },
     { id:"COMMERCIAL", label:"Commercial terms", passed:candidate.commercialTermsVerified === true, blocking:true, evidence:candidate.commercialTermsVerified ? "Commercial terms verified" : "Supplier/resale terms are not verified" },
     { id:"HOUSE_APPROVAL", label:"House approval", passed:candidate.status === "APPROVED", blocking:false, evidence:candidate.status }
   ];
@@ -502,7 +543,7 @@ export function applyHouseReview(
 }
 
 export function canPublishToShopify(candidate:ProductCandidateWithMarketProof){
-  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && !!candidate.provenanceEvidence && !!candidate.authenticityEvidence && candidate.imageUrls.length>0 && candidate.imageRightsVerified===true && candidate.commercialTermsVerified===true;
+  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && !!candidate.provenanceEvidence && !!candidate.authenticityEvidence && candidate.imageUrls.length>0 && candidate.imageRightsVerified===true && candidate.exactImageMatchesSource===true && candidate.commercialTermsVerified===true;
 }
 
 export function supplierStatusLabel(status:SupplierPipelineStatus){
