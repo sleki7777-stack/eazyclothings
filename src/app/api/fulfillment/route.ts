@@ -6,7 +6,10 @@ import {
   evaluateSupplierReturn,
   isReceivingAddressConfigured,
   type EazyFulfillmentOrder,
-  type SupplierReturnTerms,\n  type FulfillmentStage,\n  canTransitionFulfillment,\n  FULFILLMENT_STAGES,
+  type SupplierReturnTerms,
+  type FulfillmentStage,
+  canTransitionFulfillment,
+  FULFILLMENT_STAGES,
 } from "@/lib/fulfillment";
 
 export async function GET() {
