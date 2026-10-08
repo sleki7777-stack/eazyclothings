@@ -59,6 +59,7 @@ export async function GET() {
       const provenance = meta.provenance || tagValue("PROVENANCE:");
       const approved = product.tags.some((tag) => tag.toUpperCase() === "EAZY_APPROVED");
       const transparencyReady = Boolean(sourceType && origin && material && qualityCheck && provenance && approved);
+      return {
       id: product.id,
       title: product.title,
       handle: product.handle,
