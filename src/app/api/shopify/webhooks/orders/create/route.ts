@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { getEazyFulfillmentFromOrder, persistEazyFulfillmentOnOrder } from "@/lib/shopify";
+import { getEazyFulfillmentFromOrder, getShopifyProductIdentities, persistEazyFulfillmentOnOrder } from "@/lib/shopify";
 
 const SHOPIFY_WEBHOOK_SECRET =
   process.env.SHOPIFY_WEBHOOK_SECRET || process.env.EAZY_FULFILLMENT_WEBHOOK_SECRET || "";
@@ -35,18 +35,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, received: true, duplicate: true, webhookId, shopifyOrderId: orderId });
   }
 
-  const sleekComponents = Array.isArray(payload.line_items)
-    ? payload.line_items.filter((item:any) =>
-        Array.isArray(item.tags)
-          ? item.tags.includes("SLEEK_EAZY")
-          : String(item.vendor||"").toUpperCase().includes("SLEEK EAZY") ||
-            String(item.product_type||"").toUpperCase().includes("SLEEK EAZY")
-      ).map((item:any)=>({
-        id:String(item.id), orderId, kind:"SLEEK_EAZY", name:item.title||"SLEEK EAZY component",
-        sku:item.sku||"", supplier:item.vendor||undefined, quantity:Number(item.quantity||1),
-        inboundStatus:"ORDERED", qualityStatus:"PENDING"
-      }))
-    : [];
+  const lineItems = Array.isArray(payload.line_items) ? payload.line_items : [];
+  const productIdentityById = await getShopifyProductIdentities(
+    lineItems.map((item:any) => item.product_id ? String(item.product_id) : "")
+  ).catch(() => new Map());
+
+  const sleekComponents = lineItems
+    .filter((item:any) => {
+      const productId = item.product_id ? (String(item.product_id).startsWith("gid://") ? String(item.product_id) : `gid://shopify/Product/${item.product_id}`) : "";
+      const product = productIdentityById.get(productId);
+      const tags = Array.isArray(product?.tags) ? product.tags.map(tag => String(tag).toUpperCase()) : [];
+      return tags.includes("SLEEK_EAZY") ||
+        tags.includes("EAZY_SOURCED") ||
+        String(product?.vendor || item.vendor || "").toUpperCase().includes("SLEEK EAZY") ||
+        String(product?.productType || item.product_type || "").toUpperCase().includes("SLEEK EAZY") ||
+        String(item.vendor || "").toUpperCase().includes("SLEEK EAZY");
+    })
+    .map((item:any)=>({
+      id:String(item.id), orderId, kind:"SLEEK_EAZY", name:item.title||"SLEEK EAZY component",
+      sku:item.sku||"", supplier:item.vendor||undefined, quantity:Number(item.quantity||1),
+      inboundStatus:"ORDERED", qualityStatus:"PENDING"
+    }));
 
   const garmentComponent = composition["EAZY Garment"] ? [{
     id:`composition-${orderId}`, orderId, kind:"EAZY_GARMENT", name:composition["EAZY Garment"],
