@@ -61,7 +61,7 @@ export async function GET() {
       cursor = data.products.pageInfo.endCursor;
     }
 
-    const products = allNodes.filter((product) => product.tags.some((tag) => tag.toUpperCase() === "SLEEK_EAZY") || product.productType.toUpperCase().includes("SLEEK EAZY") || product.vendor.toUpperCase().includes("SLEEK EAZY")).map((product) => {
+    const products = allNodes.filter((product) => product.tags.some((tag) => tag.toUpperCase() === "SLEEK_EAZY") || product.productType.toUpperCase().includes("SLEEK EAZY") || product.vendor.toUpperCase().includes("SLEEK EAZY") || product.tags.some((tag) => tag.toUpperCase().startsWith("COLLECTION:"))).map((product) => {
       const meta = Object.fromEntries(product.metafields.nodes.map((field) => [field.key.toLowerCase(), field.value]));
       const tagValue = (prefix: string) => product.tags.find((tag) => tag.toUpperCase().startsWith(prefix))?.slice(prefix.length).trim() || "";
       const sourceType = meta.source_type || tagValue("SOURCE:");
