@@ -70,12 +70,6 @@ export async function POST(req:Request){
 
     const created=data.productCreate.product;
     if(created?.variants?.nodes?.[0]?.id){
-      const mediaByUrl = new Map<string,string>();
-      for (const mediaNode of created.media?.nodes || []) {
-        const url = mediaNode?.image?.url;
-        if (url) mediaByUrl.set(url, mediaNode.id);
-      }
-
       const optionValueFor = (variant:any) => Object.entries(variant.attributes || {}).map(([name,value]) => ({
         optionName: name,
         name: String(value)
