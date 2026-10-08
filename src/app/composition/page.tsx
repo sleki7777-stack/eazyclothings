@@ -47,12 +47,15 @@ export default function Composition(){
     const next=accessories.filter((_,i)=>i!==index);
     setAccessories(next);
     localStorage.setItem("eazy-sleek-bag",JSON.stringify(next.map((item)=>JSON.stringify(item))));
+    setValidated(false);
+    setShopUrl("");
+    setShopError("");
   }
 
   async function prepareShopify(){
     setShopBusy(true); setShopError("");
     try{
-      const response=await fetch("/api/shopify/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items:accessories.filter((item)=>item.variantId).map((item)=>({variantId:item.variantId,quantity:1})),composition:{garment:atelier.garment,textile:atelier.textile,collar:atelier.collar,sleeve:atelier.sleeve,fit:atelier.fit||atelier.size,finish:atelier.finish,edition:"07 of 24",designerNotes:designerMessage}})});
+      const response=await fetch("/api/shopify/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({approved:true,compositionLocked:true,items:accessories.filter((item)=>item.variantId).map((item)=>({variantId:item.variantId,quantity:1})),composition:{garment:atelier.garment,textile:atelier.textile,collar:atelier.collar,sleeve:atelier.sleeve,fit:atelier.fit||atelier.size,finish:atelier.finish,edition:"07 of 24",designerNotes:designerMessage}})});
       const data=await response.json();
       if(!response.ok||!data?.checkoutUrl)throw new Error(data?.error||"Unable to prepare checkout.");
       setShopUrl(data.checkoutUrl);
