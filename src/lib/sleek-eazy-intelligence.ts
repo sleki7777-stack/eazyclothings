@@ -128,6 +128,50 @@ export function evaluateQualityGate(candidate:ProductCandidate, supplier?:Suppli
   };
 }
 
+
+
+/**
+ * SLEEK EAZY — BEST-OF-SUPPLIER RULE
+ *
+ * We do not publish a supplier's catalogue. We curate the exceptional minority.
+ * A supplier may have thousands of products; only products that clear every
+ * blocking quality gate and rank among that supplier's strongest candidates
+ * are eligible for the storefront.
+ */
+export const SLEEK_EAZY_CURATION_RULE = {
+  principle: "BEST_OF_SUPPLIER_ONLY",
+  defaultMaxProductsPerSupplier: 27,
+  minimumQualityScore: 100,
+  storefrontRequiresApproval: true,
+  storefrontRequiresQcPassed: true,
+  neverAutoPublishWholeSupplierCatalogue: true,
+  collectionCountIsNotAQualityException: true
+} as const;
+
+export type ProductSelectionDecision = {
+  eligible:boolean;
+  reason:string;
+  supplierRank?:number;
+  supplierEligibleCount?:number;
+};
+
+export function selectBestOfSupplier(
+  candidates: ProductCandidate[],
+  supplierId:string,
+  maxProducts = SLEEK_EAZY_CURATION_RULE.defaultMaxProductsPerSupplier
+): ProductCandidate[] {
+  const ranked = candidates
+    .filter(c => c.supplierId === supplierId)
+    .map(c => ({ candidate:c, quality:evaluateQualityGate(c) }))
+    .filter(x => x.quality.passed && x.quality.score >= SLEEK_EAZY_CURATION_RULE.minimumQualityScore)
+    .sort((a,b) => {
+      const aSignal = Number(Boolean(a.candidate.qualityNotes)) + Number(Boolean(a.candidate.provenanceEvidence)) + Number(Boolean(a.candidate.authenticityEvidence));
+      const bSignal = Number(Boolean(b.candidate.qualityNotes)) + Number(Boolean(b.candidate.provenanceEvidence)) + Number(Boolean(b.candidate.authenticityEvidence));
+      return bSignal - aSignal;
+    });
+  return ranked.slice(0, maxProducts).map(x => x.candidate);
+}
+
 export function supplierStatusLabel(status:SupplierPipelineStatus){
   return status.replaceAll("_"," ");
 }
