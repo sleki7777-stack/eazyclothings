@@ -288,3 +288,236 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Current Faire result shows 5.0/5 from 32 reviews for the supplier listing of Amber Oud Gold Edition. Authorised resale and batch authenticity remain mandatory gates."
   }
 );
+
+
+// Continued 2026-10-08 collection coverage: leather, resort, fragrance and Nigerian craft.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"american-leather-goods-full-grain-wallet", supplierId:"american-leather-goods", title:"Men's Full-Grain Crazy Leather Bifold Wallet with ID Window",
+    sourceUrl:"https://www.faire.com/product/p_9g9t86xzcf", tier:"SELECT", world:"Leather", brand:"American Leather Goods",
+    material:"Premium full-grain crazy leather", origin:"Turkey", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies American Leather Goods.",
+    provenanceEvidence:"Current wholesale listing states Made in Turkey and gives material details.",
+    status:"EVIDENCE_REQUIRED", reviewerNotes:"Strong leather/Objects/Gifts candidate: bestseller with 97 product reviews; brand 4.8/5, product quality 4.9/5 and fulfilment 4.8/5. Exact EAZY reseller economics and shipping to Nigeria still require verification."
+  },
+  {
+    id:"renato-borzatta-full-grain-wallet", supplierId:"renato-borzatta", title:"Men's Full-Grain Genuine Leather RFID Wallet — Blue",
+    sourceUrl:"https://www.faire.com/product/p_y4ke5wx6cc", tier:"SELECT", world:"Leather", brand:"Kaili mood / RENATO BORZATTA",
+    material:"Full-grain genuine leather", origin:"Italy design; handcrafted production requires SKU verification", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies the brand and product.",
+    provenanceEvidence:"Listing states designed in Italy and handcrafted with top-quality leather; exact manufacturing location should be confirmed for the SKU.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Very strong fit for premium everyday leather and gifting: brand 4.9/5 from 41 reviews; product quality 5.0/5, fulfilment 5.0/5 and communication 4.8/5. Gift-box packaging and RFID protection are useful differentiators."
+  },
+  {
+    id:"suie-valentini-genuine-leather-briefcase", supplierId:"suie-valentini", title:"VE4816 Genuine Leather Briefcase",
+    sourceUrl:"https://www.faire.com/en-ca/product/p_jravc7z5xg", tier:"PREMIUM", world:"Leather", brand:"Suie Valentini srl",
+    material:"100% genuine leather", origin:"Bangladesh", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Suie Valentini srl.",
+    provenanceEvidence:"Current listing states 100% genuine leather and Made in Bangladesh.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"High-potential executive carry candidate: brand 4.9/5 from 339 reviews with 4.9 product quality and fulfilment. Suitable for Leather/Objects/Gifts after exact wholesale economics, product imagery rights and Nigerian shipping are verified."
+  },
+  {
+    id:"wessi-double-buckle-loafer", supplierId:"wessi", title:"Men's Black Leather Loafers with Double Buckle Detail",
+    sourceUrl:"https://www.faire.com/product/p_j7p8j9u8bn", tier:"STRONGER", world:"Footwear", brand:"Wessi",
+    material:"Premium leather", origin:"Turkey", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Wessi.",
+    provenanceEvidence:"Current listing states Made in Turkey.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Current Faire listing shows a 5.0/5 brand rating. Strong formal/ceremony silhouette, but review volume is only 4 brand reviews, so quality confidence must be supplemented with supplier documentation."
+  },
+  {
+    id:"johnny-fall-26-loafer", supplierId:"johnny-fall-26", title:"Johnny Men's Leather Loafer — Fall 26",
+    sourceUrl:"https://www.faire.com/product/p_cw3gm3rfnp", tier:"STRONGER", world:"Footwear", brand:"Supplier listing — Johnny",
+    material:"Premium pebbled leather; leather lining; rubber driver-style sole", origin:"Brazil", imageUrls:[],
+    authenticityEvidence:"Current Faire wholesale product page.",
+    provenanceEvidence:"Current listing states Made in Brazil and details leather upper, lining and driver sole.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent functional-luxury candidate: current Faire result shows 5.0/5 brand rating from 18 reviews with 5.0 product quality, fulfilment and communication. Verify exact brand identity and wholesale terms before approval."
+  },
+  {
+    id:"american-leather-goods-wallet-gift", supplierId:"american-leather-goods", title:"Genuine Full-Grain Leather Bifold Wallet with Magnetic Closure",
+    sourceUrl:"https://www.faire.com/product/p_snm4bdnrpf", tier:"ENTRY", world:"Gifts", brand:"American Leather Goods",
+    material:"Crazy Horse-style genuine leather", origin:"Turkey", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies American Leather Goods.",
+    provenanceEvidence:"Current listing states Made in Turkey and describes full-grain leather construction.",
+    status:"EVIDENCE_REQUIRED",
+    reviewerNotes:"Strong accessible gifting candidate: new listing under a supplier with 272+ brand reviews, 4.9 product quality and 4.8 fulfilment. Keep as a candidate until current wholesale cost, image rights and reseller terms are confirmed."
+  },
+  {
+    id:"zousz-black-oud", supplierId:"zousz", title:"Black Oud Men's Eau de Parfum",
+    sourceUrl:"https://www.faire.com/product/p_j8rzmkwd9a", tier:"STRONGER", world:"Fragrance & Grooming", brand:"ZOUSZ",
+    material:"Eau de Parfum", origin:"United Kingdom", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies ZOUSZ and the product.",
+    provenanceEvidence:"Current listing states Made in United Kingdom and gives ingredient disclosure.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong fragrance candidate: 5.0/5 brand rating from 10 reviews and 5.0 product quality/fulfilment. Needs Nigerian fragrance/import compliance, authorised resale confirmation and dangerous-goods shipping review."
+  },
+  {
+    id:"noble-oud-spirits", supplierId:"noble-oud", title:"Noble Oud Spirits Cologne",
+    sourceUrl:"https://www.faire.com/product/p_pqquyur88y", tier:"STRONGER", world:"Fragrance & Grooming", brand:"Noble Oud",
+    material:"Parfum-grade fragrance", origin:"United States", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies Noble Oud.",
+    provenanceEvidence:"Current listing states Made in United States and describes a 20% oil blend.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Very strong product-quality signal: brand 4.9/5 from 56 reviews, product quality 5.0/5 and fulfilment 4.9/5. Regulatory, authenticity, shipping and margin checks remain mandatory."
+  },
+  {
+    id:"manready-leather-valet-tray", supplierId:"manready", title:"Leather Valet Tray — Catch All",
+    sourceUrl:"https://www.faire.com/product/p_e7mtn9avma", tier:"ACCESSIBLE", world:"Objects", brand:"Manready Mercantile",
+    material:"Leather", origin:"United States", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies the brand and product.",
+    provenanceEvidence:"Current listing and reviews identify leather construction and U.S. production.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent Objects/Gifts candidate: current listing shows 5.0/5 brand rating from 54 reviews, 5.0 product quality and 5.0 fulfilment; multiple 2026 customer reviews praise quality, workmanship and packaging."
+  },
+  {
+    id:"mavialo-elite-signature-belt", supplierId:"mavialo-elite", title:"The Signature Belt",
+    sourceUrl:"https://www.mavialoelitebrand.com/", tier:"ENTRY", world:"Belts & Leather", brand:"Mavialo Elite",
+    material:"Full-grain leather", origin:"Lagos, Nigeria", retail:7000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Mavialo Elite storefront.",
+    provenanceEvidence:"Official site states pieces are made entirely by hand from full-grain leather in Lagos.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong Lagos-made discovery candidate: official site presents a Signature Belt alongside handcrafted briefcases and accessories. Current site price is ₦7,000, which requires commercial and positioning review before EAZY adoption."
+  },
+  {
+    id:"aaboux-architectural-leather", supplierId:"aaboux", title:"AABOUX Limited-Edition Architectural Leather Piece",
+    sourceUrl:"https://aaboux.com/about-aaboux/", tier:"CULTURAL_HOUSE", world:"African Heritage", brand:"AABOUX",
+    material:"Ethically sourced leather / selected exotic and textured skins", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official AABOUX brand site.",
+    provenanceEvidence:"Official brand story states pieces are handcrafted in Lagos by third-generation artisans and produced in limited runs.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_HERITAGE"],
+    reviewerNotes:"Strong House-level sourcing relationship candidate rather than a specific SKU. The near stitch-less construction and limited-run approach are highly differentiated. Need men's SKU identification, pricing and commercial partnership before listing."
+  },
+  {
+    id:"paciencia-limited-leather", supplierId:"paciencia", title:"Paciencia Limited Intentional-Production Leather Piece",
+    sourceUrl:"https://mypaciencia.co/about-us/", tier:"CULTURAL_HOUSE", world:"African Heritage", brand:"Paciencia",
+    material:"Real leather", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Paciencia brand site.",
+    provenanceEvidence:"Official site states products are handcrafted by Nigerian artisans in real leather and made in limited, intentional production runs.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_HERITAGE"],
+    reviewerNotes:"Strong Lagos craft relationship candidate aligned with EAZY's fewer-but-better philosophy. Need men's product/SKU selection and commercial partnership details."
+  },
+  {
+    id:"reign-collection-mens-slide", supplierId:"reign-collection", title:"The Duke Toe-loop Slide",
+    sourceUrl:"https://reigncollection.co/", tier:"CULTURAL_HOUSE", world:"Footwear", brand:"Reign Collection",
+    material:"Top-grain leather; quality sole; hand-finished brass hardware", origin:"Lagos, Nigeria", retail:45000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Reign Collection storefront.",
+    provenanceEvidence:"Official site states products are handcrafted in Lagos with top-grain leather, quality soles and hand-finished brass hardware.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Excellent Nigerian footwear candidate: current listed price ₦45,000 and the brand presents multiple men's slides, accessories and ready-now products. Resale/fulfilment rights still require a direct relationship."
+  },
+  {
+    id:"lagoscraft-shumaka-loafer", supplierId:"lagoscraft", title:"Shumaka Bi-Material Double Tassel Loafers — Coffee Brown",
+    sourceUrl:"https://lagoscraft.com/", tier:"STRONGER", world:"Footwear", brand:"Lagoscraft",
+    material:"Leather / bi-material construction", origin:"Nigeria", retail:35000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Lagoscraft storefront.",
+    provenanceEvidence:"Official site describes products as 100% leather and handmade.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong Lagos-made candidate; current storefront lists the Shumaka coffee-brown double-tassel loafer at ₦35,000 and states 100% leather/handmade. Quality, supplier terms and fulfilment must be directly verified."
+  },
+  {
+    id:"orí-ade-signature-fila", supplierId:"oriade", title:"Signature Fìlà Collection — Handwoven Yorùbá Caps",
+    sourceUrl:"https://www.oriade.co/products/signature-fila-collection-handwoven-modern-iconic", tier:"CULTURAL_HOUSE", world:"Ceremony", brand:"Orí Adé",
+    material:"Handwoven Aso-Oke", origin:"Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Orí Adé product page.",
+    provenanceEvidence:"Official product page presents handwoven Yorùbá Fìlà forms and made-to-order sizing.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong ceremony/native-headwear candidate for SLEEK EAZY where the product complements EAZY Clothing. It should remain distinct from the House's own headwear designs. Resale partnership required."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"american-leather-goods", name:"American Leather Goods", website:"https://www.faire.com/", country:"United States",
+    categories:["Men's Wallets","Leather","Gifts"], manufacturingOrigin:"Turkey",
+    materials:["Full-grain leather","Crazy Horse leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listings",
+    notes:"Current Faire listings show 4.8/5 brand rating from 276+ reviews and approximately 4.9 product-quality scoring."
+  },
+  {
+    id:"renato-borzatta", name:"Kaili mood / RENATO BORZATTA", website:"https://www.faire.com/", country:"Italy",
+    categories:["Men's Wallets","Leather Accessories","Gifts"], manufacturingOrigin:"SKU verification required",
+    materials:["Full-grain leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current listing shows 4.9/5 from 41 reviews and 5.0 product quality."
+  },
+  {
+    id:"suie-valentini", name:"Suie Valentini srl", website:"https://www.faire.com/", country:"Italy",
+    categories:["Leather Briefcases","Executive Bags","Objects"], manufacturingOrigin:"Bangladesh",
+    materials:["Genuine leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current listing shows 4.9/5 from 339 reviews and 4.9 product quality/fulfilment."
+  },
+  {
+    id:"wessi", name:"Wessi", website:"https://www.faire.com/", country:"Turkey",
+    categories:["Men's Footwear","Formalwear Accessories"], manufacturingOrigin:"Turkey",
+    materials:["Leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current loafers listing carries a 5.0/5 brand rating, though only 4 reviews."
+  },
+  {
+    id:"johnny-fall-26", name:"Johnny / Fall 26 supplier listing", website:"https://www.faire.com/", country:"Brazil",
+    categories:["Men's Footwear","Loafers"], manufacturingOrigin:"Brazil",
+    materials:["Pebbled leather","Leather lining","Rubber"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Current Faire wholesale product page",
+    notes:"Current product result shows 5.0/5 from 18 brand reviews and 5.0 product quality."
+  },
+  {
+    id:"zousz", name:"ZOUSZ", website:"https://www.faire.com/", country:"United Kingdom",
+    categories:["Fragrance","Oud","Gifts"], manufacturingOrigin:"United Kingdom",
+    materials:["Fragrance"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Black Oud listing currently shows 5.0/5 from 10 brand reviews and 5.0 product quality."
+  },
+  {
+    id:"noble-oud", name:"Noble Oud", website:"https://www.faire.com/", country:"United States",
+    categories:["Fragrance","Oud","Gifts"], manufacturingOrigin:"United States",
+    materials:["Parfum fragrance"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current listing shows 4.9/5 from 56 reviews and 5.0 product quality."
+  },
+  {
+    id:"manready", name:"Manready Mercantile", website:"https://www.faire.com/", country:"United States",
+    categories:["Leather Objects","Valet","Gifts"], manufacturingOrigin:"United States",
+    materials:["Leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current valet tray listing shows 5.0/5 from 54 reviews and 5.0 product quality/fulfilment."
+  },
+  {
+    id:"mavialo-elite", name:"Mavialo Elite", website:"https://www.mavialoelitebrand.com/", country:"Nigeria",
+    categories:["Belts","Leather","Briefcases","Accessories"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Full-grain leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site presents 2026 collection, full-grain leather, hand craftsmanship and Lagos address."
+  },
+  {
+    id:"aaboux", name:"AABOUX", website:"https://aaboux.com/", country:"Nigeria",
+    categories:["Leather","Limited Edition","Bags","Statement Objects"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Leather","Selected exotic/textured skins"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official brand site",
+    notes:"Official site states limited-edition production and handcrafted construction by third-generation Lagos artisans."
+  },
+  {
+    id:"paciencia", name:"Paciencia", website:"https://mypaciencia.co/", country:"Nigeria",
+    categories:["Leather","Bags","Intentional Limited Runs"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Real leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official brand site",
+    notes:"Official site emphasizes handcrafted Nigerian leather goods and limited intentional production."
+  },
+  {
+    id:"reign-collection", name:"Reign Collection", website:"https://reigncollection.co/", country:"Nigeria",
+    categories:["Men's Footwear","Slides","Gifts","Accessories"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Top-grain leather","Brass"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site lists men's slides at ₦45,000 and states top-grain leather, quality soles and hand-finished brass."
+  },
+  {
+    id:"lagoscraft", name:"Lagoscraft", website:"https://lagoscraft.com/", country:"Nigeria",
+    categories:["Men's Footwear","Loafers","Sandals"], manufacturingOrigin:"Nigeria",
+    materials:["Leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site states 100% leather and handmade; Shumaka double-tassel loafer currently listed at ₦35,000."
+  }
+);
