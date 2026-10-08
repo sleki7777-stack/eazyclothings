@@ -43,8 +43,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: "No Shopify variants were selected." }, { status: 400 });
     }
 
-    const domain = process.env.SHOPIFY_STORE_DOMAIN!.trim().replace(/^https?:\/\//, "").replace(/\/$/, "");
-    const cart = lines.map((line) => `${line.variantId}:${line.quantity}`).join(",");\n    const c=body.composition||{};\n    const attrs=[["EAZY Composition","WORK 001 · LAGOS SOIL"],["EAZY Composition Status","APPROVED · LOCKED"],["EAZY Garment",c.garment||"Modern Native / Senator"],["EAZY Textile",c.textile||"Lagos Earth"],["EAZY Collar",c.collar||"Band Collar"],["EAZY Sleeve",c.sleeve||"Long"],["EAZY Fit",c.fit||"L"],["EAZY Finish",c.finish||"Hand Finish"],["EAZY Edition",c.edition||"07 of 24"],["EAZY Designer Notes",c.designerNotes||""]];\n    const query=attrs.map(([k,v])=>`attributes[${encodeURIComponent(k)}]=${encodeURIComponent(String(v).slice(0,180))}`).join("&");
+    const domain = process.env.SHOPIFY_STORE_DOMAIN?.trim().replace(/^https?:\/\//, "").replace(/\/$/, "");
+    if (!domain) return NextResponse.json({ ok:false, error:"Shopify store domain is not configured." }, { status:503 });
+    const cart = lines.map((line) => `${line.variantId}:${line.quantity}`).join(",");
+    const c=body.composition||{};
+    const attrs=[
+      ["EAZY Composition","WORK 001 · LAGOS SOIL"],
+      ["EAZY Composition Status","APPROVED · LOCKED"],
+      ["EAZY Garment",c.garment||"Modern Native / Senator"],
+      ["EAZY Textile",c.textile||"Lagos Earth"],
+      ["EAZY Collar",c.collar||"Band Collar"],
+      ["EAZY Sleeve",c.sleeve||"Long"],
+      ["EAZY Fit",c.fit||"L"],
+      ["EAZY Finish",c.finish||"Hand Finish"],
+      ["EAZY Edition",c.edition||"07 of 24"],
+      ["EAZY Designer Notes",c.designerNotes||""]
+    ];
+    const query=attrs.map(([k,v])=>`attributes[${encodeURIComponent(k)}]=${encodeURIComponent(String(v).slice(0,180))}`).join("&");
     return NextResponse.json({
       ok: true,
       checkoutUrl: `https://${domain}/cart/${cart}?${query}`,
