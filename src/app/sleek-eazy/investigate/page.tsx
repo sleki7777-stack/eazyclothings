@@ -17,6 +17,8 @@ export default function SupplierInvestigationPage(){
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState("");
   const [result,setResult]=useState<Investigation|null>(null);
+  const [products,setProducts]=useState<any[]>([]);
+  const [productLoading,setProductLoading]=useState(false);
 
   async function investigate(e:FormEvent){
     e.preventDefault(); setLoading(true); setError(""); setResult(null);
@@ -27,6 +29,18 @@ export default function SupplierInvestigationPage(){
       setResult(data.investigation);
     }catch(err){setError(err instanceof Error?err.message:"Investigation failed.");}
     finally{setLoading(false);}
+  }
+
+  async function inspectProducts(){
+    if(!url) return;
+    setProductLoading(true); setError("");
+    try{
+      const res=await fetch("/api/sourcing/investigate/products",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})});
+      const data=await res.json();
+      if(!res.ok || !data.ok) throw new Error(data.error||"Product extraction failed.");
+      setProducts(data.candidates||[]);
+    }catch(err){setError(err instanceof Error?err.message:"Product extraction failed.");}
+    finally{setProductLoading(false);}
   }
 
   return <main className="sleek-investigation">
@@ -58,6 +72,26 @@ export default function SupplierInvestigationPage(){
         <article><span>PRODUCT SIGNALS</span><strong>{result.qualitySignals.materialHits + result.qualitySignals.provenanceHits}</strong><p>{result.qualitySignals.materialHits} material/provenance terms detected across the storefront.</p></article>
       </div>
 
+      <div className="sleek-investigation__products-head">
+        <div><b>PRODUCT DISCOVERY</b><p>Now inspect the supplier's actual product pages. Only products with evidence move into the EAZY quality screen.</p></div>
+        <button onClick={inspectProducts} disabled={productLoading}>{productLoading?"EXTRACTING…":"INSPECT PRODUCTS"}</button>
+      </div>
+      {products.length>0 && <div className="sleek-investigation__products">
+        {products.map((p:any)=><article key={p.sourceUrl+p.title}>
+          {p.images[0] ? <img src={p.images[0]} alt="" /> : <div className="sleek-investigation__noimage">NO IMAGE</div>}
+          <div className="sleek-investigation__productbody">
+            <span>#{p.rank} · {p.brand||"UNBRANDED"}</span>
+            <h3>{p.title}</h3>
+            <div className="sleek-investigation__productmeta">
+              <b>{p.rating ? p.rating.toFixed(1)+"/5" : "NO RATING"}</b>
+              <b>{p.reviewCount ? p.reviewCount.toLocaleString()+" REVIEWS" : "NO REVIEW COUNT"}</b>
+              <b>{p.material||"MATERIAL NOT DISCLOSED"}</b>
+            </div>
+            <p>{p.description||"No product description extracted."}</p>
+            <strong className={p.rating>=4.5&&p.reviewCount>0?"evidence-pass":"evidence-pending"}>{p.marketProof}</strong>
+          </div>
+        </article>)}
+      </div>}
       <div className="sleek-investigation__rule">
         <b>HOUSE RULE</b>
         <p>Market demand gets a supplier through the door. It does not get a product into the house. Material, craftsmanship, finish, durability, authenticity, sample/QC and final EAZY approval still have to be earned.</p>
