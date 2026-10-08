@@ -1258,3 +1258,56 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Official site states handmade and made-to-order. Current leather catalogue carries a 48-product range; recent 2026 buyer/review content emphasizes fit, finishing, comfort and durability."
   }
 );
+
+
+// Premium Shopify additions — sourced from the current Vincero Nigeria catalogue.
+// Added to Shopify as ACTIVE sourcing candidates; House approval remains separate.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"vincero-old-money-black-gold", supplierId:"vincero-collective", title:"Old Money Edition — Black Gold",
+    sourceUrl:"https://vincerocollective.com/en-ng/collections/mens-watches/page/1",
+    tier:"PREMIUM", world:"Watches", brand:"Vincero Collective",
+    material:"316L stainless steel; sapphire crystal; Miyota 8215 automatic movement", origin:"Supplier origin / manufacturing provenance requires verification",
+    retail:681100, currency:"NGN", imageUrls:["https://vincerocollective.com/cdn/shop/files/Kairos-Black-Gold_Frontal-_Hi-Res_-Padding_2480x.jpg?v=1762440372"],
+    authenticityEvidence:"Official Vincero Collective Nigeria storefront and product page.",
+    provenanceEvidence:"Current official listing states 41mm, sapphire crystal, Miyota 8215, 316L stainless steel and 999 individually numbered pieces.",
+    status:"EVIDENCE_REQUIRED", edition:"LIMITED_EDITION",
+    limitedEdition:{isGenuinelyLimited:true,editionSize:999,scarcityReason:"Official Vincero listing states a limited drop of 999 individually numbered pieces.",evidence:[{value:"LIMITED DROP - 999 individually numbered pieces",sourceUrl:"https://vincerocollective.com/collections/non-sale-items/products/old-money-edition-stealth",capturedAt:"2026-10-08",confidence:"HIGH"}]},
+    reviewerNotes:"Premium anchor candidate with strong market proof: official page currently shows 6,417 reviews and 4.8/5. Product image URL is from Vincero CDN. Verify EAZY commercial rights, supply terms, warranty handling and final pricing before House approval."
+  },
+  {
+    id:"vincero-livewire-collectors-bundle", supplierId:"vincero-collective", title:"Collectors Bundle — Livewire Edition",
+    sourceUrl:"https://vincerocollective.com/products/collectors-bundle-livewire-edition",
+    tier:"PREMIUM", world:"Watches", brand:"Vincero Collective",
+    material:"316L stainless steel; sapphire-coated crystal; Seiko VK64 hybrid movement; Saffiano leather", origin:"Supplier origin / manufacturing provenance requires verification",
+    retail:680000, currency:"NGN", imageUrls:["https://cdn.shopify.com/s/files/1/0627/5517/files/Livewire_OverlappingArc_Sandris.webp?v=1775499436"],
+    authenticityEvidence:"Official Vincero Collective listing.",
+    provenanceEvidence:"Current official listing states limited drop of 500 individually numbered pieces per colorway, 316L stainless steel and sapphire-coated crystal.",
+    status:"EVIDENCE_REQUIRED", edition:"LIMITED_EDITION",
+    limitedEdition:{isGenuinelyLimited:true,editionSize:500,scarcityReason:"Official listing states 500 individually numbered units per colorway.",evidence:[{value:"LIMITED DROP - 500 individually numbered pieces per colorway",sourceUrl:"https://vincerocollective.com/products/collectors-bundle-livewire-edition",capturedAt:"2026-10-08",confidence:"HIGH"}]},
+    reviewerNotes:"Premium collector candidate. Current product page carries substantial overall brand review history. Verify current stock, Nigerian commercial terms and exact landed economics before House approval."
+  },
+  {
+    id:"vincero-forged-carbon-fathers-blue", supplierId:"vincero-collective", title:"Forged Carbon Father's Edition — Blue Ember",
+    sourceUrl:"https://vincerocollective.com/en-ng/collections/engraved-watches-for-him/products/icon-forged-carbon-blue",
+    tier:"PREMIUM", world:"Watches", brand:"Vincero Collective",
+    material:"Forged carbon; DLC-coated 316L stainless steel; sapphire crystal; Miyota 8215 automatic movement", origin:"Supplier origin / manufacturing provenance requires verification",
+    retail:727100, currency:"NGN", imageUrls:["https://cdn.shopify.com/s/files/1/0627/5517/files/FrontHero.webp?v=1777496713"],
+    authenticityEvidence:"Official Vincero Collective Nigeria listing.",
+    provenanceEvidence:"Current official page states a 41mm automatic watch with forged-carbon dial, 316L DLC case, sapphire crystal and 500 individually numbered units.",
+    status:"EVIDENCE_REQUIRED", edition:"LIMITED_EDITION",
+    limitedEdition:{isGenuinelyLimited:true,editionSize:500,scarcityReason:"Official listing states a limited drop of 500 individually numbered units.",evidence:[{value:"LIMITED DROP - 500 individually numbered units",sourceUrl:"https://vincerocollective.com/en-ng/collections/engraved-watches-for-him/products/icon-forged-carbon-blue",capturedAt:"2026-10-08",confidence:"HIGH"}]},
+    reviewerNotes:"High-impact premium watch candidate. The official page currently shows more than 6,000 reviews for the Forged Carbon family and lifetime warranty. Verify exact product availability and EAZY resale agreement."
+  },
+  {
+    id:"vincero-lion-sterling-silver-set", supplierId:"vincero-collective", title:"Built Different: The Lion — Sterling Silver Set",
+    sourceUrl:"https://vincerocollective.com/en-ng/collections/silver-watches-for-men/products/built-different-lion-set",
+    tier:"PREMIUM", world:"Jewellery", brand:"Vincero Collective",
+    material:"925 sterling silver; rhodium plating", origin:"Supplier origin / manufacturing provenance requires verification",
+    retail:385600, currency:"NGN", imageUrls:["https://vincerocollective.com/cdn/shop/files/Built-Different-Lion-Set_4d7034f9-3606-4146-816c-91d38dfa4aa6_2134x.jpg?v=1762440621"],
+    authenticityEvidence:"Official Vincero Collective product page.",
+    provenanceEvidence:"Current page describes a 22mm 925 sterling silver lion pendant with two layered curb chains and lifetime warranty.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Premium jewellery anchor with strong storytelling and presentation potential. Verify commercial rights, current stock and exact silver documentation before House approval."
+  }
+);
