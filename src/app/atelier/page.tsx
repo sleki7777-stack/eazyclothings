@@ -72,7 +72,7 @@ export default function Atelier() {
   function handlePhoto(file: File | undefined) {
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => { const value = String(reader.result); setPhoto(value); saveState({photo:value,size,garment,measurements,measureValues,approved}); };
+    reader.onload = () => { const value = String(reader.result); setPhoto(value); setApproved(false); saveState({photo:value,size,garment,measurements,measureValues,approved:false}); };
     reader.readAsDataURL(file);
   }
 
@@ -130,7 +130,7 @@ export default function Atelier() {
             </p>
             <div className="size-row">
               {sizes.map((item) => (
-                <button key={item} className={size === item ? "selected" : ""} onClick={() => { setSize(item); saveState({photo,size:item,garment,measurements,measureValues,approved}); }}>
+                <button key={item} className={size === item ? "selected" : ""} onClick={() => { setSize(item); setApproved(false); saveState({photo,size:item,garment,measurements,measureValues,approved:false}); }}>
                   {item}
                 </button>
               ))}
@@ -144,7 +144,7 @@ export default function Atelier() {
                 <p>Measurements can refine the fit, but they are never required to start.</p>
                 <div className="measurement-grid">
                   {["Chest","Waist","Shoulder","Sleeve","Neck","Trouser length"].map((label) => (
-                    <label key={label}>{label}<input placeholder="cm" inputMode="decimal" value={measureValues[label] || ""} onChange={(e) => { const next={...measureValues,[label]:e.target.value}; setMeasureValues(next); saveState({photo,size,garment,measurements,measureValues:next,approved}); }} /></label>
+                    <label key={label}>{label}<input placeholder="cm" inputMode="decimal" value={measureValues[label] || ""} onChange={(e) => { const next={...measureValues,[label]:e.target.value}; setMeasureValues(next); setApproved(false); saveState({photo,size,garment,measurements,measureValues:next,approved:false}); }} /></label>
                   ))}
                 </div>
               </div>
@@ -174,7 +174,7 @@ export default function Atelier() {
             <h2>What are we<br/><em>making today?</em></h2>
             <div className="garment-grid">
               {garmentTypes.map((item) => (
-                <button key={item} className={garment === item ? "selected" : ""} onClick={() => { setGarment(item); saveState({photo,size,garment:item,measurements,measureValues,approved}); }}>
+                <button key={item} className={garment === item ? "selected" : ""} onClick={() => { setGarment(item); setApproved(false); saveState({photo,size,garment:item,measurements,measureValues,approved:false}); }}>
                   {item}
                 </button>
               ))}
