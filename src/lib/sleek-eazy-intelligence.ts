@@ -48,7 +48,7 @@ export type SleekEazyEditionDecision = {
 export type CultureLane = "AFRICAN_HERITAGE"|"IGBO_HERITAGE"|"LAGOS_MADE"|"CONTEMPORARY_AFRICAN"|"GLOBAL_SELECT"|"AFRICAN_GLOBAL_FUSION";
 export type MakerType = "AFRICAN_ARTISAN"|"AFRICAN_BRAND"|"INTERNATIONAL_BRAND"|"CURATED_TRADER";
 
-export type SupplierPipelineStatus = "DISCOVERED" | "CONTACTED" | "ACCESS_GRANTED" | "TERMS_RECEIVED" | "APPROVED" | "REJECTED";
+export type SupplierPipelineStatus = "DISCOVERED" | "CONTACTED" | "ACCESS_GRANTED" | "TERMS_RECEIVED" | "QUALITY_REVIEW" | "APPROVED" | "REJECTED";
 
 export type SupplierRecord = {
   id:string; name:string; website:string; country:string; categories:string[]; makerType?:MakerType; cultureLanes?:CultureLane[];
@@ -188,8 +188,7 @@ export type ProductCandidate = {
 };
 
 export const SUPPLIER_PIPELINE: readonly SupplierPipelineStatus[] = [
-  "DISCOVERED","CONTACTED","ACCESS_GRANTED","TERMS_RECEIVED",
-  "SAMPLE_ORDERED","SAMPLE_RECEIVED","QC","APPROVED"
+  "DISCOVERED","CONTACTED","ACCESS_GRANTED","TERMS_RECEIVED","QUALITY_REVIEW","APPROVED"
 ];
 
 export const SLEEK_EAZY_MAKER_PRINCIPLES = [
