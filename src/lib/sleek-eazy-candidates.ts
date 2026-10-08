@@ -159,3 +159,132 @@ export const REAL_SUPPLIER_CANDIDATES: SupplierRecord[] = [
     notes:"Supplier rating 4.88/5 from 17 customer ratings on surfaced products. Commercial resale/fulfilment terms are not publicly established.", rating:4.88
   },
 ];
+
+
+// 2026-10-08 FIRST BEST-OF-COLLECTION SOURCING PASS
+// These are sourcing candidates, not live Shopify listings. Commercial rights,
+// supplier fulfilment and final House approval remain blocking gates.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"oriade-signature-fila", supplierId:"oriade", title:"Signature Fìlà Collection — Handwoven Yorùbá Caps",
+    sourceUrl:"https://www.oriade.co/products/signature-fila-collection-handwoven-modern-iconic",
+    tier:"CULTURAL_HOUSE", world:"Native Headwear", brand:"Orí Adé",
+    material:"Handwoven Aso-Oke", origin:"Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Orí Adé product page identifies the Signature Fìlà collection.",
+    provenanceEvidence:"Official product page states the caps are handwoven Yorùbá forms intended for agbadas, kaftans, senator wear and linen sets.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"High-fit native-headwear candidate. Made-to-order with Nigerian delivery and sizing support. Resale/wholesale rights must be established before any listing."
+  },
+  {
+    id:"ilisabawn-python-loafer", supplierId:"ilisabawn", title:"Python Leather Loafer — Bespoke",
+    sourceUrl:"https://ilisabawn.com/",
+    tier:"CULTURAL_HOUSE", world:"Footwear", brand:"Ilisabawn",
+    material:"Premium leather / python leather", origin:"Lagos, Nigeria", cost:80000, currency:"NGN starting price", retail:80000, imageUrls:[],
+    authenticityEvidence:"Official Ilisabawn storefront.",
+    provenanceEvidence:"Official site states the shoes are handcrafted in Lagos by skilled artisans.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong Lagos-made footwear candidate: made-to-measure, premium leather construction and explicit custom-order pathway. Need supplier/reseller or fulfilment agreement before listing."
+  },
+  {
+    id:"zerimar-mens-leather-moccasin", supplierId:"zerimar-1942", title:"Men's Leather Moccasin Loafer Flat Shoes — Zerimar",
+    sourceUrl:"https://www.faire.com/product/p_vwsrd46gvn",
+    tier:"SELECT", world:"Footwear", brand:"Zerimar 1942",
+    material:"High-quality Nappa leather", origin:"Spain", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Zerimar 1942.",
+    provenanceEvidence:"Wholesale listing states Made in Spain.",
+    status:"EVIDENCE_REQUIRED",
+    reviewerNotes:"Strong global footwear candidate: 4.8/5 brand rating from 57 reviews; listing reports 4.8 product quality, fulfilment and communication. Wholesale access is visible on Faire; EAZY supplier account/fulfilment terms still require verification."
+  },
+  {
+    id:"aim-eternal-black-onyx-signet", supplierId:"aim-eternal", title:"Stainless Steel Black Onyx Edged Men's Signet Ring",
+    sourceUrl:"https://www.faire.com/discover/ring-men",
+    tier:"SELECT", world:"Jewellery", brand:"Aim Eternal",
+    material:"Stainless steel; black onyx detail", origin:"Supplier verification required", imageUrls:[],
+    authenticityEvidence:"Faire wholesale catalogue identifies Aim Eternal.",
+    provenanceEvidence:"Wholesale marketplace source; SKU-level origin documentation pending.",
+    status:"EVIDENCE_REQUIRED",
+    reviewerNotes:"Strong signet-ring candidate with 4.8/5 brand rating from 755 reviews surfaced in the current Faire category. Verify exact stone/material construction and resale terms."
+  },
+  {
+    id:"cuff-daddy-black-onyx-tuxedo", supplierId:"cuff-daddy", title:"Men's Tuxedo Cufflinks and Studs — Black Onyx with Gold Tone",
+    sourceUrl:"https://www.faire.com/discover/cufflinks-for-men",
+    tier:"SELECT", world:"Ceremony", brand:"Cuff-Daddy",
+    material:"Black onyx detail; gold-tone metal", origin:"Supplier verification required", imageUrls:[],
+    authenticityEvidence:"Faire wholesale catalogue identifies Cuff-Daddy.",
+    provenanceEvidence:"Wholesale marketplace source; SKU-level origin documentation pending.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Good ceremony-world candidate: current Faire result shows 4.9/5 from 16 brand reviews. Verify exact metal composition, finish, packaging and resale terms."
+  },
+  {
+    id:"dukhni-royal-oud-attar-gift", supplierId:"dukhni", title:"Royal Oud Attar Gift Set",
+    sourceUrl:"https://www.faire.com/discover/oud-parfum",
+    tier:"SELECT", world:"Fragrance & Grooming", brand:"Dukhni",
+    material:"Fragrance / attar", origin:"Supplier verification required", imageUrls:[],
+    authenticityEvidence:"Faire wholesale catalogue identifies Dukhni.",
+    provenanceEvidence:"Wholesale marketplace source; exact manufacturing/origin documentation pending.",
+    status:"EVIDENCE_REQUIRED",
+    reviewerNotes:"Strong gifting/fragrance candidate: current Faire listing shows 5.0/5 brand rating from 13 reviews. Fragrance-category regulatory, authenticity, shipping and reseller requirements must be verified before listing."
+  },
+  {
+    id:"al-haramain-amber-oud-gold", supplierId:"al-haramain", title:"Amber Oud Gold Edition Eau de Parfum",
+    sourceUrl:"https://www.faire.com/discover/oud-parfum",
+    tier:"SELECT", world:"Fragrance & Grooming", brand:"Al Haramain",
+    material:"Eau de parfum", origin:"United Arab Emirates / exact batch documentation required", imageUrls:[],
+    authenticityEvidence:"Current Faire wholesale listing identifies the branded product and supplier.",
+    provenanceEvidence:"Wholesale marketplace source; batch/authorisation documentation required.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Current Faire result shows 5.0/5 supplier rating from 32 reviews. Strong branded-fragrance candidate, but authenticity, authorised resale, dangerous-goods shipping and Nigerian regulatory requirements are hard gates."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"oriade", name:"Orí Adé", website:"https://www.oriade.co/", country:"Nigeria",
+    categories:["Native Headwear","Yorùbá Fìlà","Aso-Oke"], manufacturingOrigin:"Nigeria",
+    materials:["Aso-Oke"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official store offers handwoven Fìlà, made-to-order sizing and Nigerian delivery. Resale/wholesale relationship still needs direct agreement."
+  },
+  {
+    id:"ilisabawn", name:"Ilisabawn", website:"https://ilisabawn.com/", country:"Nigeria",
+    categories:["Men's Footwear","Leather","Loafers","Mules","Boots"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Full-grain leather","Python leather","Suede"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site states handcrafted in Lagos, made-to-measure and international delivery. Reseller/fulfilment terms need direct verification."
+  },
+  {
+    id:"zerimar-1942", name:"Zerimar 1942", website:"https://www.faire.com/", country:"Spain",
+    categories:["Men's Footwear","Leather Loafers"], manufacturingOrigin:"Spain",
+    materials:["Nappa leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current wholesale listing shows 4.8/5 brand rating from 57 reviews with 4.8 product quality, fulfilment and communication."
+  },
+  {
+    id:"aim-eternal", name:"Aim Eternal", website:"https://www.faire.com/", country:"United States",
+    categories:["Men's Rings","Signet Rings"], manufacturingOrigin:"SKU verification required",
+    materials:["Stainless steel","Onyx"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale catalogue",
+    notes:"Current Faire category result shows 4.8/5 from 755 reviews."
+  },
+  {
+    id:"cuff-daddy", name:"Cuff-Daddy", website:"https://www.faire.com/", country:"United States",
+    categories:["Cufflinks","Ceremony Accessories"], manufacturingOrigin:"SKU verification required",
+    materials:["Metal","Onyx"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale catalogue",
+    notes:"Current Faire category result shows 4.9/5 from 16 reviews for the Black Onyx tuxedo cufflink/stud set."
+  },
+  {
+    id:"dukhni", name:"Dukhni", website:"https://www.faire.com/", country:"United Kingdom / supplier verification required",
+    categories:["Fragrance","Oud","Gifts"], manufacturingOrigin:"SKU verification required",
+    materials:["Fragrance oils","Attar"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale catalogue",
+    notes:"Current Faire result shows 5.0/5 from 13 reviews for Dukhni's Royal Oud Attar Gift Set."
+  },
+  {
+    id:"al-haramain", name:"Al Haramain", website:"https://www.faire.com/", country:"United Arab Emirates / supplier verification required",
+    categories:["Fragrance","Oud","Gifts"], manufacturingOrigin:"SKU/batch verification required",
+    materials:["Fragrance"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale catalogue",
+    notes:"Current Faire result shows 5.0/5 from 32 reviews for the supplier listing of Amber Oud Gold Edition. Authorised resale and batch authenticity remain mandatory gates."
+  }
+);
