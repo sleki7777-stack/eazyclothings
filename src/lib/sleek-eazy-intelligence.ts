@@ -1,5 +1,5 @@
 export type SourcingTier = "SELECT" | "PRIVATE" | "OBJECTS" | "CULTURAL_HOUSE";
-export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "SAMPLE_REQUIRED" | "QC_PENDING" | "APPROVED" | "REJECTED";
+export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "SAMPLE_REQUIRED" | "QC_PENDING" | "APPROVED" | "REJECTED";\nexport type SleekEazyEdition = "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";\n\nexport type LimitedEditionEvidence = {\n  isGenuinelyLimited:boolean;\n  editionSize?:number;\n  unitsAvailable?:number;\n  scarcityReason?:string;\n  evidence?:EvidenceRecord[];\n};\n\nexport type SleekEazyEditionDecision = {\n  edition:SleekEazyEdition;\n  eligible:boolean;\n  reason:string;\n};
 export type CultureLane = "AFRICAN_HERITAGE"|"LAGOS_MADE"|"CONTEMPORARY_AFRICAN"|"GLOBAL_SELECT"|"AFRICAN_GLOBAL_FUSION";
 export type MakerType = "AFRICAN_ARTISAN"|"AFRICAN_BRAND"|"INTERNATIONAL_BRAND"|"CURATED_TRADER";
 
@@ -57,7 +57,7 @@ export type ProductCandidate = {
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
   sampleStatus:"NOT_REQUESTED"|"REQUESTED"|"RECEIVED"|"INSPECTED";
   qcStatus:"PENDING"|"PASSED"|"FAILED"; status:ProductReviewStatus;
-  reviewerNotes?:string; createdAt:string; updatedAt:string;
+  reviewerNotes?:string; createdAt:string; updatedAt:string;\n  edition?:SleekEazyEdition; limitedEdition?:LimitedEditionEvidence;
 };
 
 export const SUPPLIER_PIPELINE: readonly SupplierPipelineStatus[] = [
@@ -177,7 +177,7 @@ export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, s
  * Market demand and positive customer evidence are discovery gates, not substitutes
  * for physical/product QC. A supplier can contribute zero products.
  */
-export const SLEEK_EAZY_CURATION_RULE = {
+export const SLEEK_EAZY_EDITION_RULES = {\n  limitedEditionRequiresVerifiedScarcity: true,\n  limitedEditionRequiresHouseApproval: true,\n  limitedEditionRequiresQcPassed: true,\n  limitedEditionRequiresMarketProof: true,\n  limitedEditionNeverArtificial: true,\n  archiveWhenSoldOut: true,\n  weeklyUpdatesAreCurated: true,\n  monthlyEditIsCurated: true\n} as const;\n\nexport function decideEdition(candidate:ProductCandidateWithMarketProof):SleekEazyEditionDecision {\n  if (candidate.status !== "APPROVED" || candidate.qcStatus !== "PASSED") return {edition:"CORE", eligible:false, reason:"Product is not approved and QC-cleared."};\n  if (!candidate.marketProof || !candidate.marketProof.salesSignal) return {edition:"CORE", eligible:false, reason:"Market proof is required before an edition can be published."};\n  const limited = candidate.limitedEdition;\n  if (limited?.isGenuinelyLimited && (limited.editionSize || limited.unitsAvailable) && limited.scarcityReason && limited.evidence?.length) {\n    return {edition:"LIMITED_EDITION", eligible:true, reason:"Verified genuine scarcity supports limited-edition treatment."};\n  }\n  return {edition:candidate.edition || "SEASONAL_EDIT", eligible:true, reason:"Approved product belongs in the current curated edit."};\n}\n\nexport const SLEEK_EAZY_CURATION_RULE = {
   principle: "BEST_OF_SUPPLIER_ONLY",
   defaultMaxProductsPerSupplier: 27,
   minimumQualityScore: 90,
