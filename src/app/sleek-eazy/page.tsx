@@ -171,14 +171,14 @@ export default function SleekEazy() {
           {cats.map((c) => <button key={c} className={cat === c ? "active" : ""} onClick={() => setCat(c)}>{c.replace("_", " ")}</button>)}
         </div>
         {catalogueError && <div className="sleek-empty"><p className="eyebrow">CATALOGUE STATUS</p><h3>Live catalogue unavailable.</h3><p>{catalogueError}</p></div>}
-        <div className="sleek-grid">
+        <div className="sleek-edit-banner"><p className="eyebrow">THE EDIT</p><h3>New discoveries, carefully chosen.</h3><p>We update Sleek Eazy regularly, but never for the sake of volume. Weekly discoveries and monthly edits are made from products that have already earned the house standard.</p></div>\n        <div className="sleek-grid">
           {filtered.length ? filtered.map((x) => (
             <article className="sleek-card" key={x.id}>
               <div className="sleek-img">
                 {x.image ? <img src={x.image} alt={x.alt || x.title} /> : <div className="sleek-image-missing">IMAGE PENDING<br/><small>REAL PRODUCT IMAGE REQUIRED</small></div>}
                 <button onClick={() => addToComposition(x)} disabled={!x.transparencyReady || !x.image || !x.variants[0]?.availableForSale}>Add to composition</button>
               </div>
-              <p>{x.productType}</p><h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price || 0).toLocaleString()}</strong>
+              <p>{x.productType}</p>{x.edition === "LIMITED_EDITION" && <span className="sleek-edition-badge">LIMITED EDITION{x.limitedEdition?.editionSize ? ` · ${x.limitedEdition.editionSize} MADE` : ""}</span>}{x.edition === "SEASONAL_EDIT" && <span className="sleek-edition-badge">CURRENT EDIT</span>}<h3>{x.title}</h3><strong>₦{Number(x.variants[0]?.price || 0).toLocaleString()}</strong>
               <div className="sleek-transparency">
                 <span>{x.vendor || "Supplier not recorded"}</span>
                 <span>{x.origin || "Origin not recorded"}</span>
