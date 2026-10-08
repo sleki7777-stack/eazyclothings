@@ -54,7 +54,7 @@ export async function GET() {
     const allNodes: ShopifyCatalogue["products"]["nodes"] = [];
     let cursor: string | null = null;
     for (let page = 0; page < 20; page += 1) {
-      const data = await shopifyAdminGraphql<ShopifyCatalogue>(QUERY, { cursor });
+      const data: ShopifyCatalogue = await shopifyAdminGraphql<ShopifyCatalogue>(QUERY, { cursor });
       allNodes.push(...data.products.nodes);
       if (!data.products.pageInfo.hasNextPage || !data.products.pageInfo.endCursor) break;
       cursor = data.products.pageInfo.endCursor;
