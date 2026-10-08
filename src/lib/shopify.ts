@@ -69,6 +69,30 @@ export function verifyShopifyWebhook(
   );
 }
 
+export type ShopifyProductIdentity = {
+  id: string;
+  title: string;
+  vendor: string;
+  productType: string;
+  tags: string[];
+};
+
+export async function getShopifyProductIdentities(productIds: string[]) {
+  const ids = [...new Set(productIds.filter(Boolean).map(id => id.startsWith("gid://") ? id : `gid://shopify/Product/${id}`))];
+  if (!ids.length) return new Map<string, ShopifyProductIdentity>();
+  const data = await shopifyAdminGraphql<{
+    nodes: Array<ShopifyProductIdentity | null>;
+  }>(`#graphql
+query GetProductIdentities($ids: [ID!]!) {
+  nodes(ids: $ids) {
+    ... on Product { id title vendor productType tags }
+  }
+}`, { ids });
+  return new Map(
+    data.nodes.filter((node): node is ShopifyProductIdentity => Boolean(node?.id)).map(node => [node.id, node])
+  );
+}
+
 export const SHOPIFY_ORDER_QUERY = `#graphql
 query GetOrder(\$id: ID!) {
   order(id: \$id) {
