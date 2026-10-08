@@ -69,6 +69,8 @@ export async function GET() {
       const qualityCheck = meta.quality_check || tagValue("QC:");
       const provenance = meta.provenance || tagValue("PROVENANCE:");
       const approved = product.tags.some((tag) => tag.toUpperCase() === "EAZY_APPROVED");\n      const edition = (meta.edition || "CORE").toUpperCase();\n      const limitedEdition = meta.limited_edition ? (() => { try { return JSON.parse(meta.limited_edition); } catch { return undefined; } })() : undefined;
+      const firstVariant = product.variants.nodes[0];
+      const purchaseReady = Boolean(approved && product.tags.some((tag) => tag.toUpperCase() === "MARKET-PROOF") && (product.featuredImage?.url || product.images.nodes[0]?.url) && firstVariant?.availableForSale);
       const transparencyReady = Boolean(sourceType && origin && material && qualityCheck && provenance && approved);
       return {
       id: product.id,
@@ -80,6 +82,7 @@ export async function GET() {
       sourceType,
       origin,
       transparencyReady,
+      purchaseReady,
       transparency: { material, qualityCheck, provenance, approved },
       image: product.featuredImage?.url || product.images.nodes[0]?.url || null,
       alt: product.featuredImage?.altText || product.title,
