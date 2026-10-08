@@ -41,6 +41,7 @@ export async function POST(req:Request){
     const res=await fetch(url.toString(),{signal:controller.signal,redirect:"follow",headers:{"User-Agent":"EAZY-Sleek-Eazy-Product-Investigator/1.0"}});
     clearTimeout(timer);
     const html=(await res.text()).slice(0,MAX_BYTES);
+    const plain=html.replace(/<script[\\s\\S]*?<\\/script>/gi," ").replace(/<style[\\s\\S]*?<\\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\\s+/g," ").toLowerCase();
     const products:any[]=[];
     for(const m of html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)){
       try{walk(JSON.parse(m[1]),products)}catch{}
@@ -71,6 +72,7 @@ export async function POST(req:Request){
         rating:rating||null,
         reviewCount:reviewCount||null,
         marketProof:(rating>=4.5&&reviewCount>0)?"POSITIVE_REVIEW_SIGNAL":"EVIDENCE_REQUIRED",
+        salesEvidence:(/\\b(?:sold|units sold|orders|purchased|best[- ]seller|bestseller|best[- ]selling|sold out)\\b/i.test(plain))?"TRACTION_SIGNAL_DETECTED":null,
         evidence:{
           productSchema:true,
           reviewEvidence:rating>0||reviewCount>0,
@@ -84,7 +86,7 @@ export async function POST(req:Request){
       finalUrl:res.url,
       productCount:candidates.length,
       candidates,
-      nextStep:"Candidates still require source verification, market-proof verification, quality screening, sample/QC and House approval."
+      nextStep:"Candidates still require source verification, market-proof verification, quality screening and explicit House approval. No sample stage is used."
     });
   }catch(error){
     return NextResponse.json({ok:false,error:error instanceof Error?error.message:"Unable to extract product candidates."},{status:502});
