@@ -366,6 +366,69 @@ export function buildSupplierSelectionReport(
   };
 }
 
+export type SampleQcAction = "REQUEST_SAMPLE"|"MARK_RECEIVED"|"START_QC"|"PASS_QC"|"FAIL_QC"|"HOUSE_APPROVE"|"HOUSE_REJECT";
+
+export type SampleQcRecord = {
+  candidateId:string;
+  supplierId:string;
+  action:SampleQcAction;
+  performedAt:string;
+  performedBy:string;
+  notes?:string;
+  evidence?:EvidenceRecord[];
+};
+
+export const SAMPLE_QC_RULES = {
+  selectedProductsRequireSample: true,
+  receivedSampleRequiresPhysicalInspection: true,
+  qcMustPassBeforeHouseApproval: true,
+  houseApprovalMustBeExplicit: true,
+  failedQcCannotPublish: true
+} as const;
+
+export function applySampleQcAction(
+  candidate:ProductCandidateWithMarketProof,
+  action:SampleQcAction,
+  notes?:string
+):{candidate:ProductCandidateWithMarketProof;allowed:boolean;reason:string} {
+  const next={...candidate, updatedAt:new Date().toISOString()};
+  if(action==="REQUEST_SAMPLE"){
+    if(candidate.status!=="CANDIDATE" && candidate.status!=="EVIDENCE_REQUIRED" && candidate.status!=="SAMPLE_REQUIRED")
+      return {candidate,allowed:false,reason:"Only a selected candidate can enter sample review."};
+    next.sampleStatus="REQUESTED"; next.status="SAMPLE_REQUIRED";
+    return {candidate:next,allowed:true,reason:"Sample requested. Product remains unpublished."};
+  }
+  if(action==="MARK_RECEIVED"){
+    if(candidate.sampleStatus!=="REQUESTED") return {candidate,allowed:false,reason:"A sample must be requested before it can be marked received."};
+    next.sampleStatus="RECEIVED"; next.status="QC_PENDING";
+    return {candidate:next,allowed:true,reason:"Sample received. Physical inspection is now required."};
+  }
+  if(action==="START_QC"){
+    if(candidate.sampleStatus!=="RECEIVED") return {candidate,allowed:false,reason:"QC can only start after the physical sample is received."};
+    next.status="QC_PENDING";
+    return {candidate:next,allowed:true,reason:"QC inspection opened."};
+  }
+  if(action==="PASS_QC"){
+    if(candidate.sampleStatus!=="RECEIVED" && candidate.sampleStatus!=="INSPECTED") return {candidate,allowed:false,reason:"A received sample is required before QC can pass."};
+    next.sampleStatus="INSPECTED"; next.qcStatus="PASSED"; next.status="QC_PENDING";
+    return {candidate:next,allowed:true,reason:"QC passed. Explicit House approval is still required."};
+  }
+  if(action==="FAIL_QC"){
+    next.sampleStatus="INSPECTED"; next.qcStatus="FAILED"; next.status="REJECTED";
+    return {candidate:next,allowed:true,reason:"QC failed. Product is blocked from publication."};
+  }
+  if(action==="HOUSE_APPROVE"){
+    if(candidate.qcStatus!=="PASSED" || candidate.sampleStatus!=="INSPECTED") return {candidate,allowed:false,reason:"House approval requires inspected sample and passed QC."};
+    next.status="APPROVED";
+    return {candidate:next,allowed:true,reason:"House approval recorded. Product may now enter the publishing pipeline."};
+  }
+  if(action==="HOUSE_REJECT"){
+    next.status="REJECTED";
+    return {candidate:next,allowed:true,reason:"House rejection recorded. Product cannot publish."};
+  }
+  return {candidate,allowed:false,reason:"Unsupported sample/QC action."};
+}
+
 export function supplierStatusLabel(status:SupplierPipelineStatus){
   return status.replaceAll("_"," ");
 }
