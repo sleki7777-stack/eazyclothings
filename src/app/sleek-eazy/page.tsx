@@ -60,6 +60,7 @@ export default function SleekEazy() {
   const [bag, setBag] = useState<string[]>([]);
   const [products, setProducts] = useState<CatalogueProduct[]>([]);
   const [catalogueLive, setCatalogueLive] = useState(false);
+  const [bagOpen, setBagOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -101,10 +102,10 @@ export default function SleekEazy() {
       <header className="sleek-nav">
         <a href="/" className="back">EAZY</a>
         <div className="sleek-word"><span>SLEEK</span> EAZY</div>
-        <a href="/composition">Composition <span>{bag.length}</span></a>
+        <button className="sleek-bag-link" onClick={() => setBagOpen(true)}>Composition <span>{bag.length}</span></button>
       </header>
 
-      <section className="sleek-hero">
+      {bagOpen && <aside className="sleek-bag-drawer" aria-label="SLEEK EAZY composition bag">\n        <div className="sleek-bag-head"><div><p className="eyebrow">SLEEK EAZY</p><h2>Your composition</h2></div><button onClick={() => setBagOpen(false)} aria-label="Close">×</button></div>\n        <div className="sleek-bag-list">{bag.length ? bag.map((raw, i) => { const item = JSON.parse(raw) as {title:string;productType:string;price:string}; return <div className="sleek-bag-row" key={i}><div><small>{item.productType}</small><strong>{item.title}</strong></div><span>₦{Number(item.price).toLocaleString()}</span><button onClick={() => { const next = bag.filter((_, n) => n !== i); setBag(next); localStorage.setItem("eazy-sleek-bag", JSON.stringify(next)); }}>Remove</button></div> }) : <div className="sleek-empty"><p className="eyebrow">COMPOSITION</p><h3>Nothing selected.</h3><p>Choose an object that belongs with your EAZY look.</p></div>}</div>\n        {bag.length > 0 && <div className="sleek-bag-foot"><a className="primary dark" href="/composition">Continue to composition ↗</a></div>}\n      </aside>}\n\n      <section className="sleek-hero">
         <div className="sleek-heroimg"></div>
         <div className="sleek-herotext">
           <p className="eyebrow">SLEEK EAZY · THE MEN'S OBJECT HOUSE</p>
