@@ -218,10 +218,28 @@ export type ExactProductImageEvidence = {
   notes?:string;
 };
 
+export type SupplierProductVariant = {
+  id:string;
+  title:string;
+  sku?:string;
+  supplierPrice:number;
+  supplierCurrency:string;
+  retailPrice:number;
+  retailCurrency:string;
+  imageUrls:string[];
+  available?:boolean;
+  attributes?:Record<string,string>;
+  imageRightsVerified?:boolean;
+  exactImageMatchesSource?:boolean;
+  exactImageEvidence?:ExactProductImageEvidence;
+  notes?:string;
+};
+
 export type ProductCandidate = {
   id:string; supplierId:string; title:string; sourceUrl:string; tier:SourcingTier; cultureLanes?:CultureLane[]; artisanMade?:boolean;
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
+  variants?:SupplierProductVariant[];
   imageRightsVerified?:boolean; commercialTermsVerified?:boolean; exactImageMatchesSource?:boolean; exactImageEvidence?:ExactProductImageEvidence;
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
   status:ProductReviewStatus;
