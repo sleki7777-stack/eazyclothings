@@ -295,8 +295,18 @@ export function selectBestOfSupplier(
 ):ProductCandidateWithMarketProof[] {
   const ranked = candidates
     .filter(c => c.supplierId === supplier.id)
-    .map(c => ({ candidate:c, quality:evaluateQualityGate(c, supplier) }))
-    .filter(x => x.quality.passed && x.quality.score >= SLEEK_EAZY_CURATION_RULE.minimumQualityScore)
+    .map(c => ({
+      candidate:c,
+      quality:evaluateQualityGate(c, supplier),
+      market:evaluateMarketProof(c.marketProof ? {
+        storefrontUrl:c.sourceUrl,
+        salesEvidence:c.marketProof.salesEvidence,
+        reviewEvidence:c.marketProof.reviewEvidence || (c.marketProof.reviewEvidence ? [{value:c.marketProof.reviewEvidence,sourceUrl:c.sourceUrl,capturedAt:c.updatedAt,confidence:"MEDIUM"}] : []),
+        rating:c.marketProof.rating,
+        reviewCount:c.marketProof.reviewCount
+      } : undefined)
+    }))
+    .filter(x => x.market.qualifies && x.quality.passed && x.quality.score >= SLEEK_EAZY_CURATION_RULE.minimumQualityScore)
     .sort((a,b) => {
       const scoreDelta = b.quality.score - a.quality.score;
       if (scoreDelta !== 0) return scoreDelta;
