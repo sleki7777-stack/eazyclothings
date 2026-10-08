@@ -97,6 +97,7 @@ export async function GET() {
         availableForSale: variant.availableForSale,
         inventoryQuantity: variant.inventoryQuantity,
       })),
+      };
     });
     return NextResponse.json({ ok: true, configured: true, products });
   } catch (error) {
