@@ -19,7 +19,7 @@ export default function CollectionsPage() {
       {eazyCollections.map((item) => <button key={item.slug} className={active === item.slug ? "active" : ""} onClick={() => setActive(item.slug)}>{item.title.toUpperCase()}</button>)}
     </nav>
     {collections.map((collection) => <section className="collection-world" key={collection.slug}>
-      <div className="collection-heading"><div><p className="eyebrow">{collection.eyebrow}</p><h2>{collection.title}</h2></div><p>{collection.description}</p></div>
+      <div className="collection-heading"><div><p className="eyebrow">{collection.eyebrow}</p><h2>{collection.title}</h2></div><p>{collection.description}</p></div><div className="collection-promo"><img src={collection.promoImage} alt={collection.promoAlt} loading="lazy"/><div><span className="eyebrow">HOUSE PROMOTIONAL EDIT</span><strong>{collection.title}</strong><small>{collection.promoAlt}</small></div></div>
       <div className="collection-grid">{collection.works.map((item) => <a className="collection-card" key={item.code} href={`/works/${item.code.toLowerCase().replace(/\s+/g, "-")}`}>
         <div className="collection-image"><img src={item.image} alt={item.name} loading="lazy"/><span>{item.code}</span></div>
         <div className="collection-meta"><div><small>{item.form}</small><h3>{item.name}</h3></div><small>{item.direction}</small></div>
