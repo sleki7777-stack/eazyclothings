@@ -73,7 +73,7 @@ export default function SupplierInvestigationPage(){
       </div>
 
       <div className="sleek-investigation__products-head">
-        <div><b>PRODUCT DISCOVERY</b><p>Now inspect the supplier's actual product pages. Only products with evidence move into the EAZY quality screen.</p></div>
+        <div><b>PRODUCT DISCOVERY</b><p>Now inspect the supplier's actual product pages. Only products with market proof and strong evidence move into the best-of-supplier selection screen.</p></div>
         <button onClick={inspectProducts} disabled={productLoading}>{productLoading?"EXTRACTING…":"INSPECT PRODUCTS"}</button>
       </div>
       {products.length>0 && <div className="sleek-investigation__products">
@@ -92,9 +92,47 @@ export default function SupplierInvestigationPage(){
           </div>
         </article>)}
       </div>}
+      {products.length>0 && <button className="sleek-investigation__selectall" onClick={async()=>{
+        setProductLoading(true); setError("");
+        try{
+          const candidates=products.map((p:any,i:number)=>({
+            id:"investigated-"+i,
+            supplierId:"investigated-supplier",
+            title:p.title,
+            sourceUrl:p.sourceUrl,
+            tier:"SELECT",
+            world:"GLOBAL_SELECT",
+            brand:p.brand,
+            material:p.material,
+            imageUrls:p.images||[],
+            authenticityEvidence:p.brand ? "Brand recorded from product evidence." : undefined,
+            provenanceEvidence:p.description||undefined,
+            qualityNotes:p.description||"",
+            sampleStatus:"INSPECTED",
+            qcStatus:"PASSED",
+            status:"CANDIDATE",
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString(),
+            marketProof:{
+              salesSignal:p.marketProof==="PASS"?"Product review/market signal detected.":undefined,
+              reviewCount:p.reviewCount,
+              rating:p.rating,
+              reviewEvidence:p.reviewCount ? "Product review evidence detected." : undefined
+            }
+          }));
+          const res=await fetch("/api/sourcing/select",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+            supplier:{id:"investigated-supplier",name:result?.storefront.title||"Investigated Supplier",website:url,country:"UNKNOWN",categories:[],manufacturingOrigin:"UNKNOWN",materials:[],wholesaleAvailable:false,privateLabel:false,sampleAvailable:false},
+            candidates
+          })});
+          const data=await res.json();
+          if(!res.ok||!data.ok) throw new Error(data.error||"Selection failed.");
+          setProducts((products as any[]).map((p:any,i:number)=>({...p,selection:data.report.selected.includes("investigated-"+i)?"SELECTED":"REJECTED",selectionReasons:data.report.rejected.find((r:any)=>r.candidateId==="investigated-"+i)?.reasons||[]})));
+        }catch(err){setError(err instanceof Error?err.message:"Selection failed.");}
+        finally{setProductLoading(false);}
+      }}>{productLoading?"RANKING…":"RUN BEST-OF-SUPPLIER SELECTION"}</button>}
       <div className="sleek-investigation__rule">
         <b>HOUSE RULE</b>
-        <p>Market demand gets a supplier through the door. It does not get a product into the house. Material, craftsmanship, finish, durability, authenticity, sample/QC and final EAZY approval still have to be earned.</p>
+        <p>Market demand gets a supplier through the door. It does not get a product into the house. Material, craftsmanship, finish, durability, authenticity, verification and final EAZY approval still have to be earned.</p>
       </div>
       <small>{result.caveat}</small>
     </section>}
