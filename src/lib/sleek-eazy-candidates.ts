@@ -840,3 +840,125 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Official site presents a 2026 collection, Men's Collection, custom jewelry and worldwide shipping from Lagos."
   }
 );
+
+
+// 2026-10-08: further best-of coverage from live supplier research.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"kaftanlagos-black-penny-loafer", supplierId:"kaftan-lagos", title:"Black Leather Penny Loafers",
+    sourceUrl:"https://www.kaftanlagos.com/products/black-leather-penny-loafers", tier:"STRONGER", world:"Footwear", brand:"Kaftan Lagos",
+    material:"Leather", origin:"Lagos, Nigeria", retail:240000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Kaftan Lagos product page.",
+    provenanceEvidence:"Official product page states handcrafted in Lagos, Nigeria using fine leather over several weeks.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Very strong formal-footwear candidate at ₦240,000 with sizes 40–46 and worldwide shipping. Made-to-order production and actual supplier relationship must be verified before EAZY resale."
+  },
+  {
+    id:"leathergear-venice-penny-loafer", supplierId:"leathergear-venice", title:"VENICE Penny Loafer — Black",
+    sourceUrl:"https://www.leathergearcompany.com/", tier:"STRONGER", world:"Footwear", brand:"LeatherGear",
+    material:"Premium leather", origin:"Lagos, Nigeria", retail:145500, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official LeatherGear storefront.",
+    provenanceEvidence:"Official site states handcrafted in Lagos, Nigeria and says it uses hand-selected premium leather.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong formalwear candidate with a clear Lagos craftsmanship story. Current storefront lists VENICE at ₦145,500 and TORINO/MILAN alternatives. Verify exact leather grade, construction, warranty, imagery and fulfilment partnership."
+  },
+  {
+    id:"julzcraft-loafer-formal-edit", supplierId:"julz-craft", title:"Julz Craft — Premium Handcrafted Loafer / Formal Edit",
+    sourceUrl:"https://www.julzcraft.com.ng/", tier:"ACCESSIBLE", world:"Footwear", brand:"Julz Craft",
+    material:"Genuine leather", origin:"Lagos, Nigeria", imageUrls:[],
+    authenticityEvidence:"Official Julz Craft storefront.",
+    provenanceEvidence:"Official site states premium handcrafted footwear from Lagos and 100% genuine leather.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE"],
+    reviewerNotes:"Discovery candidate spanning loafers, formal shoes, boots and sandals. Keep only the strongest men's SKU after exact product-level QC and commercial terms are verified."
+  },
+  {
+    id:"ciska-handmade-casual-loafer", supplierId:"ciska-stores", title:"Handmade Casual Loafers XP",
+    sourceUrl:"https://ciska.com.ng/product/handmade-casual-loafers-xp/", tier:"ENTRY", world:"Footwear", brand:"CIska Stores",
+    material:"Handmade leather construction; exact leather grade requires verification", origin:"Nigeria", retail:30000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official CIska product page.",
+    provenanceEvidence:"Official product page identifies the product as handmade and provides current customer reviews.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE"],
+    reviewerNotes:"Useful lower-tier market-proof candidate at ₦30,000: current page shows positive customer reviews citing intact delivery, neat finishing, solid quality and attractive design. EAZY's premium bar still requires material and construction verification."
+  },
+  {
+    id:"custimikelo-argentinian-brown-belt", supplierId:"custi-mikelo", title:"Argentinian Brown Leather Belt",
+    sourceUrl:"https://www.faire.com/product/p_kut7w2myvs", tier:"ACCESSIBLE", world:"Belts & Leather", brand:"Custi Mikelo: Made in Spain",
+    material:"100% leather; metal buckle", origin:"Spain", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing.",
+    provenanceEvidence:"Current listing states Made in Spain and 100% leather.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent belt candidate: 4.9/5 brand rating from 113 reviews, 4.9 product quality and fulfilment, with 7 product reviews. Adjustable screw construction helps fit range. Verify wholesale landed cost to Nigeria."
+  },
+  {
+    id:"glove-story-cowhide-checkerboard-belt", supplierId:"glove-story", title:"Men's Cowhide Leather Belt — Checkerboard Effect CT059",
+    sourceUrl:"https://www.faire.com/product/p_288vry73md", tier:"ACCESSIBLE", world:"Belts & Leather", brand:"Glove Story",
+    material:"Premium cowhide leather; metal buckle", origin:"France", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing.",
+    provenanceEvidence:"Current listing states Made in France and premium cowhide leather.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong market-proof belt candidate: 4.9/5 brand rating from 21 reviews and 4.9 product quality/fulfilment. The textured finish differentiates it from plain belts."
+  },
+  {
+    id:"renato-borzatta-italian-vegetable-tan-belt", supplierId:"renato-borzatta", title:"RB4028B Men's Belt — Italian Vegetable-Tanned Leather",
+    sourceUrl:"https://www.faire.com/product/p_ybpb972gm7", tier:"STRONGER", world:"Belts & Leather", brand:"Kaili mood / RENATO BORZATTA",
+    material:"Genuine vegetable-tanned leather; satin-silver buckle", origin:"Italy", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing.",
+    provenanceEvidence:"Current listing states Made in Italy and genuine vegetable-tanned leather with handcrafted construction.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"High-end belt candidate with a more distinctive geometric woven/foil surface. Supplier brand currently shows 4.9/5 from 41 reviews. Strong fit for Premium Leather/Ceremony after SKU-level verification."
+  },
+  {
+    id:"manready-leather-valet-tray-live", supplierId:"manready", title:"Leather Valet Tray — Catch All",
+    sourceUrl:"https://www.faire.com/product/p_e7mtn9avma", tier:"ACCESSIBLE", world:"Objects", brand:"Manready Mercantile",
+    material:"Leather", origin:"United States", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing.",
+    provenanceEvidence:"Current listing identifies leather construction and U.S. production.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent desk/valet object with a strong B2B signal: current listing shows 5.0/5 brand rating from 54 reviews, 5.0 product quality and fulfilment. Verify current images, packaging and landed economics."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"kaftan-lagos", name:"Kaftan Lagos", website:"https://www.kaftanlagos.com/", country:"Nigeria",
+    categories:["Men's Leather Loafers","Formal Footwear"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official product page states handcrafted in Lagos, Nigeria using fine leather and current worldwide shipping."
+  },
+  {
+    id:"leathergear-venice", name:"LeatherGear", website:"https://www.leathergearcompany.com/", country:"Nigeria",
+    categories:["Men's Footwear","Leather Accessories"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Premium leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site states handcrafted in Lagos with hand-selected premium leather; current men's footwear includes VENICE, TORINO TREK and MILAN."
+  },
+  {
+    id:"julz-craft", name:"Julz Craft", website:"https://www.julzcraft.com.ng/", country:"Nigeria",
+    categories:["Men's Footwear","Loafers","Formal Shoes","Boots","Sandals"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Genuine leather"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site presents premium handcrafted footwear from Lagos and states 100% genuine leather."
+  },
+  {
+    id:"ciska-stores", name:"CIska Stores", website:"https://ciska.com.ng/", country:"Nigeria",
+    categories:["Men's Footwear","Handmade Loafers"], manufacturingOrigin:"Nigeria",
+    materials:["Leather; exact grade to verify"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Current Handmade Casual Loafers XP page is ₦30,000 and contains recent positive customer reviews."
+  },
+  {
+    id:"custi-mikelo", name:"Custi Mikelo: Made in Spain", website:"https://www.faire.com/", country:"Spain",
+    categories:["Men's Belts","Leather Accessories"], manufacturingOrigin:"Spain",
+    materials:["100% leather","Metal"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current belt listing shows 4.9/5 from 113 brand reviews and 4.9 product quality/fulfilment."
+  },
+  {
+    id:"glove-story", name:"Glove Story", website:"https://www.faire.com/", country:"France",
+    categories:["Men's Belts","Leather Accessories"], manufacturingOrigin:"France",
+    materials:["Cowhide leather","Metal"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current CT059 belt listing shows 4.9/5 from 21 brand reviews and 4.9 product quality/fulfilment."
+  }
+);
