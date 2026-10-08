@@ -24,7 +24,7 @@ export async function GET() {
           id:p.id,title:p.title,handle:p.handle,vendor:p.vendor,productType:p.productType,
           status:p.tags.some((t:string)=>t.toUpperCase()==="EAZY_APPROVED")?"APPROVED":"EVIDENCE_REQUIRED",
           sourceType:meta.source_type||"",sourceUrl:meta.source_url||"",material:meta.material||"",
-          origin:meta.origin||"",qualityCheck:meta.quality_check||"",provenance:meta.provenance||"",\n          marketProof:{salesSignal:meta.sales_signal||meta.sales_proof||"",reviewCount:meta.review_count?Number(meta.review_count):0,rating:meta.review_rating?Number(meta.review_rating):0,reviewEvidence:meta.review_evidence||"",source:meta.market_source||""},
+          origin:meta.origin||"",qualityCheck:meta.quality_check||"",provenance:meta.provenance||"",\n          marketProof:{salesSignal:meta.sales_signal||meta.sales_proof||"",reviewCount:meta.review_count?Number(meta.review_count):0,rating:meta.review_rating?Number(meta.review_rating):0,reviewEvidence:meta.review_evidence||"",source:meta.market_source||""},\n          edition:meta.edition||"CORE",limitedEdition:meta.limited_edition?JSON.parse(meta.limited_edition):undefined,
           retail:p.variants.nodes[0]?.price||null
         };
       });
