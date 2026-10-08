@@ -181,6 +181,7 @@ export type ProductCandidate = {
   id:string; supplierId:string; title:string; sourceUrl:string; tier:SourcingTier; cultureLanes?:CultureLane[]; artisanMade?:boolean;
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
+  imageRightsVerified?:boolean; commercialTermsVerified?:boolean;
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
   status:ProductReviewStatus;
   reviewerNotes?:string; createdAt:string; updatedAt:string;
@@ -288,8 +289,8 @@ export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, s
     { id:"MATERIAL", label:"Material documented", passed:Boolean(candidate.material), blocking:true, evidence:candidate.material || "Material evidence missing" },
     { id:"ORIGIN", label:"Manufacturing origin", passed:Boolean(candidate.origin), blocking:true, evidence:candidate.origin || "Origin evidence missing" },
     { id:"AUTHENTICITY", label:"Authenticity / provenance", passed:Boolean(candidate.provenanceEvidence && (!candidate.brand || candidate.authenticityEvidence)), blocking:true, evidence:candidate.provenanceEvidence || "Provenance evidence missing" },
-    { id:"IMAGE_RIGHTS", label:"Product image rights", passed:Boolean(candidate.imageUrls.length), blocking:true, evidence:candidate.imageUrls.length ? "Product imagery recorded" : "Approved product imagery missing" },
-    { id:"COMMERCIAL", label:"Commercial terms", passed:Boolean(candidate.cost || candidate.retail), blocking:true, evidence:candidate.cost ? "Cost recorded" : candidate.retail ? "Retail reference recorded; wholesale cost still required" : "Commercial terms missing" },
+    { id:"IMAGE_RIGHTS", label:"Product image rights", passed:Boolean(candidate.imageUrls.length && candidate.imageRightsVerified === true), blocking:true, evidence:candidate.imageRightsVerified ? "Product imagery and usage rights verified" : candidate.imageUrls.length ? "Images present; usage rights are not verified" : "Approved product imagery missing" },
+    { id:"COMMERCIAL", label:"Commercial terms", passed:candidate.commercialTermsVerified === true, blocking:true, evidence:candidate.commercialTermsVerified ? "Commercial terms verified" : "Supplier/resale terms are not verified" },
     { id:"HOUSE_APPROVAL", label:"House approval", passed:candidate.status === "APPROVED", blocking:false, evidence:candidate.status }
   ];
   const blockers=gates.filter(g=>g.blocking && !g.passed).map(g=>g.label);
@@ -500,7 +501,7 @@ export function applyHouseReview(
 }
 
 export function canPublishToShopify(candidate:ProductCandidateWithMarketProof){
-  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && !!candidate.provenanceEvidence && !!candidate.authenticityEvidence && candidate.imageUrls.length>0;
+  return candidate.status==="APPROVED" && candidate.sourceUrl.length>0 && !!candidate.material && !!candidate.origin && !!candidate.provenanceEvidence && !!candidate.authenticityEvidence && candidate.imageUrls.length>0 && candidate.imageRightsVerified===true && candidate.commercialTermsVerified===true;
 }
 
 export function supplierStatusLabel(status:SupplierPipelineStatus){
