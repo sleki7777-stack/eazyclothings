@@ -82,7 +82,6 @@ export async function POST(req:Request){
       }));
 
       const defaultVariant = variantSource[0];
-      const defaultMediaId = mediaByUrl.get(defaultVariant.imageUrls?.[0] || "");
       const updatePayload:any = {
         id: created.variants.nodes[0].id,
         inventoryPolicy:"CONTINUE",
