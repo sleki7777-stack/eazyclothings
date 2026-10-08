@@ -1110,3 +1110,84 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Official brand story states handmade leather accessories are handcrafted in Lagos using mainly locally sourced materials and homegrown artisans. Current catalogue is strongly women's-facing, so SLEEK EAZY should only pursue genuinely suitable men's/unisex objects, not force-fit women's bags."
   }
 );
+
+
+// 2026-10-08: Objects / travel / resort carry expansion.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"american-leather-goods-dopp-kit", supplierId:"american-leather-goods", title:"Genuine Leather Dopp Kit — Croco Black",
+    sourceUrl:"https://www.faire.com/product/p_e756c5yq3d", tier:"ACCESSIBLE", world:"Fragrance & Grooming", brand:"American Leather Goods",
+    material:"Genuine leather", origin:"Turkey", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies American Leather Goods and SKU.",
+    provenanceEvidence:"Current listing states genuine leather and Made in Turkey.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Excellent grooming/travel object candidate: current supplier rating 4.8/5 from 270+ reviews. Useful bridge between Grooming, Objects, Gifts and Travel. Verify exact lining, hardware, imagery and Nigerian fulfilment."
+  },
+  {
+    id:"wp-standard-full-grain-duffle", supplierId:"wp-standard", title:"Full-Grain Leather Duffle Bag — Overnight & Travel",
+    sourceUrl:"https://www.faire.com/product/p_f6d3ty389t", tier:"PREMIUM", world:"Resort", brand:"WP Standard",
+    material:"Full-grain leather; solid brass hardware", origin:"Mexico", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies WP Standard.",
+    provenanceEvidence:"Current listing states full-grain leather, solid brass hardware and Made in Mexico; lifetime repair guarantee is advertised.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Premium travel anchor: 5.0/5 supplier rating from 73 reviews, 5.0 product quality/fulfilment/communication. Carry-on dimensions and lifetime repair promise are compelling. Verify current wholesale terms and international shipping."
+  },
+  {
+    id:"dotch-leather-maynard-duffle", supplierId:"dotch-leather", title:"The Maynard Full-Grain Leather Duffle Bag — Weekender",
+    sourceUrl:"https://www.faire.com/product/p_c5m71uo8oj", tier:"PREMIUM", world:"Resort", brand:"Dotch Leather",
+    material:"Full-grain Indian buffalo leather", origin:"India", imageUrls:[],
+    authenticityEvidence:"Faire wholesale listing identifies Dotch Leather.",
+    provenanceEvidence:"Current listing states handcrafted from full-grain Indian buffalo leather.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong resort/weekend bag candidate with 4.9/5 brand rating from 32 reviews. Verify product-level reviews, hardware, lining, carry-on suitability, packaging and landed cost."
+  },
+  {
+    id:"hides-military-duffle", supplierId:"hides", title:"Military Leather Duffle Bag",
+    sourceUrl:"https://www.faire.com/product/p_rmhmybb6hq", tier:"PREMIUM", world:"After Dark", brand:"Hides",
+    material:"Vegetable-tanned full-grain leather; Italian brass hardware", origin:"SKU/manufacturing location requires verification", imageUrls:[],
+    authenticityEvidence:"Faire wholesale product listing identifies Hides.",
+    provenanceEvidence:"Current listing documents vegetable-tanned full-grain leather and Italian brass hardware.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["GLOBAL_SELECT"],
+    reviewerNotes:"Strong rugged-luxury travel candidate with a 4.8/5 supplier rating from 16 reviews. The distressed finish fits the After Dark / travel worlds; verify exact production origin, durability and fulfilment."
+  },
+  {
+    id:"kingsley-leather-hanging-toiletry", supplierId:"kingsley", title:"Leather Hanging Toiletry Bag",
+    sourceUrl:"https://www.faire.com/discover/leather-toiletry-bag", tier:"ACCESSIBLE", world:"Fragrance & Grooming", brand:"Wholesale supplier candidate",
+    material:"Leather; exact grade requires SKU verification", origin:"Supplier verification required", imageUrls:[],
+    authenticityEvidence:"Current Faire leather-toiletry category listing.",
+    provenanceEvidence:"Current wholesale category surfaces a leather hanging toiletry bag among men's travel-grooming options.",
+    status:"EVIDENCE_REQUIRED",
+    reviewerNotes:"Candidate for a high-quality travel grooming system. Product-level supplier, material, review and fulfilment data need verification before selection."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"wp-standard", name:"WP Standard", website:"https://www.faire.com/", country:"United States / production Mexico for surfaced SKU",
+    categories:["Full-Grain Leather Duffle Bags","Travel","Gifts"], manufacturingOrigin:"Mexico",
+    materials:["Full-grain leather","Solid brass hardware"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current surfaced duffle shows 5.0/5 from 73 reviews with 5.0 product quality, fulfilment and communication; lifetime repair guarantee advertised."
+  },
+  {
+    id:"dotch-leather", name:"Dotch Leather", website:"https://www.faire.com/", country:"India / supplier verification required",
+    categories:["Leather Duffel Bags","Weekenders","Travel"], manufacturingOrigin:"India",
+    materials:["Full-grain buffalo leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current Maynard duffle shows 4.9/5 brand rating from 32 reviews."
+  },
+  {
+    id:"hides", name:"Hides", website:"https://www.faire.com/", country:"Supplier verification required",
+    categories:["Leather Duffels","Travel","After Dark"], manufacturingOrigin:"SKU verification required",
+    materials:["Vegetable-tanned full-grain leather","Italian brass"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale listing",
+    notes:"Current Military Leather Duffle shows 4.8/5 from 16 reviews."
+  },
+  {
+    id:"kingsley", name:"Leather Travel Grooming Supplier — Kingsley candidate", website:"https://www.faire.com/", country:"Supplier verification required",
+    categories:["Leather Toiletry Bags","Grooming Travel"], manufacturingOrigin:"SKU verification required",
+    materials:["Leather"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Faire/supplier terms must be verified", authenticityEvidence:"Faire wholesale category discovery",
+    notes:"Keep only a top-ranked men's toiletry SKU after supplier/product-level review."
+  }
+);
