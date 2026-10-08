@@ -16,7 +16,14 @@ const collections = [
   { name: "Gifts", key: "GIFTS", description: "For moments that matter", image: "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&w=1200&q=85" }
 ];
 
-const cats = ["ALL", ...collections.map((collection) => collection.key)];
+const cultureLanes = [
+  { key: "AFRICAN_HERITAGE", name: "African Heritage", description: "Traditional beads · craft · ceremony" },
+  { key: "LAGOS_MADE", name: "Lagos Made", description: "Nigerian makers · Lagos craft" },
+  { key: "CONTEMPORARY_AFRICAN", name: "Contemporary Africa", description: "Modern African design" },
+  { key: "GLOBAL_SELECT", name: "Global Select", description: "International pieces, Eazy standard" },
+  { key: "AFRICAN_GLOBAL_FUSION", name: "African × Global", description: "African identity meets global design" }
+];
+const cats = ["ALL", ...cultureLanes.map((x) => x.key), ...collections.map((collection) => collection.key)];
 
 type CatalogueProduct = {
   id: string;
@@ -33,6 +40,15 @@ type CatalogueProduct = {
 };
 
 function belongs(product: CatalogueProduct, key: string) {
+  const culture = (product.tags || []).map((x) => x.toUpperCase());
+  const cultureRules: Record<string, string[]> = {
+    AFRICAN_HERITAGE: ["SLEEK-AFRICAN-HERITAGE", "SLEEK-CULTURAL", "SLEEK-BEADS", "SLEEK-TRADITIONAL-ARTS"],
+    LAGOS_MADE: ["SLEEK-LAGOS-MADE", "SLEEK-LAGOS", "SLEEK-NIGERIA"],
+    CONTEMPORARY_AFRICAN: ["SLEEK-CONTEMPORARY-AFRICAN", "SLEEK-AFRICA"],
+    GLOBAL_SELECT: ["SLEEK-GLOBAL-SELECT", "SLEEK-INTERNATIONAL"],
+    AFRICAN_GLOBAL_FUSION: ["SLEEK-AFRICAN-GLOBAL", "SLEEK-FUSION"]
+  };
+  if (cultureRules[key]?.some((term) => culture.includes(term))) return true;
   const haystack = [product.productType, ...product.tags, product.title].join(" ").toUpperCase();
   const rules: Record<string, string[]> = {
     WATCHES: ["WATCH", "TIMEPIECE"],
@@ -108,6 +124,21 @@ export default function SleekEazy() {
       </section>
 
       <section className="sleek-intro">
+        <p className="eyebrow">AFRICA × THE WORLD</p>
+        <h2>African excellence<br />belongs everywhere.</h2>
+        <p>We curate exceptional African makers, traditional craft and Lagos design beside the strongest international pieces. African identity is not a limitation here — it is part of the signature.</p>
+        <div className="sleek-pillars">
+          <span>AFRICAN HERITAGE</span><span>LAGOS MADE</span><span>GLOBAL SELECT</span><span>AFRICAN × GLOBAL</span>
+        </div>
+      </section>
+
+      <section className="sleek-maker-banner">
+        <p className="eyebrow">FOR MAKERS & ARTISANS</p>
+        <h2>Your craft.<br /><em>A bigger stage.</em></h2>
+        <p>Exceptional African makers should not need a giant marketing budget to reach serious customers. Eazy can provide the channel, presentation and discovery layer — while every product still earns its place through verification and quality review.</p>
+      </section>
+
+      <section className="sleek-intro">
         <p className="eyebrow">THE SLEEK EAZY RULE</p>
         <h2>Nothing enters<br />just because it sells.</h2>
         <p>Every piece must belong beside EAZY clothing. Material, build quality, finish, proportion, function and presence come first. SLEEK EAZY is curated — never a catalogue of random men's products.</p>
@@ -136,6 +167,7 @@ export default function SleekEazy() {
           <p className="sleek-shop-note">{activeCollection ? activeCollection.description : "The current house selection"}</p>
         </div>
         <div className="filters">
+          {cultureLanes.map((lane) => <button key={lane.key} className={cat === lane.key ? "active" : ""} onClick={() => setCat(lane.key)}>{lane.name}</button>)}
           {cats.map((c) => <button key={c} className={cat === c ? "active" : ""} onClick={() => setCat(c)}>{c.replace("_", " ")}</button>)}
         </div>
         {catalogueError && <div className="sleek-empty"><p className="eyebrow">CATALOGUE STATUS</p><h3>Live catalogue unavailable.</h3><p>{catalogueError}</p></div>}
@@ -161,7 +193,7 @@ export default function SleekEazy() {
 
       <section className="sleek-worlds">
         <div><p className="eyebrow">THE MINDSET</p><h2>From Lagos<br /><em>to everywhere.</em></h2></div>
-        <p>Rooted in African confidence, shaped by Lagos, and finished with a global luxury retail instinct. SLEEK EAZY can feel at home in a Lagos evening, an Accra celebration, a Johannesburg dinner, a Dubai hotel, Miami heat or Las Vegas after dark — without becoming a costume.</p>
+        <p>Rooted in African confidence, shaped by Lagos, and finished with a global luxury retail instinct. Traditional beads can sit beside a Swiss timepiece. Lagos leather can sit beside Italian eyewear. Native craft can meet contemporary design. The point is not to make Africa look foreign — it is to let African excellence travel. SLEEK EAZY can feel at home in a Lagos evening, an Accra celebration, a Johannesburg dinner, a Dubai hotel, Miami heat or Las Vegas after dark — without becoming a costume.</p>
       </section>
 
       <section className="gift-section">
