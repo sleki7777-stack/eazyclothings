@@ -262,3 +262,12 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 @media(max-width:760px){.sleek-investigation__products-head{align-items:flex-start;flex-direction:column}.sleek-investigation__products{grid-template-columns:1fr}.sleek-investigation__products article{grid-template-columns:120px 1fr}.sleek-investigation__products img,.sleek-investigation__noimage{width:120px;height:170px}}
 
 .collection-promo-empty{display:flex;align-items:center;min-height:360px;background:#111;color:#fff}.collection-promo-empty .collection-promo-copy{max-width:760px}
+
+/* SLEEK EAZY — verified collection imagery + exact variant picker */
+.sleek-collection-image{position:relative;display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:2px;background:#d7d1c8;overflow:hidden}
+.sleek-collection-image img{width:100%;height:100%;object-fit:cover;min-width:0;min-height:0}
+.sleek-collection-pending{grid-column:1/-1;grid-row:1/-1;display:grid;place-items:center;align-content:center;gap:8px;text-align:center;color:#777;font-size:9px;letter-spacing:.16em}
+.sleek-collection-pending small{font-size:7px;letter-spacing:.12em}
+.sleek-variant-picker{display:grid;gap:7px;margin:14px 0 8px}
+.sleek-variant-picker span{font-size:7px;letter-spacing:.14em;color:#777}
+.sleek-variant-picker select{width:100%;border:1px solid #c9c2b8;background:#f3efe8;color:#171717;padding:10px;font:inherit;font-size:10px}
