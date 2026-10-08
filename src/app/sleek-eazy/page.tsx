@@ -113,7 +113,13 @@ export default function SleekEazy() {
         <button className="sleek-bag-link" onClick={() => setBagOpen(true)}>Composition <span>{bag.length}</span></button>
       </header>
 
-      {bagOpen && <aside className="sleek-bag-drawer" aria-label="SLEEK EAZY composition bag">\n        <div className="sleek-bag-head"><div><p className="eyebrow">SLEEK EAZY</p><h2>Your composition</h2></div><button onClick={() => setBagOpen(false)} aria-label="Close">×</button></div>\n        <div className="sleek-bag-list">{bag.length ? bag.map((raw, i) => { const item = JSON.parse(raw) as {title:string;productType:string;price:string}; return <div className="sleek-bag-row" key={i}><div><small>{item.productType}</small><strong>{item.title}</strong></div><span>₦{Number(item.price).toLocaleString()}</span><button onClick={() => { const next = bag.filter((_, n) => n !== i); setBag(next); localStorage.setItem("eazy-sleek-bag", JSON.stringify(next)); }}>Remove</button></div> }) : <div className="sleek-empty"><p className="eyebrow">COMPOSITION</p><h3>Nothing selected.</h3><p>Choose an object that belongs with your EAZY look.</p></div>}</div>\n        {bag.length > 0 && <div className="sleek-bag-foot"><a className="primary dark" href="/composition">Continue to composition ↗</a></div>}\n      </aside>}\n\n      <section className="sleek-hero">
+      {bagOpen && <aside className="sleek-bag-drawer" aria-label="SLEEK EAZY composition bag">
+        <div className="sleek-bag-head"><div><p className="eyebrow">SLEEK EAZY</p><h2>Your composition</h2></div><button onClick={() => setBagOpen(false)} aria-label="Close">×</button></div>
+        <div className="sleek-bag-list">{bag.length ? bag.map((raw, i) => { const item = JSON.parse(raw) as {title:string;productType:string;price:string}; return <div className="sleek-bag-row" key={i}><div><small>{item.productType}</small><strong>{item.title}</strong></div><span>₦{Number(item.price).toLocaleString()}</span><button onClick={() => { const next = bag.filter((_, n) => n !== i); setBag(next); localStorage.setItem("eazy-sleek-bag", JSON.stringify(next)); }}>Remove</button></div> }) : <div className="sleek-empty"><p className="eyebrow">COMPOSITION</p><h3>Nothing selected.</h3><p>Choose an object that belongs with your EAZY look.</p></div>}</div>
+        {bag.length > 0 && <div className="sleek-bag-foot"><a className="primary dark" href="/composition">Continue to composition ↗</a></div>}
+      </aside>}
+
+      <section className="sleek-hero">
         <div className="sleek-heroimg"></div>
         <div className="sleek-herotext">
           <p className="eyebrow">SLEEK EAZY · THE MEN'S OBJECT HOUSE</p>
@@ -176,7 +182,8 @@ export default function SleekEazy() {
           {cats.map((c) => <button key={c} className={cat === c ? "active" : ""} onClick={() => setCat(c)}>{c.replace("_", " ")}</button>)}
         </div>
         {catalogueError && <div className="sleek-empty"><p className="eyebrow">CATALOGUE STATUS</p><h3>Live catalogue unavailable.</h3><p>{catalogueError}</p></div>}
-        <div className="sleek-edit-banner"><p className="eyebrow">THE EDIT</p><h3>New discoveries, carefully chosen.</h3><p>We update Sleek Eazy regularly, but never for the sake of volume. Weekly discoveries and monthly edits are made from products that have already earned the house standard.</p></div>\n        <div className="sleek-grid">
+        <div className="sleek-edit-banner"><p className="eyebrow">THE EDIT</p><h3>New discoveries, carefully chosen.</h3><p>We update Sleek Eazy regularly, but never for the sake of volume. Weekly discoveries and monthly edits are made from products that have already earned the house standard.</p></div>
+        <div className="sleek-grid">
           {filtered.length ? filtered.map((x) => (
             <article className="sleek-card" key={x.id}>
               <div className="sleek-img">
