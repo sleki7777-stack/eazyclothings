@@ -1191,3 +1191,70 @@ REAL_SUPPLIER_CANDIDATES.push(
     notes:"Keep only a top-ranked men's toiletry SKU after supplier/product-level review."
   }
 );
+
+
+// 2026-10-08: further footwear candidates discovered during Nigerian luxury hunt.
+REAL_SOURCING_CANDIDATES.push(
+  {
+    id:"jarikre-black-white-penny-loafer", supplierId:"jarikre", title:"Men's Black & White Penny Loafers",
+    sourceUrl:"https://jarikre.com/product/mens-black-white-penny-loafers/", tier:"STRONGER", world:"Footwear", brand:"Jarikre",
+    material:"Premium full-grain leather", origin:"Lagos, Nigeria", retail:65000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Jarikre product page.",
+    provenanceEvidence:"Official page states premium full-grain leather and offers sizes 38–50 with fit options.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong versatile candidate with unusually broad sizing and leather choices. Current price ₦65,000–₦75,000. Need reseller/fulfilment agreement and deeper QC verification before approval."
+  },
+  {
+    id:"jarikre-obsidian-horsebit", supplierId:"jarikre", title:"Obsidian Horsebit Mule",
+    sourceUrl:"https://jarikre.com/product-category/jarikre-mens-leather-mules-collection/", tier:"ACCESSIBLE", world:"Footwear", brand:"Jarikre",
+    material:"Premium full-grain leather", origin:"Nigeria", retail:55000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official Jarikre storefront.",
+    provenanceEvidence:"Official category page states handcrafted from premium full-grain leather and made in Nigeria.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE","AFRICAN_GLOBAL_FUSION"],
+    reviewerNotes:"Strong modern native/smart-casual crossover with gold-tone horsebit hardware. Current price ₦55,000–₦65,000. Verify finish, outsole and commercial terms."
+  },
+  {
+    id:"fawoye-black-horsebit-loafer", supplierId:"fawoye", title:"Black Leather Horsebit Loafer",
+    sourceUrl:"https://fawoye.com/product-category/leather/", tier:"ACCESSIBLE", world:"Footwear", brand:"FAWOYE",
+    material:"Leather; exact grade requires product verification", origin:"Nigeria", retail:60000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official FAWOYE category listing.",
+    provenanceEvidence:"FAWOYE states its range is handcrafted and made to order in Nigeria.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["LAGOS_MADE"],
+    reviewerNotes:"Current official catalogue price ₦60,000. The maker's 2026 buyer guide emphasizes material accuracy, fit, construction and finishing; customer-review signals include 5-star feedback on comfort and durability. Need product-level material documentation and reseller terms."
+  },
+  {
+    id:"fawoye-odobwu-special-edition", supplierId:"fawoye", title:"Odogwu Special Edition",
+    sourceUrl:"https://fawoye.com/product-category/leather/", tier:"CULTURAL_HOUSE", world:"African Heritage", brand:"FAWOYE",
+    material:"Leather / material-specific variation", origin:"Nigeria", retail:60000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"Official FAWOYE category listing.",
+    provenanceEvidence:"Official catalogue labels Odogwu Special Edition within its handcrafted leather range.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","LAGOS_MADE"],
+    reviewerNotes:"Cultural/statement candidate worth deeper SKU research rather than automatic approval. Current catalogue price ₦60,000; verify the exact design story, materials, limited nature (if claimed), production consistency and commercial terms."
+  },
+  {
+    id:"fawoye-two-tone-monkstrap", supplierId:"fawoye", title:"Two-Toned Monkstrap",
+    sourceUrl:"https://fawoye.com/what-shoes-to-wear-with-agbada/", tier:"CULTURAL_HOUSE", world:"Footwear", brand:"FAWOYE",
+    material:"Leather / exact material variation requires SKU verification", origin:"Nigeria", retail:60000, currency:"NGN", imageUrls:[],
+    authenticityEvidence:"FAWOYE official style guide identifies the design.",
+    provenanceEvidence:"Official FAWOYE guide presents the two-toned monkstrap as a Nigerian handmade styling option for agbada and formal native wear.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["AFRICAN_HERITAGE","LAGOS_MADE"],
+    reviewerNotes:"Excellent composition candidate because it can bridge EAZY native and SLEEK footwear. Need actual product page/SKU, material details, imagery rights and fulfilment agreement."
+  }
+);
+
+REAL_SUPPLIER_CANDIDATES.push(
+  {
+    id:"jarikre", name:"Jarikre", website:"https://jarikre.com/", country:"Nigeria",
+    categories:["Men's Footwear","Bags","Leather Accessories"], manufacturingOrigin:"Lagos, Nigeria",
+    materials:["Full-grain leather","Suede","Croc/basket leather options"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official storefront states handmade in Lagos, global shipping and a 30-day warranty. Current men's range includes full-grain loafers, shoes, mules and slides."
+  },
+  {
+    id:"fawoye", name:"FAWOYE", website:"https://fawoye.com/", country:"Nigeria",
+    categories:["Men's Loafers","Oxfords","Brogues","Monk Straps","Boots","Slides"], manufacturingOrigin:"Nigeria",
+    materials:["Leather","Suede","Woven textiles","Mixed materials"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier terms must be verified", authenticityEvidence:"Official storefront",
+    notes:"Official site states handmade and made-to-order. Current leather catalogue carries a 48-product range; recent 2026 buyer/review content emphasizes fit, finishing, comfort and durability."
+  }
+);
