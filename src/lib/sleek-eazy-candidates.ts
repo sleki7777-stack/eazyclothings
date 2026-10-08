@@ -82,6 +82,22 @@ export const REAL_SOURCING_CANDIDATES: ProductCandidate[] = [
     createdAt:"2026-10-08", updatedAt:"2026-10-08"
   },
   {
+    id:"kemiland-igbo-ozo-cap", supplierId:"kemiland-fabrics", title:"Beaded Velvet Igbo Ozo Cap", sourceUrl:"https://www.etsy.com/shop/KemilandFabrics",
+    tier:"SELECT", world:"Igbo Heritage", brand:"KemilandFabrics", material:"Velvet; beadwork", origin:"Nigeria design/sourcing; supplier location United States", imageUrls:[],
+    authenticityEvidence:"Etsy shop and product listings identify KemilandFabrics and its Igbo Ozo cap range.",
+    provenanceEvidence:"Supplier shop presents Igbo Ozo caps and Nigerian cultural goods; exact production location requires verification.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["IGBO_HERITAGE","AFRICAN_HERITAGE"],
+    reviewerNotes:"Strong Igbo Headwear candidate. Seller is a Star Seller with 788 sales and 4.4/5 across 224 reviews; the surfaced beaded Igbo cap has a 5-star item review. Shop states wholesale is available. Need direct verification of exact materials, production, reseller fulfilment and current wholesale economics.", createdAt:"2026-10-08", updatedAt:"2026-10-08"
+  },
+  {
+    id:"kemiland-igbo-coral-set", supplierId:"kemiland-fabrics", title:"Men's Red Coral Bead Necklace & Bracelet Set", sourceUrl:"https://www.etsy.com/listing/4426376352/african-traditional-red-coral-bead",
+    tier:"SELECT", world:"Igbo Heritage", brand:"KemilandFabrics", material:"Coral gemstone beads", origin:"Nigeria design/sourcing; supplier location United States", imageUrls:[],
+    authenticityEvidence:"Etsy product listing identifies the maker and product.",
+    provenanceEvidence:"Listing describes Edo/Igbo royal-regalia inspiration; gemstone/material authenticity requires supplier documentation.",
+    status:"EVIDENCE_REQUIRED", cultureLanes:["IGBO_HERITAGE","AFRICAN_HERITAGE"],
+    reviewerNotes:"Potential Stronger/occasion heritage piece. Seller has 788 sales and 4.4/5 from 224 reviews and accepts bulk orders. Must verify that 'coral' is genuine, obtain exact fulfilment terms and confirm lawful material sourcing before approval.", createdAt:"2026-10-08", updatedAt:"2026-10-08"
+  },
+  {
     id:"handmadeng-aso-oke-duffel", supplierId:"handmade-ng", title:"Aso-oke Duffel Travel Bag",
     sourceUrl:"https://www.handmadeng.com/product/aso-oke-duffel-travel-bag/", tier:"SELECT", world:"African Heritage", brand:"Handmade NG",
     material:"Handwoven Aso-oke; structured travel-bag construction", origin:"Nigeria", retail:45000, currency:"NGN", imageUrls:[],
@@ -129,6 +145,12 @@ export const REAL_SUPPLIER_CANDIDATES: SupplierRecord[] = [
     materials:["Aso-oke","Ankara","Adire","Mixed textiles"], wholesaleAvailable:false, privateLabel:false, sampleAvailable:false,
     imageRights:"Supplier terms must be verified", authenticityEvidence:"Official Shopify storefront",
     notes:"Official storefront has 58 products, worldwide shipping, and a sustained trail of positive customer feedback. Wholesale/drop-ship partnership terms are not publicly established.", rating:5
+  },
+  {
+    id:"kemiland-fabrics", name:"KemilandFabrics", website:"https://www.etsy.com/shop/KemilandFabrics", country:"United States", categories:["Igbo Heritage","Coral Beads","Igbo Caps","Aso-oke","African Accessories"], manufacturingOrigin:"Exact SKU origin requires verification",
+    materials:["Coral","Velvet","Beads","Aso-oke"], wholesaleAvailable:true, privateLabel:false, sampleAvailable:false,
+    imageRights:"Supplier/Etsy terms must be verified", authenticityEvidence:"Etsy Star Seller storefront",
+    notes:"788 sales and 4.4/5 from 224 reviews surfaced on Etsy; 379+ listings in one surfaced shop snapshot, including 81 Igbo caps and 28 coral-bead listings. Shop explicitly states bulk/wholesale orders are available.", rating:4.4
   },
   {
     id:"handmade-ng", name:"Handmade NG", website:"https://www.handmadeng.com/", country:"Nigeria", categories:["African Heritage","Aso-oke","Handmade Bags","Leather"], manufacturingOrigin:"Nigeria",
