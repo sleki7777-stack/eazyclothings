@@ -27,6 +27,7 @@ const cats = ["ALL", ...cultureLanes.map((x) => x.key), ...collections.map((coll
 
 type CatalogueProduct = {
   id: string;
+  handle: string;
   title: string;
   productType: string;
   tags: string[];
@@ -230,7 +231,7 @@ export default function SleekEazy() {
                 <p>{x.productType}</p>
                 {x.edition === "LIMITED_EDITION" && <span className="sleek-edition-badge">LIMITED EDITION{x.limitedEdition?.editionSize ? ` · ${x.limitedEdition.editionSize} MADE` : ""}</span>}
                 {x.edition === "SEASONAL_EDIT" && <span className="sleek-edition-badge">CURRENT EDIT</span>}
-                <h3>{x.title}</h3>
+                <h3><a href={"/products/" + x.handle}>{x.title}</a></h3>
                 {x.variants.length > 1 && <label className="sleek-variant-picker">
                   <span>SELECT VARIANT</span>
                   <select value={variant?.id || ""} onChange={(event) => setSelectedVariants((current) => ({ ...current, [x.id]: event.target.value }))}>
