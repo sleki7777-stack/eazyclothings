@@ -57,7 +57,7 @@ export async function GET() {
       const material = meta.material || tagValue("MATERIAL:");
       const qualityCheck = meta.quality_check || tagValue("QC:");
       const provenance = meta.provenance || tagValue("PROVENANCE:");
-      const approved = product.tags.some((tag) => tag.toUpperCase() === "EAZY_APPROVED");
+      const approved = product.tags.some((tag) => tag.toUpperCase() === "EAZY_APPROVED");\n      const edition = (meta.edition || "CORE").toUpperCase();\n      const limitedEdition = meta.limited_edition ? (() => { try { return JSON.parse(meta.limited_edition); } catch { return undefined; } })() : undefined;
       const transparencyReady = Boolean(sourceType && origin && material && qualityCheck && provenance && approved);
       return {
       id: product.id,
