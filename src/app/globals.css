@@ -128,3 +128,43 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 .sleek-collections{padding:110px 8vw;background:#eee9e1}.sleek-collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.sleek-collection{display:block;text-align:left;padding:0;background:transparent;border:0;cursor:pointer;color:inherit}.sleek-collection-image{display:block;aspect-ratio:4/5;overflow:hidden;background:#d7d1c8}.sleek-collection-image img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s ease}.sleek-collection:hover .sleek-collection-image img,.sleek-collection.active .sleek-collection-image img{transform:scale(1.035);filter:saturate(.9)}.sleek-collection-meta{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 0 0;border-top:1px solid #bbb4aa;margin-top:12px}.sleek-collection-meta small{display:block;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#77716a;margin-bottom:7px}.sleek-collection-meta strong{display:block;font:500 25px 'Playfair Display',serif}.sleek-collection-meta i{font-style:normal;font-size:15px;padding-top:4px}.sleek-card .sleek-img img{width:100%;height:100%;object-fit:cover;display:block}.sleek-card .sleek-img{overflow:hidden}.sleek-card .sleek-img img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}.sleek-card:hover .sleek-img img{transform:scale(1.025)}
 @media(max-width:900px){.sleek-collection-grid{grid-template-columns:repeat(2,1fr)}.sleek-collection-meta strong{font-size:21px}}
 @media(max-width:620px){.sleek-collections{padding:80px 6vw}.sleek-collection-grid{grid-template-columns:1fr;gap:42px}.sleek-collection-image{aspect-ratio:1/1.08}}
+
+
+/* SLEEK EAZY — premium men's lifestyle direction */
+.sleek-intro{padding:125px 8vw;background:#e3ddd4;display:grid;grid-template-columns:1fr 1.2fr;gap:8vw;align-items:end}
+.sleek-intro h2{font:500 clamp(48px,6vw,84px)/.9 'Playfair Display',serif;letter-spacing:-.045em;margin:0}
+.sleek-intro>p:not(.eyebrow){max-width:560px;font-size:15px;line-height:1.8;color:#625d56}
+.sleek-pillars{grid-column:1/-1;border-top:1px solid #bdb6ac;padding-top:18px;display:flex;gap:24px;flex-wrap:wrap}
+.sleek-pillars span{font-size:8px;letter-spacing:.16em;color:#716b63}
+.sleek-collections .sectionhead h2,.sleek-shop .sectionhead h2{font:500 clamp(44px,5vw,72px)/.95 'Playfair Display',serif;letter-spacing:-.04em;margin:0}
+.sleek-shop{padding:110px 8vw;background:#f3efe8}
+.sleek-shop-note{max-width:230px;color:#777;font-size:11px;line-height:1.6}
+.sleek-empty{grid-column:1/-1;border-top:1px solid #bbb4aa;padding:70px 0}
+.sleek-empty h3{font:500 40px 'Playfair Display',serif;margin:0 0 10px}
+.sleek-empty p:last-child{color:#777;font-size:13px}
+.sleek-worlds{padding:120px 8vw;background:#171717;color:#f4f0e9;display:grid;grid-template-columns:1fr 1fr;gap:10vw;align-items:end}
+.sleek-worlds h2{font:500 clamp(55px,7vw,100px)/.85 'Playfair Display',serif;letter-spacing:-.05em;margin:0}
+.sleek-worlds p{max-width:500px;color:#aaa;font-size:14px;line-height:1.9}
+.sleek-worlds .eyebrow{color:#888}
+.sleek-page .gift-section{padding:120px 8vw;background:#cfc5b8;display:grid;grid-template-columns:1fr .7fr;gap:8vw;align-items:end}
+.sleek-page .gift-section h2,.sleek-page .sleek-bridge h2{font:500 clamp(48px,6vw,86px)/.9 'Playfair Display',serif;letter-spacing:-.045em;margin:0}
+.sleek-page .gift-section p:not(.eyebrow),.sleek-page .sleek-bridge p:not(.eyebrow){font-size:14px;line-height:1.8;color:#5f5a54;max-width:470px}
+.sleek-page .sleek-bridge{padding:120px 8vw;background:#ebe5dc}
+.sleek-page .sleek-bridge>p:not(.eyebrow){margin:25px 0;max-width:560px}
+.sleek-page footer{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;padding:55px 8vw;background:#0b0b0b;color:#aaa;border:0}
+.sleek-page footer a,.sleek-page footer span{font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+.sleek-page footer small{font-size:8px;letter-spacing:.14em;text-align:right}
+@media(max-width:900px){
+ .sleek-intro,.sleek-worlds,.sleek-page .gift-section{grid-template-columns:1fr;gap:45px}
+ .sleek-shop,.sleek-worlds,.sleek-page .gift-section,.sleek-page .sleek-bridge{padding:85px 7vw}
+ .sleek-shop-note{max-width:420px}
+ .sleek-page footer{grid-template-columns:1fr;padding:45px 7vw}
+ .sleek-page footer small{text-align:left}
+}
+@media(max-width:600px){
+ .sleek-intro{padding:85px 6vw}
+ .sleek-pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ .sleek-collections{padding:80px 6vw}
+ .sleek-shop{padding:80px 6vw}
+ .sleek-page .gift-section,.sleek-page .sleek-bridge,.sleek-worlds{padding:80px 6vw}
+}
