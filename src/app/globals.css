@@ -199,3 +199,14 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 .sourcing-page{min-height:100vh;background:#111;color:#f3efe8}.sourcing-head{padding:120px 8vw 90px;border-bottom:1px solid #ffffff16}.sourcing-head h1{font-size:clamp(58px,9vw,130px);line-height:.82;letter-spacing:-.055em;font-weight:500;margin:0 0 30px}.sourcing-head h1 em{font-family:'Playfair Display',serif;font-weight:500}.sourcing-head>p:last-child{max-width:600px;color:#999;line-height:1.8}.sourcing-law{padding:70px 8vw;background:#171717;border-bottom:1px solid #ffffff16}.sourcing-law h2{font:500 clamp(28px,4vw,55px)/1 'Playfair Display',serif;max-width:1000px;margin:0}.sourcing-table{padding:70px 8vw}.sourcing-row{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr 1fr;gap:20px;padding:20px 0;border-top:1px solid #ffffff16;align-items:center;font-size:10px;letter-spacing:.08em}.sourcing-row strong{font:500 20px 'Playfair Display',serif;letter-spacing:0}.sourcing-row span{color:#999}.sourcing-row b{font-size:8px;letter-spacing:.14em;color:#c9a45c}.sourcing-label{font-size:8px;letter-spacing:.16em;color:#777}.sourcing-empty{padding:80px 0;color:#999;line-height:1.8}.sourcing-empty h3{font:500 38px 'Playfair Display',serif;color:#f3efe8;margin:0 0 10px}@media(max-width:800px){.sourcing-head,.sourcing-law,.sourcing-table{padding-left:6vw;padding-right:6vw}.sourcing-row{grid-template-columns:1.5fr 1fr 1fr}.sourcing-row span:nth-child(4),.sourcing-row span:nth-child(5){display:none}.sourcing-row b{grid-column:3}.sourcing-label b{display:none}}
 
 .sourcing-row strong small{display:block;font:9px/1.5 inherit;color:#777;letter-spacing:.08em;margin-top:5px}.sourcing-row a{color:#c9a45c;text-decoration:none}.sourcing-suppliers{padding:30px 8vw 90px;color:#888}.sourcing-suppliers p:last-child{color:#c9a45c;letter-spacing:.08em;line-height:2}
+/* SLEEK EAZY — EAZY signature on every collection/product image */
+.sleek-brand-stamp{position:absolute;z-index:4;pointer-events:none;display:block;filter:drop-shadow(0 5px 14px rgba(0,0,0,.34));mix-blend-mode:normal}
+.sleek-brand-stamp img{display:block;width:100%;height:100%;object-fit:contain}
+.sleek-brand-stamp--product{right:16px;bottom:16px;width:clamp(105px,18%,180px);height:auto;aspect-ratio:900/520;opacity:.92}
+.sleek-brand-stamp--collection{right:12px;bottom:12px;width:42%;height:auto;aspect-ratio:900/520;opacity:.9}
+.sleek-card .sleek-img,.sleek-collection-image{position:relative}
+.sleek-card .sleek-img:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,transparent 70%,rgba(0,0,0,.06))}
+@media(max-width:620px){
+  .sleek-brand-stamp--product{right:11px;bottom:11px;width:145px;max-width:42%}
+  .sleek-brand-stamp--collection{right:10px;bottom:10px;width:46%}
+}
