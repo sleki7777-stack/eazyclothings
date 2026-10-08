@@ -116,7 +116,12 @@ export async function GET() {
           imageRightsVerified: vm.variant_image_rights_verified === "true",
         };
       });
-      const everyVariantVerified = variantRecords.length > 0 && variantRecords.every((variant) => variant.exactImageMatch && variant.imageRightsVerified && Boolean(variant.sourceImage));
+      const everyVariantVerified = variantRecords.length > 0 && variantRecords.every((variant) =>
+        variant.exactImageMatch &&
+        variant.imageRightsVerified &&
+        Boolean(variant.sourceImage) &&
+        Boolean(variant.image)
+      );
       const purchaseReady = Boolean(approved && product.tags.some((tag) => tag.toUpperCase() === "MARKET-PROOF") && exactImageMatch && imageRightsVerified && everyVariantVerified && (product.featuredImage?.url || product.images.nodes[0]?.url) && firstVariant?.availableForSale);
       const transparencyReady = Boolean(sourceType && origin && material && qualityCheck && provenance && approved);
       return {
