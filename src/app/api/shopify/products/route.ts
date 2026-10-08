@@ -97,7 +97,6 @@ export async function GET() {
       const edition = (meta.edition || "CORE").toUpperCase();
       const limitedEdition = meta.limited_edition ? (() => { try { return JSON.parse(meta.limited_edition); } catch { return undefined; } })() : undefined;
       const anyVariantAvailable = product.variants.nodes.some((variant) => variant.availableForSale);
-      const anyVariantAvailable = product.variants.nodes.some((variant) => variant.availableForSale);
       const variantRecords = product.variants.nodes.map((variant) => {
         const vm = Object.fromEntries(variant.metafields.nodes.map((field) => [field.key.toLowerCase(), field.value]));
         return {
