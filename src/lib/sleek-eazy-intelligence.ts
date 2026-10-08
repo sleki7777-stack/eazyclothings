@@ -1,9 +1,9 @@
 export type SourcingTier = "SELECT" | "PRIVATE" | "OBJECTS" | "CULTURAL_HOUSE";
-export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "SAMPLE_REQUIRED" | "QC_PENDING" | "APPROVED" | "REJECTED";\nexport type SleekEazyEdition = "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";\n\nexport type LimitedEditionEvidence = {\n  isGenuinelyLimited:boolean;\n  editionSize?:number;\n  unitsAvailable?:number;\n  scarcityReason?:string;\n  evidence?:EvidenceRecord[];\n};\n\nexport type SleekEazyEditionDecision = {\n  edition:SleekEazyEdition;\n  eligible:boolean;\n  reason:string;\n};
+export type ProductReviewStatus = "CANDIDATE" | "EVIDENCE_REQUIRED" | "APPROVED" | "REJECTED";\nexport type SleekEazyEdition = "CORE" | "SEASONAL_EDIT" | "LIMITED_EDITION" | "ARCHIVE";\n\nexport type LimitedEditionEvidence = {\n  isGenuinelyLimited:boolean;\n  editionSize?:number;\n  unitsAvailable?:number;\n  scarcityReason?:string;\n  evidence?:EvidenceRecord[];\n};\n\nexport type SleekEazyEditionDecision = {\n  edition:SleekEazyEdition;\n  eligible:boolean;\n  reason:string;\n};
 export type CultureLane = "AFRICAN_HERITAGE"|"LAGOS_MADE"|"CONTEMPORARY_AFRICAN"|"GLOBAL_SELECT"|"AFRICAN_GLOBAL_FUSION";
 export type MakerType = "AFRICAN_ARTISAN"|"AFRICAN_BRAND"|"INTERNATIONAL_BRAND"|"CURATED_TRADER";
 
-export type SupplierPipelineStatus = "DISCOVERED" | "CONTACTED" | "ACCESS_GRANTED" | "TERMS_RECEIVED" | "SAMPLE_ORDERED" | "SAMPLE_RECEIVED" | "QC" | "APPROVED" | "REJECTED";
+export type SupplierPipelineStatus = "DISCOVERED" | "CONTACTED" | "ACCESS_GRANTED" | "TERMS_RECEIVED" | "APPROVED" | "REJECTED";
 
 export type SupplierRecord = {
   id:string; name:string; website:string; country:string; categories:string[]; makerType?:MakerType; cultureLanes?:CultureLane[];
@@ -29,13 +29,11 @@ export type SupplierInvestigationStage =
   | "MARKET_PROOF_REVIEW"
   | "CANDIDATES_EXTRACTED"
   | "QUALITY_SCREEN"
-  | "SAMPLE_QC"
   | "HOUSE_DECISION";
 
 export type SupplierInvestigationDecision =
   | "INVESTIGATE"
   | "MOVE_ON"
-  | "SAMPLE"
   | "APPROVE"
   | "REJECT";
 
@@ -104,9 +102,6 @@ export function decideSupplierInvestigation(
   if (investigation.candidateCount === 0 || selectedCount === 0) {
     return { decision:"MOVE_ON", reason:"Supplier has market evidence, but no product meets the EAZY quality threshold." };
   }
-  if (investigation.stage === "SAMPLE_QC") {
-    return { decision:"SAMPLE", reason:"Selected products have earned sample/QC review." };
-  }
   return { decision:"INVESTIGATE", reason:"Supplier has passed discovery gates and requires the next investigation stage." };
 }
 
@@ -142,8 +137,7 @@ export type ProductCandidate = {
   world:string; brand?:string; material?:string; origin?:string; cost?:number;
   retail?:number; currency?:string; moq?:number; imageUrls:string[];
   authenticityEvidence?:string; provenanceEvidence?:string; qualityNotes?:string;
-  sampleStatus:"NOT_REQUESTED"|"REQUESTED"|"RECEIVED"|"INSPECTED";
-  qcStatus:"PENDING"|"PASSED"|"FAILED"; status:ProductReviewStatus;
+  status:ProductReviewStatus;
   reviewerNotes?:string; createdAt:string; updatedAt:string;\n  edition?:SleekEazyEdition; limitedEdition?:LimitedEditionEvidence;
 };
 
@@ -166,7 +160,6 @@ export const SLEEK_EAZY_APPROVAL_REQUIREMENTS = [
   "Manufacturing origin disclosed or explicitly unknown",
   "Legitimate product photography/use rights",
   "Authenticity evidence for branded goods",
-  "Sample inspection or documented QC path",
   "Commercial terms recorded",
   "EAZY House approval"
 ] as const;
@@ -174,7 +167,7 @@ export const SLEEK_EAZY_APPROVAL_REQUIREMENTS = [
 export function transparencyReady(candidate:ProductCandidate, supplier?:SupplierRecord){
   return Boolean(
     candidate.sourceUrl && supplier?.name && candidate.material && candidate.origin &&
-    candidate.imageUrls.length && candidate.qcStatus === "PASSED" &&
+    candidate.imageUrls.length &&
     candidate.provenanceEvidence && candidate.status === "APPROVED"
   );
 }
@@ -252,7 +245,7 @@ export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, s
     { id:"AUTHENTICITY", label:"Authenticity / provenance", passed:Boolean(candidate.authenticityEvidence && candidate.provenanceEvidence), blocking:true, evidence:candidate.provenanceEvidence || "Provenance evidence missing" },
     { id:"IMAGE_RIGHTS", label:"Product image rights", passed:Boolean(candidate.imageUrls.length), blocking:true, evidence:candidate.imageUrls.length ? "Product imagery recorded" : "Approved product imagery missing" },
     { id:"COMMERCIAL", label:"Commercial terms", passed:Boolean(candidate.cost || candidate.retail), blocking:true, evidence:candidate.cost ? "Cost recorded" : candidate.retail ? "Retail reference recorded; wholesale cost still required" : "Commercial terms missing" },
-    { id:"HOUSE_APPROVAL", label:"House approval", passed:candidate.status === "APPROVED", blocking:true, evidence:candidate.status }
+    { id:"HOUSE_APPROVAL", label:"House approval", passed:candidate.status === "APPROVED", blocking:false, evidence:candidate.status }
   ];
   const blockers=gates.filter(g=>g.blocking && !g.passed).map(g=>g.label);
   return { passed:blockers.length===0, score:premiumScore(candidate,gates), gates, blockers };
@@ -265,7 +258,7 @@ export function evaluateQualityGate(candidate:ProductCandidateWithMarketProof, s
  * Market demand and positive customer evidence are discovery gates, not substitutes
  * for physical/product QC. A supplier can contribute zero products.
  */
-export const SLEEK_EAZY_EDITION_RULES = {\n  limitedEditionRequiresVerifiedScarcity: true,\n  limitedEditionRequiresHouseApproval: true,\n  limitedEditionRequiresQcPassed: true,\n  limitedEditionRequiresMarketProof: true,\n  limitedEditionNeverArtificial: true,\n  archiveWhenSoldOut: true,\n  weeklyUpdatesAreCurated: true,\n  monthlyEditIsCurated: true\n} as const;\n\nexport function decideEdition(candidate:ProductCandidateWithMarketProof):SleekEazyEditionDecision {\n  if (candidate.status !== "APPROVED" || candidate.qcStatus !== "PASSED") return {edition:"CORE", eligible:false, reason:"Product is not approved and QC-cleared."};\n  if (!candidate.marketProof || !candidate.marketProof.salesSignal) return {edition:"CORE", eligible:false, reason:"Market proof is required before an edition can be published."};\n  const limited = candidate.limitedEdition;\n  if (limited?.isGenuinelyLimited && (limited.editionSize || limited.unitsAvailable) && limited.scarcityReason && limited.evidence?.length) {\n    return {edition:"LIMITED_EDITION", eligible:true, reason:"Verified genuine scarcity supports limited-edition treatment."};\n  }\n  return {edition:candidate.edition || "SEASONAL_EDIT", eligible:true, reason:"Approved product belongs in the current curated edit."};\n}\n\nexport const SLEEK_EAZY_CURATION_RULE = {
+export const SLEEK_EAZY_EDITION_RULES = {\n  limitedEditionRequiresVerifiedScarcity: true,\n  limitedEditionRequiresHouseApproval: true,\n  limitedEditionRequiresQcPassed: true,\n  limitedEditionRequiresMarketProof: true,\n  limitedEditionNeverArtificial: true,\n  archiveWhenSoldOut: true,\n  weeklyUpdatesAreCurated: true,\n  monthlyEditIsCurated: true\n} as const;\n\nexport function decideEdition(candidate:ProductCandidateWithMarketProof):SleekEazyEditionDecision {\n  if (candidate.status !== "APPROVED") return {edition:"CORE", eligible:false, reason:"Product is not House-approved."};\n  if (!candidate.marketProof || !candidate.marketProof.salesSignal) return {edition:"CORE", eligible:false, reason:"Market proof is required before an edition can be published."};\n  const limited = candidate.limitedEdition;\n  if (limited?.isGenuinelyLimited && (limited.editionSize || limited.unitsAvailable) && limited.scarcityReason && limited.evidence?.length) {\n    return {edition:"LIMITED_EDITION", eligible:true, reason:"Verified genuine scarcity supports limited-edition treatment."};\n  }\n  return {edition:candidate.edition || "SEASONAL_EDIT", eligible:true, reason:"Approved product belongs in the current curated edit."};\n}\n\nexport const SLEEK_EAZY_CURATION_RULE = {
   principle: "BEST_OF_SUPPLIER_ONLY",
   defaultMaxProductsPerSupplier: 27,
   minimumQualityScore: 90,
@@ -273,7 +266,6 @@ export const SLEEK_EAZY_EDITION_RULES = {\n  limitedEditionRequiresVerifiedScarc
   minimumReviewCount: 1,
   requiresMarketProof: true,
   storefrontRequiresApproval: true,
-  storefrontRequiresQcPassed: true,
   neverAutoPublishWholeSupplierCatalogue: true,
   supplierMayContributeZeroProducts: true,
   collectionCountIsNotAQualityException: true
