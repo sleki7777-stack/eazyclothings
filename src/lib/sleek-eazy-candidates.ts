@@ -1341,3 +1341,37 @@ const STANDARD_BAND_EXPANSION = [
 ];
 
 export { STANDARD_BAND_EXPANSION };
+
+
+// Men's traditional-completion sourcing lanes.
+// These leads are deliberately not customer-ready until exact product photography,
+// price, supplier identity, market proof, QC and image-use rights are verified.
+export const MEN_TRADITIONAL_COMPLETION_SOURCING_LEADS = [
+  {
+    supplier:"Jiro-G Collections",
+    sourceUrl:"https://jirogcollections.com.ng/",
+    products:["Ofor/Staff","Walking stick","Horse tail","Groom/Men Beads","Coral bead jewellery"],
+    occasions:["CHIEFTAINCY_AND_TITLE_CEREMONIES","BIG_MAN_FORMAL","TRADITIONAL_WEDDING_GROOM","TRADITIONAL_WEDDING_GUEST","COMMANDER_AUTHORITY","ROYAL_AND_PALACE_STYLE"],
+    notes:"Current official storefront identifies Ofor/Staff, Walking stick, Horse tail, Groom/Men Beads and Coral Bead jewellery as best-seller royal-collection products. Public product prices are not shown, so no price has been invented.",
+    exactImageRequired:true,
+    status:"SOURCE_LEAD"
+  },
+  {
+    supplier:"Fortunate Klotinz",
+    sourceUrl:"https://fortunateklotinz.com/",
+    products:["Walking staffs","Bow ties","Ties","Lapel pins","Belts","Cufflinks","Executive pens"],
+    occasions:["BIG_MAN_FORMAL","TRADITIONAL_WEDDING_GROOM","BIRTHDAY_PORTRAIT","EDITORIAL_AND_HOTOSHOOT"],
+    notes:"Current official storefront says it offers men's walking staffs and other finishing accessories. Individual product pages, pricing and exact imagery must be verified before listing.",
+    exactImageRequired:true,
+    status:"SOURCE_LEAD"
+  },
+  {
+    supplier:"Labaleo",
+    sourceUrl:"https://labaleo.com/",
+    products:["Embroidered pocket pieces","Traditional finishing pieces","Walking-stick complete looks"],
+    occasions:["TRADITIONAL_WEDDING_GROOM","BIG_MAN_FORMAL","BIRTHDAY_PORTRAIT","EDITORIAL_AND_HOTOSHOOT"],
+    notes:"Official catalogue demonstrates coordinated men's traditional looks with pocket details and walking-stick styling. Full garments belong to EAZY Clothing; only standalone accessories belong in Sleek Eazy.",
+    exactImageRequired:true,
+    status:"SOURCE_LEAD"
+  }
+] as const;
