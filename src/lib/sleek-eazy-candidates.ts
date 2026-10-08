@@ -8,7 +8,7 @@ export const REAL_SOURCING_CANDIDATES: ProductCandidate[] = [
     cost:85, currency:"USD MSRP reference", retail:85, imageUrls:[],
     authenticityEvidence:"Wholesale listing identifies FREYRS Eyewear; authorization for EAZY resale still requires supplier account verification.",
     provenanceEvidence:"Faire supplier listing; manufacturing/origin verification pending.", status:"EVIDENCE_REQUIRED",
-    reviewerNotes:"Strong fit: premium aviator silhouette, stainless construction, UVA/UVB protection, complimentary case. Do not publish until supplier terms, origin and sample QC are verified.",
+    reviewerNotes:"Strong fit: premium aviator silhouette, stainless construction, UVA/UVB protection, complimentary case. Do not publish until supplier terms, origin and product QC are verified.",
     createdAt:"2026-10-08", updatedAt:"2026-10-08"
   },
   {
@@ -28,7 +28,7 @@ export const REAL_SOURCING_CANDIDATES: ProductCandidate[] = [
     cost:85, currency:"USD MSRP reference", retail:85, imageUrls:[],
     authenticityEvidence:"Wholesale listing identifies FREYRS Eyewear; authorization for EAZY resale still requires supplier account verification.",
     provenanceEvidence:"Supplier listing; origin documentation pending.", status:"EVIDENCE_REQUIRED",
-    reviewerNotes:"Strong fit for Lagos/after-dark styling. Verify origin, wholesale cost and sample before approval.",
+    reviewerNotes:"Strong fit for Lagos/after-dark styling. Verify origin, wholesale cost and product before approval.",
     createdAt:"2026-10-08", updatedAt:"2026-10-08"
   },
   {
@@ -48,7 +48,7 @@ export const REAL_SOURCING_CANDIDATES: ProductCandidate[] = [
     imageUrls:[],
     authenticityEvidence:"Faire brand page identifies Tres Cuervos and its wholesale catalogue.",
     provenanceEvidence:"Supplier brand page; exact product origin pending.", status:"EVIDENCE_REQUIRED",
-    reviewerNotes:"Potential SLEEK EAZY leather-world candidate. Must verify material, construction, wholesale price and sample QC before listing.",
+    reviewerNotes:"Potential SLEEK EAZY leather-world candidate. Must verify material, construction, wholesale price and product QC before listing.",
     createdAt:"2026-10-08", updatedAt:"2026-10-08"
   },
   {
