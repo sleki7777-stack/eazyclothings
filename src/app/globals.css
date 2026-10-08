@@ -238,3 +238,16 @@ html{scroll-behavior:smooth}body{background:var(--eazy-paper);color:var(--eazy-i
 .sleek-investigation__rule b{font-size:10px;letter-spacing:.2em}.sleek-investigation__rule p{color:#b6aea2;line-height:1.65}
 @media(max-width:760px){.sleek-investigation__inputrow{flex-direction:column}.sleek-investigation__inputrow button{height:52px}.sleek-investigation__grid{grid-template-columns:1fr 1fr}.sleek-investigation__decision{align-items:flex-start;flex-direction:column;gap:8px}}
 @media(max-width:480px){.sleek-investigation__grid{grid-template-columns:1fr}}
+
+.sleek-investigation__products-head{margin-top:38px;border-top:1px solid #2b2926;padding-top:24px;display:flex;justify-content:space-between;gap:24px;align-items:end}
+.sleek-investigation__products-head b{font-size:10px;letter-spacing:.2em}.sleek-investigation__products-head p{color:#8e877e;max-width:620px;line-height:1.5}
+.sleek-investigation__products-head button{background:#e8d19a;color:#111;border:0;padding:14px 20px;font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.sleek-investigation__products{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#2a2825;margin-top:16px}
+.sleek-investigation__products article{background:#0d0d0d;display:grid;grid-template-columns:150px 1fr;min-height:190px}
+.sleek-investigation__products img,.sleek-investigation__noimage{width:150px;height:190px;object-fit:cover;background:#171717}
+.sleek-investigation__noimage{display:grid;place-items:center;color:#6f6961;font-size:9px;letter-spacing:.12em}
+.sleek-investigation__productbody{padding:18px}.sleek-investigation__productbody>span{font-size:9px;letter-spacing:.13em;color:#7e776d}
+.sleek-investigation__productbody h3{font-size:18px;font-weight:500;margin:9px 0 14px}.sleek-investigation__productbody p{font-size:12px;line-height:1.5;color:#8e877e}
+.sleek-investigation__productmeta{display:flex;flex-wrap:wrap;gap:8px}.sleek-investigation__productmeta b{font-size:9px;border:1px solid #302d29;padding:5px 7px;font-weight:500}
+.evidence-pass,.evidence-pending{font-size:9px;letter-spacing:.12em}.evidence-pass{color:#cdb879}.evidence-pending{color:#8b6d62}
+@media(max-width:760px){.sleek-investigation__products-head{align-items:flex-start;flex-direction:column}.sleek-investigation__products{grid-template-columns:1fr}.sleek-investigation__products article{grid-template-columns:120px 1fr}.sleek-investigation__products img,.sleek-investigation__noimage{width:120px;height:170px}}
